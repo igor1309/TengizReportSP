@@ -23,6 +23,10 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "TengizReportSPTests",
-            dependencies: ["TengizReportSP"]),
+            dependencies: ["TengizReportSP"],
+            resources: [
+                .process("Reports (txt)")
+            ]
+        ),
     ]
 )
