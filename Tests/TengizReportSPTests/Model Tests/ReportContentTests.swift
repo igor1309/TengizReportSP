@@ -38,9 +38,9 @@ final class ReportContentTests: XCTestCase {
 
                 XCTAssertNotEqual(reportContent, ReportContent.empty)
 
-                XCTAssertFalse(reportContent.header.isEmpty, "Header is empty")
-                XCTAssertFalse(reportContent.body.isEmpty, "Body array is empty")
-                XCTAssertFalse(reportContent.footer.isEmpty, "Footer is empty")
+                XCTAssertFalse(reportContent.header.isEmpty, "Header should not be empty")
+                XCTAssertFalse(reportContent.body.isEmpty, "Body should not be empty")
+                XCTAssertFalse(reportContent.footer.isEmpty, "Footer should not be empty")
 
                 XCTAssertEqual(reportContent.header, sample.header, "Header split error")
                 XCTAssertEqual(reportContent.body, sample.body, "Body split error")
@@ -48,3 +48,4 @@ final class ReportContentTests: XCTestCase {
             }
     }
 }
+

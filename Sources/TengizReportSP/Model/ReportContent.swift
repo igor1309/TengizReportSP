@@ -9,23 +9,37 @@ import Foundation
 
 public struct ReportContent: Equatable {
 
-    public var header: String
+    public var header: [String]
     public var body: [String]
-    public var footer: String
+    public var footer: [String]
 
-    public init(header: String, body: [String], footer: String) {
+    public init(header: [String], body: [String], footer: [String]) {
         self.header = header
         self.body = body
         self.footer = footer
     }
 
-    public static let empty = ReportContent(header: "", body: [], footer: "")
+    public static let empty = ReportContent(header: [], body: [], footer: [])
 }
 
 extension ReportContent: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
-        let header = string.firstMatch(for: Patterns.headerPattern) ?? ""
-        let footer = string.firstMatch(for: Patterns.footerPattern) ?? ""
+        let delimiter = "$$$$$"
+
+        let headerString = string.firstMatch(for: Patterns.headerPattern) ?? ""
+        let header = headerString
+            .replaceMatches(for: #"\t"#, withString: delimiter)
+            .replaceMatches(for: #"\n"#, withString: delimiter)
+            .components(separatedBy: delimiter)
+            .map { $0.clearWhitespacesAndNewlines() }
+            .filter { !$0.isEmpty }
+
+        let footerString = string.firstMatch(for: Patterns.footerPattern) ?? ""
+        let footer = footerString
+            .replaceMatches(for: #"\n"#, withString: delimiter)
+            .components(separatedBy: delimiter)
+            .map { $0.clearWhitespacesAndNewlines() }
+            .filter { !$0.isEmpty }
 
         let body = string
             // cut header
