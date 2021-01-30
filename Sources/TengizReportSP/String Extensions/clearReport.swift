@@ -17,6 +17,8 @@ public extension String {
                             withString: "2. ФОТ Бренд, логистика, бухгалтерия")
             .replaceMatches(for: #"-173.753 остаток с июня"#,
                             withString: "-173.753 переходит остаток с июня")
+            .replaceMatches(for: #"Остаток с ноября \t684.753р 85к"#,
+                            withString: "Переходит остаток с ноября \t684.753р 85к")
             .replaceMatches(for: "Итого-",
                             withString: "Итого ")
             .replaceMatches(for: #"\s*ВМ ЩК\s*"#,

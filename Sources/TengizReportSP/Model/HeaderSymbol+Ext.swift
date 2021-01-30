@@ -29,7 +29,14 @@ public extension String {
         // item
         if let title = self.firstMatch(for: Patterns.headerItemTitlePattern),
            let number = self.numberWithoutSign() {
-            return .item(title: title, value: number)
+            // return .item(title: title, value: number)
+            #warning("pattern hardcoding is not nice")
+            switch title {
+                case "Оборот": return .revenue(number)
+                case "Оборот факт": return .revenue(number)
+                case "Средний показатель": return .dailyAverage(number)
+                default: return .error
+            }
         }
 
         return .error

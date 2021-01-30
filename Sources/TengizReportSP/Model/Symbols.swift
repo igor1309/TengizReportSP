@@ -12,8 +12,8 @@ import Foundation
     public enum HeaderSymbol: Hashable, Equatable {
         case company(name: String)
         case month(monthStr: String)
-        #warning("item? или более конкретно? revenue, например??")
-        case item(title: String, value: Double)
+        case revenue(Double)
+        case dailyAverage(Double)
         case error
     }
 
