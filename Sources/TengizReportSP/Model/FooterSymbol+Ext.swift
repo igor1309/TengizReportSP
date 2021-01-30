@@ -23,44 +23,38 @@ extension FooterSymbol: ExpressibleByStringLiteral {
 
 extension String {
     func expensesTotal() -> FooterSymbol? {
-        guard self.firstMatch(for: #"ИТОГ всех расходов за месяц"#) != nil,
-              let number = self.numberWithSign() else { return nil }
+        guard firstMatch(for: #"ИТОГ всех расходов за месяц"#) != nil,
+              let number = numberWithSign() else { return nil }
         return .expensesTotal(title: "ИТОГ всех расходов за месяц", value: number)
     }
 
     func balance() -> FooterSymbol? {
-        if self.firstMatch(for: #"Фактический остаток:"#) != nil {
-            // get percentage and remains (replace percentage with "")
-            let percentageString = self.firstMatch(for: Patterns.percentage)
-            let percentage = percentageString?.percentageStringToDouble()
+        guard firstMatch(for: #"Фактический остаток:"#) != nil,
+              let number = replaceMatches(for: Patterns.percentage, withString: "").numberWithSign()
+        else { return nil }
 
-            let remains = self.replaceMatches(for: Patterns.percentage, withString: "")
-            // get number
-            if let number = remains.numberWithSign() {
-                return .balance(title: "Фактический остаток", value: number, percentage: percentage)
-            } else {
-                return nil
-            }
-        } else {
-            return nil
-        }
+        // get percentage and remains (replace percentage with "")
+        let percentageString = firstMatch(for: Patterns.percentage)
+        let percentage = percentageString?.percentageStringToDouble()
+
+        return .balance(title: "Фактический остаток", value: number, percentage: percentage)
     }
 
     func openingBalance() -> FooterSymbol? {
-        guard self.firstMatch(for: #"[П\п]ереход"#) != nil,
-              let number = self.numberWithSign() else { return nil }
-        return .openingBalance(title: self.trimmingCharacters(in: .whitespaces), value: number)
+        guard firstMatch(for: #"[П\п]ереход"#) != nil,
+              let number = numberWithSign() else { return nil }
+        return .openingBalance(title: trimmingCharacters(in: .whitespaces), value: number)
     }
 
     func extraIncomeExpenses() -> FooterSymbol? {
-        guard self.firstMatch(for: Patterns.numberWithSignAtStart) != nil,
-              let number = self.numberWithSign() else { return nil }
+        guard firstMatch(for: Patterns.numberWithSignAtStart) != nil,
+              let number = numberWithSign() else { return nil }
         return .extraIncomeExpenses(title: self, value: number)
     }
 
     func runningBalance() -> FooterSymbol? {
-        guard self.firstMatch(for: #"ИТОГ:"#) != nil,
-              let number = self.numberWithSign() else { return nil }
+        guard firstMatch(for: #"ИТОГ:"#) != nil,
+              let number = numberWithSign() else { return nil }
         return .runningBalance(title: "ИТОГ", value: number)
     }
 }

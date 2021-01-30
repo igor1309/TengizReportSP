@@ -21,28 +21,27 @@ extension HeaderSymbol: ExpressibleByStringLiteral {
 
 public extension String {
     func company() -> HeaderSymbol? {
-        guard let companyString = self.firstMatch(for: Patterns.headerCompanyPattern) else { return nil }
+        guard let companyString = firstMatch(for: Patterns.headerCompanyPattern) else { return nil }
         return .company(name: companyString)
     }
 
     func month() -> HeaderSymbol? {
-        guard let monthString = self.firstMatch(for: Patterns.headerMonthPattern) else { return nil }
+        guard let monthString = firstMatch(for: Patterns.headerMonthPattern) else { return nil }
         return .month(monthStr: monthString)
     }
 
     func item() -> HeaderSymbol? {
-        if let title = self.firstMatch(for: Patterns.headerItemTitlePattern),
-           let number = self.numberWithoutSign() {
-            // return .item(title: title, value: number)
-            #warning("pattern hardcoding is not nice")
-            switch title {
-                case "Оборот": return .revenue(number)
-                case "Оборот факт": return .revenue(number)
-                case "Средний показатель": return .dailyAverage(number)
-                default: return nil
-            }
-        } else {
-            return nil
+        guard let title = firstMatch(for: Patterns.headerItemTitlePattern),
+              let number = numberWithoutSign()
+        else { return nil }
+
+        // return .item(title: title, value: number)
+        #warning("pattern hardcoding is not nice")
+        switch title {
+            case "Оборот": return .revenue(number)
+            case "Оборот факт": return .revenue(number)
+            case "Средний показатель": return .dailyAverage(number)
+            default: return nil
         }
     }
 }
