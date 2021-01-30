@@ -21,19 +21,13 @@ extension HeaderSymbol: ExpressibleByStringLiteral {
 
 public extension String {
     func company() -> HeaderSymbol? {
-        if let companyString = self.firstMatch(for: Patterns.headerCompanyPattern) {
-            return .company(name: companyString)
-        } else {
-            return nil
-        }
+        guard let companyString = self.firstMatch(for: Patterns.headerCompanyPattern) else { return nil }
+        return .company(name: companyString)
     }
 
     func month() -> HeaderSymbol? {
-        if let monthString = self.firstMatch(for: Patterns.headerMonthPattern) {
-            return .month(monthStr: monthString)
-        } else {
-            return nil
-        }
+        guard let monthString = self.firstMatch(for: Patterns.headerMonthPattern) else { return nil }
+        return .month(monthStr: monthString)
     }
 
     func item() -> HeaderSymbol? {
