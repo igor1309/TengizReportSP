@@ -27,10 +27,10 @@ import Foundation
     public enum FooterSymbol: Hashable, Equatable {
         case expensesTotal(title: String, value: Double)
         /// сальдо доходов-расходов
-        case total(title: String, value: Double, percentage: Double)
+        case balance(title: String, value: Double, percentage: Double?)
         case openingBalance(title: String, value: Double)
         case extraIncomeExpenses(title: String, value: Double)
-        case balance(title: String, value: Double)
+        case runningBalance(title: String, value: Double)
         case error
     }
 //}

@@ -9,24 +9,34 @@ import Foundation
 
 extension HeaderSymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
-        self = string.headerSymbol()
+        self = {
+            if let company = string.company() { return company }
+            if let month = string.month() { return month }
+            if let item = string.item() { return item }
+
+            return .error
+        }()
     }
 }
 
 public extension String {
-    func headerSymbol() -> HeaderSymbol {
-
-        // company
+    func company() -> HeaderSymbol? {
         if let companyString = self.firstMatch(for: Patterns.headerCompanyPattern) {
             return .company(name: companyString)
+        } else {
+            return nil
         }
+    }
 
-        // month
+    func month() -> HeaderSymbol? {
         if let monthString = self.firstMatch(for: Patterns.headerMonthPattern) {
             return .month(monthStr: monthString)
+        } else {
+            return nil
         }
+    }
 
-        // item
+    func item() -> HeaderSymbol? {
         if let title = self.firstMatch(for: Patterns.headerItemTitlePattern),
            let number = self.numberWithoutSign() {
             // return .item(title: title, value: number)
@@ -35,11 +45,11 @@ public extension String {
                 case "Оборот": return .revenue(number)
                 case "Оборот факт": return .revenue(number)
                 case "Средний показатель": return .dailyAverage(number)
-                default: return .error
+                default: return nil
             }
+        } else {
+            return nil
         }
-
-        return .error
     }
 }
 
