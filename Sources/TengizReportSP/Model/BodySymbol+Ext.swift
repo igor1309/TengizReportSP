@@ -9,7 +9,16 @@ import Foundation
 
 extension BodySymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
-        self = string.bodySymbol()
+        self = {
+            if let correction      = string.correction()      { return correction }
+            if let withPlus        = string.withPlus()        { return withPlus }
+            if let prihodWithItogo = string.prihodWithItogo() { return prihodWithItogo }
+            if let prepayWithItogo = string.prepayWithItogo() { return prepayWithItogo }
+            if let prepayNoItogo   = string.prepayNoItogo()   { return prepayNoItogo }
+            if let otherPatterns   = string.otherPatterns()   { return otherPatterns }
+
+            return .empty
+        }()
     }
 }
 
@@ -40,46 +49,43 @@ public extension String {
                      comment: remains.clearWhitespacesAndNewlines())
     }
 
-    func itogo() -> BodySymbol? {
-        let itemWithItogoPattern = #".*?Итого"#
-        if firstMatch(for: itemWithItogoPattern) != nil {
+//    func itogo() -> BodySymbol? {
+//        if firstMatch(for: Patterns.itemWithItogoPattern) != nil {
+//
+//            #warning("move to patterns + make tests")
+//            let prihodPattern = #"1. Приход товара по накладным"#
+//            if let titleString = firstMatch(for: prihodPattern),
+//               let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
+//               let number = dropItogo.numberWithSign(),
+//               let comment = replaceFirstMatch(for: prihodPattern, withString: "") {
+//                return .item(title: titleString,
+//                             value: number,
+//                             comment: comment.clearWhitespacesAndNewlines())
+//            }
+//
+//            #warning("move to patterns + make tests")
+//            let prepayWithItogo = #"2. Предоплаченный товар, но не отраженный в приходе"#
+//            if let titleString = firstMatch(for: prepayWithItogo),
+//               let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
+//               let number = dropItogo.numberWithSign(),
+//               let comment = replaceFirstMatch(for: prepayWithItogo, withString: "") {
+//                return .item(title: titleString,
+//                             value: number,
+//                             comment: comment.clearWhitespacesAndNewlines())
+//            }
+//
+//            return nil
+//        } else {
+//            return nil
+//        }
+//    }
 
-            let prihodPattern = #"1. Приход товара по накладным"#
-            if let titleString = firstMatch(for: prihodPattern),
-               let afterItogo = replaceFirstMatch(for: itemWithItogoPattern, withString: ""),
-               let number = afterItogo.numberWithSign(),
-               let comment = replaceFirstMatch(for: prihodPattern, withString: "") {
-                return .item(title: titleString,
-                             value: number,
-                             comment: comment.clearWhitespacesAndNewlines())
-            }
-
-            let prepayPattern = #"2. Предоплаченный товар, но не отраженный в приходе"#
-            if let titleString = firstMatch(for: prepayPattern),
-               let afterItogo = replaceFirstMatch(for: itemWithItogoPattern, withString: ""),
-               let number = afterItogo.numberWithSign(),
-               let comment = replaceFirstMatch(for: prepayPattern, withString: "") {
-                return .item(title: titleString,
-                             value: number,
-                             comment: comment.clearWhitespacesAndNewlines())
-            }
-
-            return nil
-        } else {
-            return nil
-        }
-    }
-
-    func prihod() -> BodySymbol? {
-
-        let itemWithItogoPattern = #".*?Итого"#
-        let prihodPattern = #"1. Приход товара по накладным"#
-
-        guard firstMatch(for: itemWithItogoPattern) != nil,
-              let titleString = firstMatch(for: prihodPattern),
-              let afterItogo = replaceFirstMatch(for: itemWithItogoPattern, withString: ""),
-              let number = afterItogo.numberWithSign(),
-              let comment = replaceFirstMatch(for: prihodPattern, withString: "")
+    func prihodWithItogo() -> BodySymbol? {
+        guard firstMatch(for: Patterns.itemWithItogoPattern) != nil,
+              let titleString = firstMatch(for: Patterns.prihodPattern),
+              let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
+              let number = dropItogo.numberWithSign(),
+              let comment = replaceFirstMatch(for: Patterns.prihodPattern, withString: "")
         else { return nil }
 
         return .item(title: titleString,
@@ -87,15 +93,11 @@ public extension String {
                      comment: comment.clearWhitespacesAndNewlines())
     }
 
-    func prepay() -> BodySymbol? {
-        let itemWithItogoPattern = #".*?Итого"#
-        let prepayPattern = #"2. Предоплаченный товар, но не отраженный в приходе"#
-
-        guard firstMatch(for: itemWithItogoPattern) != nil,
-              let titleString = firstMatch(for: prepayPattern),
-              let afterItogo = replaceFirstMatch(for: itemWithItogoPattern, withString: ""),
-              let number = afterItogo.numberWithSign(),
-              let comment = replaceFirstMatch(for: prepayPattern, withString: "")
+    func prepayWithItogo() -> BodySymbol? {
+        guard let titleString = firstMatch(for: Patterns.prepayWithItogo),
+              let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
+              let number = dropItogo.numberWithoutSign(),
+              let comment = replaceFirstMatch(for: Patterns.prepayWithItogo, withString: "")
         else { return nil }
 
         return .item(title: titleString,
@@ -103,34 +105,23 @@ public extension String {
                      comment: comment.clearWhitespacesAndNewlines())
     }
 
-    func anotherPrepay() -> BodySymbol? {
-        /// tokenize line like `"2. Предоплаченный товар, но не отраженный в приходе    Студиопак-12.500 (влажные салфетки);"`
-        let anotherPrepayPattern = #"2. Предоплаченный товар, но не отраженный в приходе(?=\s+[А-Яа-я])"#
-        if let titleString = firstMatch(for: anotherPrepayPattern) {
-            let comment = replaceMatches(for: anotherPrepayPattern, withString: "")
-            if let number = comment.numberWithoutSign() {
-                return .item(title: titleString,
-                             value: number,
-                             comment: comment.clearWhitespacesAndNewlines())
-            } else {
-                return nil
-            }
-        } else {
-            return nil
-        }
+    func prepayNoItogo() -> BodySymbol? {
+        #warning(#" why not working replaceFirstMatch(for: Patterns.prepayNoItogo, withString: "") ????"#)
+        guard firstMatch(for: Patterns.prepayNoItogoLine) != nil,
+              let titleString = firstMatch(for: Patterns.prepayNoItogo),
+              let comment = replaceFirstMatch(for: titleString, withString: ""),
+              let number = comment.numberWithoutSign()
+        else { return nil }
+
+        return .item(title: titleString,
+                     value: number,
+                     comment: comment.clearWhitespacesAndNewlines())
     }
 
-    // swiftlint:disable:next function_body_length
-    func bodySymbol() -> BodySymbol {
+    func otherPatterns() -> BodySymbol? {
         var title: String = ""
         var remains: String = ""
         var number: Double?
-
-        if let correction    = correction()    { return correction }
-        if let withPlus      = withPlus()      { return withPlus }
-        if let prihod        = prihod()        { return prihod }
-        if let prepay        = prepay()        { return prepay }
-        if let anotherPrepay = anotherPrepay() { return anotherPrepay }
 
         let itemTitlePatterns = [Patterns.itemTitleWithPercentage,
                                  Patterns.itemTitleWithParentheses,
@@ -143,24 +134,15 @@ public extension String {
             remains = tailString
         }
 
-        guard !title.isEmpty && !remains.isEmpty else {
-            #warning("what to return here as source?")
-            return .empty
-        }
+        guard !title.isEmpty && !remains.isEmpty else { return nil }
 
         (number, remains) = remains.numberAndRemains()
 
-        let itemWithItogoPattern = #".*?Итого"#
-        /// special case when number after item title is not a number for item
-        /// for example in `"1. Приход товара по накладным     946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого-632.684р 37к)"`
-        if let afterItogo = remains.replaceFirstMatch(for: itemWithItogoPattern, withString: "") {
-            number = afterItogo.numberWithSign()
+        if let dropItogo = remains.replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: "") {
+            number = dropItogo.numberWithSign()
         }
 
-        /// another special case when number after item title is not a number for item
-        /// for example in `"1. Приход товара по накладным    451.198р41к (из них у нас оплачено фактический 21.346р15к)"`
-        let factPattern = #".*?фактический"#
-        if let afterFact = remains.replaceFirstMatch(for: factPattern, withString: "") {
+        if let afterFact = remains.replaceFirstMatch(for: Patterns.factPattern, withString: "") {
             number = afterFact.numberWithSign()
             remains = self.replaceFirstMatch(for: Patterns.itemTitle + #""#, withString: "") ?? self
         }
@@ -183,9 +165,8 @@ public extension String {
         var remains: String?
 
         for pattern in patterns {
-            guard let regex = try? NSRegularExpression(pattern: pattern, options: []),
-                  let headString = self.firstMatch(for: regex),
-                  let tailString = self.replaceFirstMatch(for: regex, withString: "") else { continue }
+            guard let headString = self.firstMatch(for: pattern),
+                  let tailString = self.replaceFirstMatch(for: pattern, withString: "") else { continue }
 
             match = headString.trimmingCharacters(in: .whitespaces)
             remains = tailString.trimmingCharacters(in: .whitespaces)
@@ -195,5 +176,40 @@ public extension String {
         completion(match, remains)
     }
 
+}
 
+extension Patterns {
+    /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
+    public static let itemCorrectionLine = #"^-\d{1,3}(?:\.\d{3})*.*"#
+
+    public static let itemTitle = #"^[1-9]\d?\.\D+"#
+
+    public static let itemWithPlus = itemTitle + numbersWithPlus
+
+    /// matching lines like `"4.Банковская комиссия 1.6% за эквайринг    "` (mind whitespace)
+    public static let itemTitleWithPercentage =  itemTitle + percentage + #"\D*"#
+    /// matching lines like `"22. Хэдхантер (подбор пероснала)    "` (mind whitespace)
+    public static let itemTitleWithParentheses = itemTitle + #"\([^(]*\)\D*"#
+
+    /// pattern to match `"200.000 (за август) +400.000 (за сентябрь)"` or `"7.701+4.500"`
+    public static let numbersWithPlus = itemNumber + #"(?:\s*\([^\)]+\)\s*)?\+"# + itemNumber + #"(?:\s*\([^\)]+\)\s*)?"#
+
+    /// special case when number after item title is not a number for item
+    /// for example in `"1. Приход товара по накладным\t946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого-632.684р 37к)"`
+    public static let itemWithItogoPattern = #".*?Итого"#
+
+    #warning("make tests")
+    public static let prihodPattern = #"1. Приход товара по накладным"#
+
+    #warning("make tests")
+    public static let prepayWithItogo = #"2. Предоплаченный товар, но не отраженный в приходе(?=.*?Итого)"#
+
+    #warning("make tests")
+    /// tokenize line like `"2. Предоплаченный товар, но не отраженный в приходе    Студиопак-12.500 (влажные салфетки);"`
+    public static let prepayNoItogo = #"2. Предоплаченный товар, но не отраженный в приходе(?=\s+[А-Яа-я])"#
+    public static let prepayNoItogoLine = #"2. Предоплаченный товар, но не отраженный в приходе((?!Итого).)*$"#
+
+    /// another special case when number after item title is not a number for item
+    /// for example in `"1. Приход товара по накладным\t451.198р41к (из них у нас оплачено фактический 21.346р15к)"`
+    public static let factPattern = #".*?фактический"#
 }
