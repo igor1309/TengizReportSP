@@ -61,4 +61,6 @@ extension String {
 
 extension Patterns {
     public static let numberWithSignAtStart = #"^\s*(-|\+)\d{1,3}"#
+    public static let percentage = #"\d+(\.\d+)?%"#
+
 }

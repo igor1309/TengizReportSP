@@ -66,7 +66,7 @@ final class FooterSymbolTests: XCTestCase {
                        .runningBalance(title: "ИТОГ", value: -739_626.06))
     }
 
-    func testExpensesTotal() {
+    func test_expensesTotal() {
         XCTAssertEqual("ИТОГ всех расходов за месяц:\t92.531р 15к".expensesTotal(),
                        .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 92531.15))
         XCTAssertEqual("ИТОГ всех расходов за месяц:\t1.677.077р 46к".expensesTotal(),
@@ -106,7 +106,7 @@ final class FooterSymbolTests: XCTestCase {
                        .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 920_954.54))
     }
 
-    func testBalance() {
+    func test_balance() {
         XCTAssertEqual("Фактический остаток:\t173.753 \t20%".balance(),
                        .balance(title: "Фактический остаток", value: 173_753, percentage: 0.2))
         XCTAssertEqual("Фактический остаток:\t-609.230р 46к\t20%".balance(),
@@ -146,7 +146,7 @@ final class FooterSymbolTests: XCTestCase {
                        .balance(title: "Фактический остаток", value: 8_670.46, percentage: nil))
     }
 
-    func testOpeningBalance() {
+    func test_openingBalance() {
         XCTAssertEqual("-173.753 переходит остаток с июня".openingBalance(),
                        .openingBalance(title: "-173.753 переходит остаток с июня", value: -173753.0))
         XCTAssertEqual("Минус с июля 407.477р 46к, переходит".openingBalance(),
@@ -178,7 +178,7 @@ final class FooterSymbolTests: XCTestCase {
                        .openingBalance(title: "Переходит остаток с ноября \t684.753р 85к", value: 684_753.85))
     }
 
-    func testExtraIncomeExpenses() {
+    func test_extraIncomeExpenses() {
         XCTAssertEqual("-28.000 субсидия, поступила в июле".extraIncomeExpenses(),
                        .extraIncomeExpenses(title: "-28.000 субсидия, поступила в июле", value: -28_000))
         XCTAssertEqual("+23.334р 76к остаток с инвестиций".extraIncomeExpenses(),
@@ -190,7 +190,7 @@ final class FooterSymbolTests: XCTestCase {
                        .extraIncomeExpenses(title: "+23.334р 76к остаток с инвестиций", value: 23_334.76))
     }
 
-    func testRunningBalance() {
+    func test_runningBalance() {
         XCTAssertEqual("Фактический остаток:\t173.753 \t20%".runningBalance(), .runningBalance(title: "ИТОГ", value: 173_753))
         XCTAssertEqual("ИТОГ:\t-407.477р 46к".runningBalance(), .runningBalance(title: "ИТОГ", value: -407_477.46))
         XCTAssertEqual("ИТОГ:\t-739.626р 06к".runningBalance(), .runningBalance(title: "ИТОГ", value: -739_626.06))

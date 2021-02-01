@@ -81,7 +81,7 @@ public extension String {
 //    }
 
     func prihodWithItogo() -> BodySymbol? {
-        guard firstMatch(for: Patterns.itogo) != nil,
+        guard firstMatch(for: Patterns.prihodWithItogo) != nil,
               let titleString = firstMatch(for: Patterns.prihod),
               let dropItogo = replaceFirstMatch(for: Patterns.itogo, withString: ""),
               let number = dropItogo.numberWithSign(),
@@ -192,14 +192,12 @@ extension Patterns {
     /// matching lines like `"22. Хэдхантер (подбор пероснала)    "` (mind whitespace)
     public static let itemTitleWithParentheses = itemTitle + #"\([^(]*\)\D*"#
 
-    /// pattern to match `"200.000 (за август) +400.000 (за сентябрь)"` or `"7.701+4.500"`
     public static let numbersWithPlus = itemNumber + #"(?:\s*\([^\)]+\)\s*)?\+"# + itemNumber + #"(?:\s*\([^\)]+\)\s*)?"#
 
     /// special case when number after item title is not a number for item
     /// for example in `"1. Приход товара по накладным\t946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого-632.684р 37к)"`
-    public static let itogo = #".*?Итого"#
+    public static let itogo = ".*?Итого"
 
-    #warning("make tests")
     public static let prihod = #"1. Приход товара по накладным"#
     public static let prihodWithItogo = "\(prihod)(?=.*?Итого)"
 

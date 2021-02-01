@@ -23,7 +23,7 @@ final class HeaderSymbolTests: XCTestCase {
         XCTAssertEqual(HeaderSymbol("Средний показатель: 38.040\n\n"), .dailyAverage(38_040))
     }
 
-    func testHeaderSymbolCompany() {
+    func testHeaderSymbol_company() {
         XCTAssertEqual("Название объекта: Саперави Аминьевка".company(), .company(name: "Саперави Аминьевка"))
         XCTAssertEqual("Название объекта: Вай Мэ! Щелково".company(), .company(name: "Вай Мэ! Щелково"))
 
@@ -31,7 +31,7 @@ final class HeaderSymbolTests: XCTestCase {
         XCTAssertEqual(HeaderSymbol("Название объекта: Вай Мэ! Щелково"), .company(name: "Вай Мэ! Щелково"))
     }
 
-    func testHeaderSymbolMonth() {
+    func testHeaderSymbol_month() {
         XCTAssertEqual("Месяц: июнь2020 (с 24 по 30 июня)".month(), .month(monthStr: "июнь2020"))
         XCTAssertEqual("Месяц: июль2020".month(), .month(monthStr: "июль2020"))
         XCTAssertEqual("Месяц: август2020".month(), .month(monthStr: "август2020"))
@@ -53,7 +53,7 @@ final class HeaderSymbolTests: XCTestCase {
         XCTAssertEqual(HeaderSymbol("Декабрь2020"), .month(monthStr: "Декабрь2020"))
     }
 
-    func testHeaderSymbolRevenue() {
+    func testHeaderSymbol_revenue() {
         XCTAssertEqual("Оборот:266.285".item(), .revenue(266_285))
         XCTAssertEqual("Оборот:1.067.807".item(), .revenue(1_067_807))
         XCTAssertEqual("Оборот:1.738.788".item(), .revenue(1_738_788))
@@ -75,7 +75,7 @@ final class HeaderSymbolTests: XCTestCase {
         XCTAssertEqual(HeaderSymbol("Оборот факт:929.625"), .revenue(929_625))
     }
 
-    func testHeaderSymbolDailyAverage() {
+    func testHeaderSymbol_dailyAverage() {
         XCTAssertEqual("Средний показатель: 38.040".item(), .dailyAverage(38_040))
         XCTAssertEqual("Средний показатель: 34.445".item(), .dailyAverage(34_445))
         XCTAssertEqual("Средний показатель: 56.089".item(), .dailyAverage(56_089))

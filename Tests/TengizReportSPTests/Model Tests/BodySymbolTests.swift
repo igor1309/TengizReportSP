@@ -188,7 +188,6 @@ final class BodySymbolPatternsTests: XCTestCase {
     }
 
     func test_numbersWithPlus() {
-        /// pattern to match `"200.000 (за август) +400.000 (за сентябрь)"` or `"7.701+4.500"`
         XCTAssertNotNil("200.000 (за август) +400.000 (за сентябрь)"
                             .firstMatch(for:Patterns.numbersWithPlus))
         XCTAssertNotNil("7.701+4.500"

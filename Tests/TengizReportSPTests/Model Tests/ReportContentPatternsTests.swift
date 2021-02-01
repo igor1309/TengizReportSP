@@ -9,7 +9,7 @@ import XCTest
 @testable import TengizReportSP
 
 final class ReportContentPatternsTests: XCTestCase {
-    func testReportHeaderPattern() {
+    func testReport_headerPattern() {
         XCTAssertNotNil("""
             Название объекта: Саперави Аминьевка
             Декабрь2020     Оборот:2.318.274    Средний показатель: 74.783
@@ -30,7 +30,7 @@ final class ReportContentPatternsTests: XCTestCase {
             """.firstMatch(for: Patterns.headerPattern))
     }
 
-    func testReportFooterPattern() {
+    func testReport_footerPattern() {
         XCTAssertNotNil("""
             ИТОГ всех расходов за месяц:    2.432.175р89к
 
@@ -60,7 +60,7 @@ final class ReportContentPatternsTests: XCTestCase {
             """.firstMatch(for: Patterns.footerPattern))
     }
 
-    func testColumnTitleRowPattern() {
+    func test_columnTitleRowPattern() {
         XCTAssertNotNil("""
             Статья расхода:    Сумма расхода:    План %     Факт %\n
             """.firstMatch(for: Patterns.columnTitleRowPattern))
@@ -70,7 +70,7 @@ final class ReportContentPatternsTests: XCTestCase {
             """.firstMatch(for: Patterns.columnTitleRowPattern))
     }
 
-    func testReportBodyPattern() {
+    func testReport_bodyPattern() {
         XCTAssertNotNil("""
             Статья расхода:    Сумма расхода:    План %     Факт %
             Основные расходы:        20%

@@ -9,7 +9,7 @@ import XCTest
 @testable import TengizReportSP
 
 final class HeaderSymbolPatternsTests: XCTestCase {
-    func testHeaderItemTitlePattern() {
+    func test_headerItemTitlePattern() {
         XCTAssertEqual("Название объекта: Саперави Аминьевка\nМесяц: июнь2020 (с 24 по 30 июня)\tОборот:266.285\tСредний показатель: 38.040\n\n"
                         .firstMatch(for: Patterns.headerItemTitlePattern),
                        "Название объекта")
@@ -24,7 +24,7 @@ final class HeaderSymbolPatternsTests: XCTestCase {
                        "Средний показатель")
     }
 
-    func testHeaderItemPattern() {
+    func test_headerItemPattern() {
         XCTAssertEqual("Название объекта: Саперави Аминьевка\nМесяц: июнь2020 (с 24 по 30 июня)\tОборот:266.285\tСредний показатель: 38.040\n\n"
                         .firstMatch(for: Patterns.headerItemPattern),
                        "Месяц: июнь2020")
@@ -40,7 +40,7 @@ final class HeaderSymbolPatternsTests: XCTestCase {
 
     }
 
-    func testHeaderCompanyPattern() {
+    func test_headerCompanyPattern() {
         XCTAssertEqual("Название объекта: Саперави Аминьевка\nМесяц: июнь2020 (с 24 по 30 июня)\tОборот:266.285\tСредний показатель: 38.040\n\n"
                         .firstMatch(for: Patterns.headerCompanyPattern),
                        "Саперави Аминьевка")
@@ -56,7 +56,7 @@ final class HeaderSymbolPatternsTests: XCTestCase {
                        "Вай Мэ! Щелково")
     }
 
-    func testHeaderMonthPattern() {
+    func test_headerMonthPattern() {
         XCTAssertEqual("Название объекта: Саперави Аминьевка\nМесяц: июнь2020 (с 24 по"
                         .firstMatch(for: Patterns.headerMonthPattern),
                        "июнь2020")

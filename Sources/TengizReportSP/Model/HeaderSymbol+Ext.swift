@@ -11,8 +11,8 @@ extension HeaderSymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
         self = {
             if let company = string.company() { return company }
-            if let month = string.month() { return month }
-            if let item = string.item() { return item }
+            if let month   = string.month()   { return month }
+            if let item    = string.item()    { return item }
 
             return .error
         }()
@@ -37,6 +37,7 @@ public extension String {
 
         // return .item(title: title, value: number)
         #warning("pattern hardcoding is not nice")
+        #warning("split into 2 funcs returning revenue and dailyAverage")
         switch title {
             case "Оборот": return .revenue(number)
             case "Оборот факт": return .revenue(number)
