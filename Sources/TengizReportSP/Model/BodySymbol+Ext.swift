@@ -81,11 +81,11 @@ public extension String {
 //    }
 
     func prihodWithItogo() -> BodySymbol? {
-        guard firstMatch(for: Patterns.itemWithItogoPattern) != nil,
-              let titleString = firstMatch(for: Patterns.prihodPattern),
-              let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
+        guard firstMatch(for: Patterns.itogo) != nil,
+              let titleString = firstMatch(for: Patterns.prihod),
+              let dropItogo = replaceFirstMatch(for: Patterns.itogo, withString: ""),
               let number = dropItogo.numberWithSign(),
-              let comment = replaceFirstMatch(for: Patterns.prihodPattern, withString: "")
+              let comment = replaceFirstMatch(for: Patterns.prihod, withString: "")
         else { return nil }
 
         return .item(title: titleString,
@@ -96,7 +96,7 @@ public extension String {
     func prepayWithItogo() -> BodySymbol? {
         guard firstMatch(for: Patterns.prepayWithItogo) != nil,
               let titleString = firstMatch(for: Patterns.prepay),
-              let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
+              let dropItogo = replaceFirstMatch(for: Patterns.itogo, withString: ""),
               let number = dropItogo.numberWithoutSign(),
               let comment = replaceFirstMatch(for: titleString, withString: "")
         else { return nil }
@@ -139,7 +139,7 @@ public extension String {
 
         (number, remains) = remains.numberAndRemains()
 
-        if let dropItogo = remains.replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: "") {
+        if let dropItogo = remains.replaceFirstMatch(for: Patterns.itogo, withString: "") {
             number = dropItogo.numberWithSign()
         }
 
@@ -197,10 +197,11 @@ extension Patterns {
 
     /// special case when number after item title is not a number for item
     /// for example in `"1. Приход товара по накладным\t946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого-632.684р 37к)"`
-    public static let itemWithItogoPattern = #".*?Итого"#
+    public static let itogo = #".*?Итого"#
 
     #warning("make tests")
-    public static let prihodPattern = #"1. Приход товара по накладным"#
+    public static let prihod = #"1. Приход товара по накладным"#
+    public static let prihodWithItogo = "\(prihod)(?=.*?Итого)"
 
     public static let prepay = "2. Предоплаченный товар, но не отраженный в приходе"
     public static let prepayWithItogo = "\(prepay)(?=.*?Итого)"
