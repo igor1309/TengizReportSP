@@ -94,10 +94,11 @@ public extension String {
     }
 
     func prepayWithItogo() -> BodySymbol? {
-        guard let titleString = firstMatch(for: Patterns.prepayWithItogo),
+        guard firstMatch(for: Patterns.prepayWithItogo) != nil,
+              let titleString = firstMatch(for: Patterns.prepay),
               let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
               let number = dropItogo.numberWithoutSign(),
-              let comment = replaceFirstMatch(for: Patterns.prepayWithItogo, withString: "")
+              let comment = replaceFirstMatch(for: titleString, withString: "")
         else { return nil }
 
         return .item(title: titleString,
@@ -106,9 +107,9 @@ public extension String {
     }
 
     func prepayNoItogo() -> BodySymbol? {
-        #warning(#" why not working replaceFirstMatch(for: Patterns.prepayNoItogo, withString: "") ????"#)
-        guard firstMatch(for: Patterns.prepayNoItogoLine) != nil,
-              let titleString = firstMatch(for: Patterns.prepayNoItogo),
+        #warning("why not working replaceFirstMatch(for: Patterns.prepayNoItogo, …) ????")
+        guard firstMatch(for: Patterns.prepayNoItogo) != nil,
+              let titleString = firstMatch(for: Patterns.prepay),
               let comment = replaceFirstMatch(for: titleString, withString: ""),
               let number = comment.numberWithoutSign()
         else { return nil }
@@ -201,13 +202,9 @@ extension Patterns {
     #warning("make tests")
     public static let prihodPattern = #"1. Приход товара по накладным"#
 
-    #warning("make tests")
-    public static let prepayWithItogo = #"2. Предоплаченный товар, но не отраженный в приходе(?=.*?Итого)"#
-
-    #warning("make tests")
-    /// tokenize line like `"2. Предоплаченный товар, но не отраженный в приходе    Студиопак-12.500 (влажные салфетки);"`
-    public static let prepayNoItogo = #"2. Предоплаченный товар, но не отраженный в приходе(?=\s+[А-Яа-я])"#
-    public static let prepayNoItogoLine = #"2. Предоплаченный товар, но не отраженный в приходе((?!Итого).)*$"#
+    public static let prepay = "2. Предоплаченный товар, но не отраженный в приходе"
+    public static let prepayWithItogo = "\(prepay)(?=.*?Итого)"
+    public static let prepayNoItogo = "\(prepay)((?!Итого).)*$"
 
     /// another special case when number after item title is not a number for item
     /// for example in `"1. Приход товара по накладным\t451.198р41к (из них у нас оплачено фактический 21.346р15к)"`
