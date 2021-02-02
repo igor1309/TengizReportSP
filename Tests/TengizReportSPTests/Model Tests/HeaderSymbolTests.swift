@@ -54,15 +54,17 @@ final class HeaderSymbolTests: XCTestCase {
     }
 
     func testHeaderSymbol_revenue() {
-        XCTAssertEqual("Оборот:266.285".item(), .revenue(266_285))
-        XCTAssertEqual("Оборот:1.067.807".item(), .revenue(1_067_807))
-        XCTAssertEqual("Оборот:1.738.788".item(), .revenue(1_738_788))
-        XCTAssertEqual("Оборот:2.440.021".item(), .revenue(2_440_021))
-        XCTAssertEqual("Оборот:2.587.735".item(), .revenue(2_587_735))
-        XCTAssertEqual("Оборот:1.885.280".item(), .revenue(1_885_280))
-        XCTAssertEqual("Оборот:2.318.274".item(), .revenue(2_318_274))
-        XCTAssertEqual("Оборот факт:141.690+1.238.900=1.380.590".item(), .revenue(1_380_590))
-        XCTAssertEqual("Оборот факт:929.625".item(), .revenue(929_625))
+        XCTAssertNil("Выручка:266.285".revenue(), "Match should be for '\(Patterns.revenue)'")
+
+        XCTAssertEqual("Оборот:266.285".revenue(), .revenue(266_285))
+        XCTAssertEqual("Оборот:1.067.807".revenue(), .revenue(1_067_807))
+        XCTAssertEqual("Оборот:1.738.788".revenue(), .revenue(1_738_788))
+        XCTAssertEqual("Оборот:2.440.021".revenue(), .revenue(2_440_021))
+        XCTAssertEqual("Оборот:2.587.735".revenue(), .revenue(2_587_735))
+        XCTAssertEqual("Оборот:1.885.280".revenue(), .revenue(1_885_280))
+        XCTAssertEqual("Оборот:2.318.274".revenue(), .revenue(2_318_274))
+        XCTAssertEqual("Оборот факт:141.690+1.238.900=1.380.590".revenue(), .revenue(1_380_590))
+        XCTAssertEqual("Оборот факт:929.625".revenue(), .revenue(929_625))
 
         XCTAssertEqual(HeaderSymbol("Оборот:266.285"), .revenue(266_285))
         XCTAssertEqual(HeaderSymbol("Оборот:1.067.807"), .revenue(1_067_807))
@@ -76,15 +78,17 @@ final class HeaderSymbolTests: XCTestCase {
     }
 
     func testHeaderSymbol_dailyAverage() {
-        XCTAssertEqual("Средний показатель: 38.040".item(), .dailyAverage(38_040))
-        XCTAssertEqual("Средний показатель: 34.445".item(), .dailyAverage(34_445))
-        XCTAssertEqual("Средний показатель: 56.089".item(), .dailyAverage(56_089))
-        XCTAssertEqual("Средний показатель: 81.334".item(), .dailyAverage(81_334))
-        XCTAssertEqual("Средний показатель: 83.475".item(), .dailyAverage(83_475))
-        XCTAssertEqual("Средний показатель: 62.842".item(), .dailyAverage(62_842))
-        XCTAssertEqual("Средний показатель: 74.783".item(), .dailyAverage(74_783))
-        XCTAssertEqual("Средний показатель:41.836".item(), .dailyAverage(41_836))
-        XCTAssertEqual("Средний показатель:29.987".item(), .dailyAverage(29_987))
+        XCTAssertNil("Средний: 38.040".dailyAverage(), "Match should be for '\(Patterns.dailyAverage)'")
+
+        XCTAssertEqual("Средний показатель: 38.040".dailyAverage(), .dailyAverage(38_040))
+        XCTAssertEqual("Средний показатель: 34.445".dailyAverage(), .dailyAverage(34_445))
+        XCTAssertEqual("Средний показатель: 56.089".dailyAverage(), .dailyAverage(56_089))
+        XCTAssertEqual("Средний показатель: 81.334".dailyAverage(), .dailyAverage(81_334))
+        XCTAssertEqual("Средний показатель: 83.475".dailyAverage(), .dailyAverage(83_475))
+        XCTAssertEqual("Средний показатель: 62.842".dailyAverage(), .dailyAverage(62_842))
+        XCTAssertEqual("Средний показатель: 74.783".dailyAverage(), .dailyAverage(74_783))
+        XCTAssertEqual("Средний показатель:41.836".dailyAverage(), .dailyAverage(41_836))
+        XCTAssertEqual("Средний показатель:29.987".dailyAverage(), .dailyAverage(29_987))
 
         XCTAssertEqual(HeaderSymbol("Средний показатель: 38.040"), .dailyAverage(38_040))
         XCTAssertEqual(HeaderSymbol("Средний показатель: 34.445"), .dailyAverage(34_445))

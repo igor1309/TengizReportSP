@@ -10,9 +10,10 @@ import Foundation
 extension HeaderSymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
         self = {
-            if let company = string.company() { return company }
-            if let month   = string.month()   { return month }
-            if let item    = string.item()    { return item }
+            if let company      = string.company()      { return company }
+            if let month        = string.month()        { return month }
+            if let revenue      = string.revenue()      { return revenue }
+            if let dailyAverage = string.dailyAverage() { return dailyAverage }
 
             return .error
         }()
@@ -21,35 +22,33 @@ extension HeaderSymbol: ExpressibleByStringLiteral {
 
 public extension String {
     func company() -> HeaderSymbol? {
-        guard let companyString = firstMatch(for: Patterns.headerCompanyPattern) else { return nil }
-        return .company(name: companyString)
+        guard let company = firstMatch(for: Patterns.headerCompany) else { return nil }
+        return .company(name: company)
     }
 
     func month() -> HeaderSymbol? {
-        guard let monthString = firstMatch(for: Patterns.headerMonthPattern) else { return nil }
-        return .month(monthStr: monthString)
+        guard let month = firstMatch(for: Patterns.headerMonth) else { return nil }
+        return .month(monthStr: month)
     }
 
-    func item() -> HeaderSymbol? {
-        guard let title = firstMatch(for: Patterns.headerItemTitlePattern),
-              let number = numberWithoutSign()
-        else { return nil }
+    func revenue() -> HeaderSymbol? {
+        guard firstMatch(for: Patterns.revenue) != nil,
+              let number = numberWithoutSign() else { return nil }
+        return .revenue(number)
+    }
 
-        // return .item(title: title, value: number)
-        #warning("pattern hardcoding is not nice")
-        #warning("split into 2 funcs returning revenue and dailyAverage")
-        switch title {
-            case "Оборот": return .revenue(number)
-            case "Оборот факт": return .revenue(number)
-            case "Средний показатель": return .dailyAverage(number)
-            default: return nil
-        }
+    func dailyAverage() -> HeaderSymbol? {
+        guard firstMatch(for: Patterns.dailyAverage) != nil,
+              let number = numberWithoutSign() else { return nil }
+        return .dailyAverage(number)
     }
 }
 
 public extension Patterns {
-    static let headerItemTitlePattern = #"[А-Яа-я ]+(?=:)"#
-    static let headerItemPattern = headerItemTitlePattern + #":[А-Яа-я ]*\d+(\.\d{3})*"#
-    static let headerCompanyPattern = #"(?<=Название объекта:\s).*"#
-    static let headerMonthPattern = #"[А-Яа-я]+\d{4}"#
+    static let headerItemTitle = #"[А-Яа-я ]+(?=:)"#
+    static let headerItem = headerItemTitle + #":[А-Яа-я ]*\d+(\.\d{3})*"#
+    static let headerCompany = #"(?<=Название объекта:\s).*"#
+    static let headerMonth = #"[А-Яа-я]+\d{4}"#
+    static let revenue = "Оборот"
+    static let dailyAverage = "Средний показатель"
 }
