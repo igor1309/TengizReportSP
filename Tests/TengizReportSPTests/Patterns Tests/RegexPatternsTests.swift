@@ -48,7 +48,6 @@ final class RegexPatternsTests: XCTestCase {
         XCTAssertNotNil("23. Аудит кантора (Бухуслуги)\t60.000\t\t\n".firstMatch(for:Patterns.itemNumber))
 
         XCTAssertNotNil("\tПереходит минус с сентября 642.997р 43к\t\t\n".firstMatch(for:Patterns.rubliKopeiki))
-        XCTAssertNotNil("\tПереходит минус с сентября 642.997р 43к\t\t\n".firstMatch(for:Patterns.kopeiki))
     }
 
     func testMinusPattern() {

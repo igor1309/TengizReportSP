@@ -28,9 +28,10 @@ public enum Patterns {
     public static let itemNumber = #"\d{1,3}(?:\.\d{3})*"#
 
     #warning("get back to pattern used in cleanReport")
-    public static let rubliKopeiki = #"\d{1,3}(?:\.\d{3})*р(?: \d\d?к)?"#
+    public static let rubliKopeiki = #"(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?)к)?"# //#"\d{1,3}(?:\.\d{3})*р(?: \d\d?к)?"#
            //>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*р(?: \d\d?к)?).*)
-    public static let kopeiki = #"((?<=р )\d\d?(?=к))"#
+    #warning("kopeiki - not used anymore?")
+    //public static let kopeiki = #"((?<=р )\d\d?(?=к))"#
                                 //((?<=р )\d\d?(?=к))
 
     public static let minus = #"(?:[М|м]инус\D*)|-(?=\d)"#

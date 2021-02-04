@@ -17,8 +17,8 @@ public extension String {
             sign = -1
         }
 
-        if let numberString = self.firstMatch(for: Patterns.rubliKopeiki) {
-            let rubliIKopeiki = numberString.rubliIKopeikiToDouble()
+        if let numberString = self.firstMatch(for: Patterns.rubliKopeiki),
+           let rubliIKopeiki = numberString.rubliKopeikiToDouble() {
             if let remains = self.replaceFirstMatch(for: Patterns.rubliKopeiki, withString: "") {
                 return (sign * rubliIKopeiki, remains)
             }
@@ -47,8 +47,8 @@ public extension String {
             return listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)
         }
 
-        if let rubliIKopeikiString = firstMatch(for: Patterns.rubliKopeiki) {
-            let rubliIKopeiki = rubliIKopeikiString.rubliIKopeikiToDouble()
+        if let rubliIKopeikiString = firstMatch(for: Patterns.rubliKopeiki),
+           let rubliIKopeiki = rubliIKopeikiString.rubliKopeikiToDouble() {
             return sign * rubliIKopeiki
         }
 
@@ -62,12 +62,12 @@ public extension String {
 
     // MARK: - Conversion
 
-    func rubliIKopeikiToDouble() -> Double {
-        guard let integerString = self.firstMatch(for: Patterns.itemNumber),
+    func rubliKopeikiToDouble() -> Double? {
+        guard let integerString = replaceFirstMatch(for: Patterns.rubliKopeiki, withGroup: "integer"),
               let integer = Double(integerString.replaceMatches(for: #"\."#, withString: ""))
-        else { return 0 }
+        else { return nil }
 
-        guard let decimalString = self.firstMatch(for: Patterns.kopeiki),
+        guard let decimalString = replaceFirstMatch(for: Patterns.rubliKopeiki, withGroup: "decimal"),
               let decimal = Double(decimalString.trimmingCharacters(in: .whitespaces))
         else { return integer }
 

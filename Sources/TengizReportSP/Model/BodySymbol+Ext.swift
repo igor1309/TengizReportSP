@@ -189,7 +189,8 @@ extension Patterns {
     /// matching lines like `"22. Хэдхантер (подбор пероснала)    "` (mind whitespace)
     public static let itemTitleWithParentheses = itemTitle + #"\([^(]*\)\D*"#
 
-    public static let numbersWithPlus = itemNumber + #"(?:\s*\([^\)]+\)\s*)?\+"# + itemNumber + #"(?:\s*\([^\)]+\)\s*)?"#
+    #warning("was it totally replaced by itemMath??")
+    public static let numbersWithPlus = rubliKopeiki + #"(?:\s*\([^\)]+\)\s*)?\+"# + rubliKopeiki + #"(?:\s*\([^\)]+\)\s*)?"#
 
     /// special case when number after item title is not a number for item
     /// for example in `"1. Приход товара по накладным\t946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого-632.684р 37к)"`

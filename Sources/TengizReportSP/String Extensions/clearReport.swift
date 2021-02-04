@@ -9,6 +9,8 @@ import Foundation
 
 public extension String {
 
+    #warning("do i need replacements with rubliKopeiki?")
+    #warning("do i need last fix? 'fix no space after dot after line number'")
     func clearReport() -> String {
         // make some cleaning & fixes
         self.clearWhitespacesAndNewlines()

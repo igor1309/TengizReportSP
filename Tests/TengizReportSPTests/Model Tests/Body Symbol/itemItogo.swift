@@ -10,32 +10,29 @@ import XCTest
 
 extension Patterns {
     /// `itogo`
-    static let itemItogo = #"(?<title>^\d+\.\D+)(?<comment>.*\s*(?<value>(?<=Итого|фактический)\s*\#(Patterns.rubliKopeiki)).*)"#
+    //static let itemItogo = #"(?<title>^\d+\.\D+)(?<comment>.*\s*(?<value>(?<=Итого|фактический)\s*\#(Patterns.rubliKopeiki)).*)"#
+    static let itemItogo = #"(?<title>^\d+\.\D+\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#
 }
 
 extension RegexPatternsTests {
     func test_itemItogo() {
-        XCTAssertEqual(Patterns.itemItogo, "")
+        //XCTAssertEqual(Patterns.itemItogo, "")
 
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemItogo) }.count,
                        11, "Should be exactly 11 matches: 8 - sure, +1, +2 not rubliKopeiki")
         _ = {
             XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"
-                            .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "title")?
-                            .trimmingCharacters(in: .whitespaces),
+                            .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "title"),
                            "1. Приход товара по накладным")
             XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"
-                            .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "value")?
-                            .trimmingCharacters(in: .whitespaces),
+                            .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "value"),
                            "498.373р 46к")
             XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"
                             .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "value")?
-                            .trimmingCharacters(in: .whitespaces)
-                            .rubliIKopeikiToDouble(),
+                            .rubliKopeikiToDouble(),
                            498_373.46)
             XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"
                             .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "value")?
-                            .trimmingCharacters(in: .whitespaces)
                             .numberWithSign(),
                            498_373.46)
             XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)".replaceFirstMatch(for: Patterns.itemItogo, withGroup: "comment"),
@@ -77,7 +74,7 @@ extension RegexPatternsTests {
 extension BodySymbolFuncTests {
     func test_itemItogo() {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.bodySymbol(for: Patterns.itemItogo) }.count,
-                       9, "Should be exactly 9 matches")
+                       11, "Should be exactly 1 matches")
 
         XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)".bodySymbol(for: Patterns.itemItogo),
                        .item(title: "1. Приход товара по накладным", value: 498_373.46, comment: "922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"))
@@ -99,5 +96,12 @@ extension BodySymbolFuncTests {
         // ??? need to replace 'оплачено фактический' with 'Итого' and tokenize like 'itogo'
         XCTAssertEqual("1. Приход товара по накладным\t451.198р 41к (из них у нас оплачено фактический 21.346р 15к)".bodySymbol(for: Patterns.itemItogo),
                        .item(title: "1. Приход товара по накладным", value: 21_346.15, comment: "451.198р 41к (из них у нас оплачено фактический 21.346р 15к)"))
+
+        /// also `itogo`
+        XCTAssertEqual("2. Предоплаченный товар, но не отраженный в приходе\t КНК Групп-17.300 (плейсметы;ИП Максимов-6.300 (шоколад фирм.,);Итого 23.600".bodySymbol(for: Patterns.itemItogo),
+                       .item(title: "2. Предоплаченный товар, но не отраженный в приходе", value: 23_600, comment: "КНК Групп-17.300 (плейсметы;ИП Максимов-6.300 (шоколад фирм.,);Итого 23.600"))
+        XCTAssertEqual("2. Предоплаченный товар, но не отраженный в приходе\tБейсболки персонал-18.000; Подушки в зал-22.400; Итого 40.400".bodySymbol(for: Patterns.itemItogo),
+                       .item(title: "2. Предоплаченный товар, но не отраженный в приходе", value: 40_400, comment: "Бейсболки персонал-18.000; Подушки в зал-22.400; Итого 40.400"))
+
     }
 }

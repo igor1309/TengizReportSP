@@ -297,24 +297,6 @@ final class BodySymbolPatternsTests: XCTestCase {
 
 }
 
-extension String {
-    /// Get non-empty match for pattern and remains of string (tail).
-    /// Returning nil if no pattern match.
-    /// If match or tail is empty return nil.
-    /// - Parameter pattern: pattern to match
-    /// - Returns: tuple for match and tail or nil
-    func getFirstMatchAndTail(for pattern: String) -> (String, String)? {
-        guard let match = firstMatch(for: pattern)?.trimmingCharacters(in: .whitespaces),
-              !match.isEmpty,
-              let tail = replaceFirstMatch(for: pattern, withString: "")?.trimmingCharacters(in: .whitespaces),
-              !tail.isEmpty
-        else { return nil }
-
-        return (match, tail)
-    }
-}
-
-
 final class BodySymbolTests_Think: XCTestCase {
     func test() {
         let itemTitlePatterns = [Patterns.itemTitleWithPercentage,

@@ -59,36 +59,36 @@ final class NumberFromStringTests: XCTestCase {
     }
 
     func testRubliIKopeikiToDouble() {
-        XCTAssertNotEqual("74к".rubliIKopeikiToDouble(), 0.74, "Doesn't work without rubles")
+        XCTAssertNotEqual("74к".rubliKopeikiToDouble(), 0.74, "Doesn't work without rubles")
 
-        XCTAssertEqual("3р 74к".rubliIKopeikiToDouble(), 3.74)
+        XCTAssertEqual("3р 74к".rubliKopeikiToDouble(), 3.74)
 
-        XCTAssertEqual("63р 74к".rubliIKopeikiToDouble(), 63.74)
+        XCTAssertEqual("63р 74к".rubliKopeikiToDouble(), 63.74)
 
-        XCTAssertEqual("863р 74к".rubliIKopeikiToDouble(), 863.74)
+        XCTAssertEqual("863р 74к".rubliKopeikiToDouble(), 863.74)
 
-        XCTAssertEqual("5.863р 74к".rubliIKopeikiToDouble(), 5863.74)
+        XCTAssertEqual("5.863р 74к".rubliKopeikiToDouble(), 5863.74)
 
-        XCTAssertEqual("13.318р 93к".rubliIKopeikiToDouble(), 13318.93)
-        XCTAssertEqual("21.346р 15к".rubliIKopeikiToDouble(), 21346.15)
-        XCTAssertEqual("75.255р 20к".rubliIKopeikiToDouble(), 75255.2)
-        XCTAssertEqual("98.340р 24к".rubliIKopeikiToDouble(), 98340.24)
+        XCTAssertEqual("13.318р 93к".rubliKopeikiToDouble(), 13318.93)
+        XCTAssertEqual("21.346р 15к".rubliKopeikiToDouble(), 21346.15)
+        XCTAssertEqual("75.255р 20к".rubliKopeikiToDouble(), 75255.2)
+        XCTAssertEqual("98.340р 24к".rubliKopeikiToDouble(), 98340.24)
 
-        XCTAssertEqual("145.292р 59к".rubliIKopeikiToDouble(), 145292.59)
-        XCTAssertEqual("739.626р 06к".rubliIKopeikiToDouble(), 739626.06)
-        XCTAssertEqual("922.936р 30к".rubliIKopeikiToDouble(), 922936.3)
+        XCTAssertEqual("145.292р 59к".rubliKopeikiToDouble(), 145292.59)
+        XCTAssertEqual("739.626р 06к".rubliKopeikiToDouble(), 739626.06)
+        XCTAssertEqual("922.936р 30к".rubliKopeikiToDouble(), 922936.3)
 
-        XCTAssertEqual("1.065.596р 76к".rubliIKopeikiToDouble(), 1065596.76)
-        XCTAssertEqual("1.677.077р 46к".rubliIKopeikiToDouble(), 1677077.46)
-        XCTAssertEqual("2.030.572р 59к".rubliIKopeikiToDouble(), 2030572.59)
-        XCTAssertEqual("2.094.271р 36к".rubliIKopeikiToDouble(), 2094271.36)
-        XCTAssertEqual("2.343.392р 37к".rubliIKopeikiToDouble(), 2343392.37)
-        XCTAssertEqual("2.865.042р 74к".rubliIKopeikiToDouble(), 2865042.74)
+        XCTAssertEqual("1.065.596р 76к".rubliKopeikiToDouble(), 1065596.76)
+        XCTAssertEqual("1.677.077р 46к".rubliKopeikiToDouble(), 1677077.46)
+        XCTAssertEqual("2.030.572р 59к".rubliKopeikiToDouble(), 2030572.59)
+        XCTAssertEqual("2.094.271р 36к".rubliKopeikiToDouble(), 2094271.36)
+        XCTAssertEqual("2.343.392р 37к".rubliKopeikiToDouble(), 2343392.37)
+        XCTAssertEqual("2.865.042р 74к".rubliKopeikiToDouble(), 2865042.74)
 
-        XCTAssertEqual("7.841р".rubliIKopeikiToDouble(), 7841.0)
-        XCTAssertEqual("90.841р".rubliIKopeikiToDouble(), 90841.0)
-        XCTAssertEqual("907.841р".rubliIKopeikiToDouble(), 907841.0)
-        XCTAssertEqual("946.056р".rubliIKopeikiToDouble(), 946056.0)
+        XCTAssertEqual("7.841р".rubliKopeikiToDouble(), 7841.0)
+        XCTAssertEqual("90.841р".rubliKopeikiToDouble(), 90841.0)
+        XCTAssertEqual("907.841р".rubliKopeikiToDouble(), 907841.0)
+        XCTAssertEqual("946.056р".rubliKopeikiToDouble(), 946056.0)
     }
 
     func testPercentageStringToDouble() {
@@ -99,22 +99,6 @@ final class NumberFromStringTests: XCTestCase {
         XCTAssertEqual("2%".percentageStringToDouble(), 0.02)
         XCTAssertEqual("20%".percentageStringToDouble(), 0.2)
         XCTAssertEqual("200%".percentageStringToDouble(), 2)
-    }
-
-    func testNumberWithoutSign() {
-        XCTAssertNil("".numberWithoutSign())
-        XCTAssertNil("Основные расходы".numberWithoutSign())
-
-        XCTAssertEqual("123".numberWithoutSign(), 123)
-        XCTAssertEqual("-123".numberWithoutSign(), 123)
-        XCTAssertEqual("- 123".numberWithoutSign(), 123)
-
-        XCTAssertEqual("12.345".numberWithoutSign(), 12_345)
-        XCTAssertEqual("123.456".numberWithoutSign(), 123_456)
-        XCTAssertEqual("1.234.567".numberWithoutSign(), 1_234_567)
-
-        XCTAssertEqual("123.45".numberWithoutSign(), 123)
-        XCTAssertEqual("123.4".numberWithoutSign(), 123)
     }
 
 }
