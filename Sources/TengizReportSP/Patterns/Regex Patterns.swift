@@ -25,9 +25,13 @@ public enum Patterns {
     public static let itemFullLineWithoutDigits = #"(?m)^[1-9]\d?\.\D*$"#
 
     // pattern to match numbers without rubliKopeiki
-    public static let itemNumber =   #"\d{1,3}(?:\.\d{3})*"#
-    public static let rubliKopeiki = #"\d{1,3}(\.\d{3})*р( \d\d?к)?"#
+    public static let itemNumber = #"\d{1,3}(?:\.\d{3})*"#
+
+    #warning("get back to pattern used in cleanReport")
+    public static let rubliKopeiki = #"\d{1,3}(?:\.\d{3})*р(?: \d\d?к)?"#
+           //>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*р(?: \d\d?к)?).*)
     public static let kopeiki = #"((?<=р )\d\d?(?=к))"#
+                                //((?<=р )\d\d?(?=к))
 
     public static let minus = #"(?:[М|м]инус\D*)|-(?=\d)"#
 

@@ -22,7 +22,6 @@ extension BodySymbol: ExpressibleByStringLiteral {
     }
 }
 
-#warning("move patterns to Patterns??")
 public extension String {
     func correction() -> BodySymbol? {
         /// tokenize lines like `"-10.000 за перерасход питание персонала в июле"`
@@ -48,37 +47,6 @@ public extension String {
                      value: sum,
                      comment: remains.clearWhitespacesAndNewlines())
     }
-
-//    func itogo() -> BodySymbol? {
-//        if firstMatch(for: Patterns.itemWithItogoPattern) != nil {
-//
-//            #warning("move to patterns + make tests")
-//            let prihodPattern = #"1. Приход товара по накладным"#
-//            if let titleString = firstMatch(for: prihodPattern),
-//               let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
-//               let number = dropItogo.numberWithSign(),
-//               let comment = replaceFirstMatch(for: prihodPattern, withString: "") {
-//                return .item(title: titleString,
-//                             value: number,
-//                             comment: comment.clearWhitespacesAndNewlines())
-//            }
-//
-//            #warning("move to patterns + make tests")
-//            let prepayWithItogo = #"2. Предоплаченный товар, но не отраженный в приходе"#
-//            if let titleString = firstMatch(for: prepayWithItogo),
-//               let dropItogo = replaceFirstMatch(for: Patterns.itemWithItogoPattern, withString: ""),
-//               let number = dropItogo.numberWithSign(),
-//               let comment = replaceFirstMatch(for: prepayWithItogo, withString: "") {
-//                return .item(title: titleString,
-//                             value: number,
-//                             comment: comment.clearWhitespacesAndNewlines())
-//            }
-//
-//            return nil
-//        } else {
-//            return nil
-//        }
-//    }
 
     func prihodWithItogo() -> BodySymbol? {
         guard firstMatch(for: Patterns.prihodWithItogo) != nil,
@@ -128,11 +96,9 @@ public extension String {
                                  Patterns.itemTitleWithParentheses,
                                  Patterns.itemTitle]
 
-        self.getFirstMatchAndRemains(patterns: itemTitlePatterns) { (match, remainsString) in
-            guard let headString = match,
-                  let tailString = remainsString else { return }
-            title = headString
-            remains = tailString
+        getFirstMatchAndRemains(patterns: itemTitlePatterns) { (match, tail) in
+            title = match ?? ""
+            remains = tail ?? ""
         }
 
         guard !title.isEmpty && !remains.isEmpty else { return nil }
@@ -143,6 +109,7 @@ public extension String {
             number = dropItogo.numberWithSign()
         }
 
+        #warning("что за + после 'for: Patterns.itemTitle' ?")
         if let afterFact = remains.replaceFirstMatch(for: Patterns.factPattern, withString: "") {
             number = afterFact.numberWithSign()
             remains = self.replaceFirstMatch(for: Patterns.itemTitle + #""#, withString: "") ?? self
@@ -152,6 +119,36 @@ public extension String {
         let comment: String? = cleanComment.isEmpty ? nil : cleanComment
 
         return .item(title: title, value: number ?? 0, comment: comment)
+    }
+
+    func itemTitleWithPercentage() -> BodySymbol? {
+        guard let title = firstMatch(for: Patterns.itemTitleWithPercentage),
+              let numberString = replaceFirstMatch(for: Patterns.itemTitleWithPercentage, withString: ""),
+              let number = numberString.numberWithSign()
+        else { return nil }
+        return .item(title: title.clearWhitespacesAndNewlines(),
+                     value: number,
+                     comment: nil)
+    }
+
+    func itemTitleWithParentheses() -> BodySymbol? {
+        guard let title = firstMatch(for: Patterns.itemTitleWithParentheses),
+              let numberString = replaceFirstMatch(for: Patterns.itemTitleWithParentheses, withString: ""),
+              let number = numberString.numberWithSign()
+        else { return nil }
+        return .item(title: title.clearWhitespacesAndNewlines(),
+                     value: number,
+                     comment: nil)
+    }
+
+    func itemTitle() -> BodySymbol? {
+        guard let title = firstMatch(for: Patterns.itemTitle),
+              let numberString = replaceFirstMatch(for: Patterns.itemTitle, withString: ""),
+              let number = numberString.numberWithSign()
+        else { return nil }
+        return .item(title: title.clearWhitespacesAndNewlines(),
+                     value: number,
+                     comment: nil)
     }
 
     // MARK: - Helpers
@@ -166,8 +163,8 @@ public extension String {
         var remains: String?
 
         for pattern in patterns {
-            guard let headString = self.firstMatch(for: pattern),
-                  let tailString = self.replaceFirstMatch(for: pattern, withString: "") else { continue }
+            guard let headString = firstMatch(for: pattern),
+                  let tailString = replaceFirstMatch(for: pattern, withString: "") else { continue }
 
             match = headString.trimmingCharacters(in: .whitespaces)
             remains = tailString.trimmingCharacters(in: .whitespaces)
@@ -188,7 +185,7 @@ extension Patterns {
     public static let itemWithPlus = itemTitle + numbersWithPlus
 
     /// matching lines like `"4.Банковская комиссия 1.6% за эквайринг    "` (mind whitespace)
-    public static let itemTitleWithPercentage =  itemTitle + percentage + #"\D*"#
+    public static let itemTitleWithPercentage =  #"\#(Patterns.itemTitle)\#(Patterns.percentage)\D*"#
     /// matching lines like `"22. Хэдхантер (подбор пероснала)    "` (mind whitespace)
     public static let itemTitleWithParentheses = itemTitle + #"\([^(]*\)\D*"#
 

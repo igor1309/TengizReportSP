@@ -37,34 +37,29 @@ final class NumberFromStringTests: XCTestCase {
     }
 
     func testNumberWithSign() {
-        XCTAssertEqual("минус 123".numberWithSign(), -123)
         XCTAssertEqual("Минус 123".numberWithSign(), -123)
-        /// mind  whitespace after sign
-        XCTAssertEqual("- 123".numberWithSign(), 123)
+        XCTAssertEqual("минус 123".numberWithSign(), -123)
         XCTAssertEqual("-123".numberWithSign(), -123)
+        XCTAssertNotEqual("- 123".numberWithSign(), -123, "Whitespace after minus")
 
-        XCTAssertEqual("минус 1.001".numberWithSign(), -1_001)
         XCTAssertEqual("Минус 1.002".numberWithSign(), -1_002)
-        /// mind  whitespace after sign
-        XCTAssertEqual("- 1.003".numberWithSign(), 1_003)
+        XCTAssertEqual("минус 1.001".numberWithSign(), -1_001)
         XCTAssertEqual("-1.004".numberWithSign(), -1_004)
+        XCTAssertNotEqual("- 1.003".numberWithSign(), -1_003, "Whitespace after minus")
 
-        XCTAssertEqual("минус 123.456".numberWithSign(), -123_456)
         XCTAssertEqual("Минус 123.456".numberWithSign(), -123_456)
-        /// mind  whitespace after sign
-        XCTAssertEqual("- 123.456".numberWithSign(), 123_456)
+        XCTAssertEqual("минус 123.456".numberWithSign(), -123_456)
         XCTAssertEqual("-123.456".numberWithSign(), -123_456)
+        XCTAssertNotEqual("- 123.456".numberWithSign(), -123_456, "Whitespace after minus")
 
-        XCTAssertEqual("минус 123.456р 78к".numberWithSign(), -123_456.78)
         XCTAssertEqual("Минус 123.456р 78к".numberWithSign(), -123_456.78)
-        /// mind  whitespace after sign
-        XCTAssertEqual("- 123.456р 78к".numberWithSign(), 123_456.78)
+        XCTAssertEqual("минус 123.456р 78к".numberWithSign(), -123_456.78)
         XCTAssertEqual("-123.456р 78к".numberWithSign(), -123_456.78)
+        XCTAssertNotEqual("- 123.456р 78к".numberWithSign(), -123_456.78, "Whitespace after minus")
     }
 
     func testRubliIKopeikiToDouble() {
-        XCTAssertNotEqual("74к".rubliIKopeikiToDouble(), 0.74,
-                          "Doesn't work without rubles")
+        XCTAssertNotEqual("74к".rubliIKopeikiToDouble(), 0.74, "Doesn't work without rubles")
 
         XCTAssertEqual("3р 74к".rubliIKopeikiToDouble(), 3.74)
 

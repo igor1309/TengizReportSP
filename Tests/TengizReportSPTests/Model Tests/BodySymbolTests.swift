@@ -240,7 +240,6 @@ final class BodySymbolPatternsTests: XCTestCase {
         XCTAssertNotNil("1. Приход товара по накладным\t473.128р 43к(оплаты фактические:231.572р 46к-переводы;51.104р 93к-корпоративная карта;2.799р-наличные из кассы; Итого 285.476р 39к)".firstMatch(for: Patterns.prihod))
     }
 
-
     func test_prihodWithItogo() {
         let sources = try? filenames
             .flatMap { filename in
@@ -253,10 +252,10 @@ final class BodySymbolPatternsTests: XCTestCase {
                 .flatMap { $0.components(separatedBy: "\n") }
                 .filter { $0.firstMatch(for: "Приход") != nil }
             }
-         XCTAssertNotNil(sources)
-//        sources?.forEach {
-//            XCTAssertNotNil($0.firstMatch(for: Patterns.prihodWithItogo))
-//        }
+        XCTAssertNotNil(sources)
+        //        sources?.forEach {
+        //            XCTAssertNotNil($0.firstMatch(for: Patterns.prihodWithItogo))
+        //        }
 
         XCTAssertNil("1. Приход товара по накладным\t451.198р 41к (из них у нас оплачено фактический 21.346р 15к)".firstMatch(for: Patterns.prihodWithItogo))
 
@@ -296,4 +295,138 @@ final class BodySymbolPatternsTests: XCTestCase {
         XCTAssertNotNil("1. Приход товара по накладным\t451.198р41к (из них у нас оплачено фактический 21.346р15к)".firstMatch(for: Patterns.factPattern))
     }
 
+}
+
+extension String {
+    /// Get non-empty match for pattern and remains of string (tail).
+    /// Returning nil if no pattern match.
+    /// If match or tail is empty return nil.
+    /// - Parameter pattern: pattern to match
+    /// - Returns: tuple for match and tail or nil
+    func getFirstMatchAndTail(for pattern: String) -> (String, String)? {
+        guard let match = firstMatch(for: pattern)?.trimmingCharacters(in: .whitespaces),
+              !match.isEmpty,
+              let tail = replaceFirstMatch(for: pattern, withString: "")?.trimmingCharacters(in: .whitespaces),
+              !tail.isEmpty
+        else { return nil }
+
+        return (match, tail)
+    }
+}
+
+
+final class BodySymbolTests_Think: XCTestCase {
+    func test() {
+        let itemTitlePatterns = [Patterns.itemTitleWithPercentage,
+                                 Patterns.itemTitleWithParentheses,
+                                 Patterns.itemTitle]
+
+        "1. Приход товара по накладным\t946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)"
+            .getFirstMatchAndRemains(patterns: itemTitlePatterns) { (match, remains) in
+                XCTAssertEqual(match, "1. Приход товара по накладным")
+                XCTAssertEqual(remains, "946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)")
+            }
+    }
+
+    func testHelper_getFirstMatchAndRemains_itemTitleWithPercentage() {
+        "4. Банковская комиссия 1.6% за эквайринг\t2.120"
+            .getFirstMatchAndRemains(patterns: [Patterns.itemTitleWithPercentage]) { match, remains in
+                XCTAssertEqual(match, "4. Банковская комиссия 1.6% за эквайринг")
+                XCTAssertEqual(remains, "2.120")
+            }
+
+        "4. Банковская комиссия"
+            .getFirstMatchAndRemains(patterns: [Patterns.itemTitleWithPercentage]) { match, remains in
+                XCTAssertNil(match)
+                XCTAssertNil(remains)
+            }
+    }
+
+    func testHelper_getFirstMatchAndRemains_itemTitleWithParentheses() {
+        "1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
+            .getFirstMatchAndRemains(patterns: [Patterns.itemTitleWithParentheses]) { title, remains in
+                XCTAssertNil(title)
+                XCTAssertNil(remains)
+            }
+
+        "14. Контур (эл.отчетность)\t3.000"
+            .getFirstMatchAndRemains(patterns: [Patterns.itemTitleWithParentheses]) { title, remains in
+                XCTAssertEqual(title, "14. Контур (эл.отчетность)")
+                XCTAssertEqual(remains, "3.000")
+            }
+
+        "1. Приход товара по накладным\t946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)"
+            .getFirstMatchAndRemains(patterns: [Patterns.itemTitle]) { title, remains in
+                XCTAssertEqual(title, "1. Приход товара по накладным")
+                XCTAssertEqual(remains, "946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)")
+            }
+    }
+
+    func testHelper_getFirstMatchAndRemains_itemTitle() {
+        #warning("FINISH")
+    }
+
+    func test_itemTitleWithParentheses() {
+        XCTAssertNil("4. Банковская комиссия 1.6% за эквайринг\t2.120".itemTitleWithParentheses())
+
+        XCTAssertNil("1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
+                        .itemTitleWithParentheses())
+        XCTAssertNil("1. Приход товара по накладным\t451.198р 41к (из них у нас оплачено фактический 21.346р 15к)"
+                        .itemTitleWithParentheses())
+        XCTAssertNil("1. Аренда торгового помещения\t46.667 (за июнь)"
+                        .itemTitleWithParentheses())
+        XCTAssertNil("1. ФОТ\t704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
+                        .itemTitleWithParentheses())
+        XCTAssertNil("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"
+                        .itemTitleWithParentheses())
+
+        XCTAssertNil("1. Аренда торгового помещения\t200.000 (за июль)".itemTitleWithParentheses())
+        XCTAssertNil("1. Аренда торгового помещения\t200.000 (за август)".itemTitleWithParentheses())
+        XCTAssertNil("1. Аренда торгового помещения\t200.000 (за август) +400.000 (за сентябрь)".itemTitleWithParentheses())
+        XCTAssertNil("1. Аренда торгового помещения\t500.000 (за октябрь)".itemTitleWithParentheses())
+        XCTAssertNil("1. Аренда торгового помещения\t500.000 (за ноябрь)".itemTitleWithParentheses())
+
+        XCTAssertNil("1. ФОТ\t894.510( за вторую часть июля и первая часть августа)".itemTitleWithParentheses())
+        XCTAssertNil("1. ФОТ\t960.056( за вторую часть августа и первую  часть сентября)".itemTitleWithParentheses())
+        XCTAssertNil("1. ФОТ\t1.147.085( за вторую часть сентября и первую  часть октября)".itemTitleWithParentheses())
+        XCTAssertNil("1. ФОТ\t564.678( за вторую часть октября)".itemTitleWithParentheses())
+        XCTAssertNil("1. ФОТ\t595.360 ( за первую часть ноября)".itemTitleWithParentheses())
+
+        let prihods = [
+            "1. Приход товара по накладным\t946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)",
+            "1. Приход товара по накладным\t907.841р; (оплаты фактические: 529.875р 50к -переводы; 98.340р 24к-корпоративная карта; 0-наличные из кассы; Итого 628.215р 74к)",
+            "1. Приход товара по накладным\t739.457; (оплаты фактические: 357.254р 17к -переводы; 80.220р 30к-корпоративная карта; 0-наличные из кассы; Итого 437.474р 47к)",
+            "1. Приход товара по накладным\t997.446р; (оплаты фактические: 491.114р 65к -переводы; 114.589 -корпоративная карта; 12.170 -наличные из кассы; Итого 617.873р 65к)",
+            "1. Приход товара по накладным\t179.108р 89к+512.293р(оплаты фактические:199.803р 80к-переводы;81.225р 35к-корпоративная карта;34.202р-наличные из кассы; Итого 315.231р 15к)",
+            "1. Приход товара по накладным\t473.128р 43к(оплаты фактические:231.572р 46к-переводы;51.104р 93к-корпоративная карта;2.799р-наличные из кассы; Итого 285.476р 39к)"
+        ]
+        prihods.forEach { prihod in
+            XCTAssertNil(prihod.itemTitleWithParentheses(), "Tokenizing by prihodWithItogo")
+            XCTAssertNotNil(prihod.prihodWithItogo(), "Tokenizing by prihodWithItogo")
+        }
+
+
+
+
+        XCTAssertNil("2. Предоплаченный товар, но не отраженный в приходе\tКНК Групп-17.300 (плейсметы;ИП Максимов-6.300 (шоколад фирм.,);Итого 23.600"
+                        .itemTitleWithParentheses())
+        XCTAssertNil("2. Предоплаченный товар, но не отраженный в приходе\tСтудиопак-12.500 (влажные салфетки);"
+                        .itemTitleWithParentheses())
+
+        XCTAssertNil("22. Хэдхантер (подбор пероснала)    ----------------------------".itemTitleWithParentheses())
+
+
+        XCTAssertEqual("14. Контур (эл.отчетность)\t3.000".itemTitleWithParentheses(),
+                       .item(title: "14. Контур (эл.отчетность)", value: 3_000, comment: nil))
+        XCTAssertEqual("18. Регистрация Кассового аппарата (запасной)\t2.000".itemTitleWithParentheses(),
+                       .item(title: "18. Регистрация Кассового аппарата (запасной)", value: 2_000, comment: nil))
+        XCTAssertEqual("22. Хэдхантер (подбор пероснала)\t3.240".itemTitleWithParentheses(),
+                       .item(title: "22. Хэдхантер (подбор пероснала)", value: 3_240, comment: nil))
+        XCTAssertEqual("14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000".itemTitleWithParentheses(),
+                       .item(title: "14. РПК Ника (крепления д/телевизоров и монтаж)", value: 30_000, comment: nil))
+        XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)    12.655".itemTitleWithParentheses(),
+                       .item(title: "27. Сервис Гуру (система аттестации, за 1 год)", value: 12_655, comment: nil))
+        XCTAssertEqual("8. Аудит Кантора (бухуслуги)\t60.000".itemTitleWithParentheses(),
+                       .item(title: "8. Аудит Кантора (бухуслуги)", value: 60_000, comment: nil))
+    }
 }
