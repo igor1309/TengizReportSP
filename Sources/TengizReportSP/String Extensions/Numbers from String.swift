@@ -13,18 +13,16 @@ public extension String {
 
     func numberAndRemains() -> (Double?, String) {
         var sign: Double = 1
-        if self.firstMatch(for: Patterns.minus) != nil {
+        if firstMatch(for: Patterns.minus) != nil {
             sign = -1
         }
 
-        if let numberString = self.firstMatch(for: Patterns.rubliKopeiki),
-           let rubliIKopeiki = numberString.rubliKopeikiToDouble() {
-            if let remains = self.replaceFirstMatch(for: Patterns.rubliKopeiki, withString: "") {
-                return (sign * rubliIKopeiki, remains)
-            }
+        if let rubliIKopeiki = rubliKopeikiToDouble(),
+           let remains = replaceFirstMatch(for: Patterns.rubliKopeiki, withString: "") {
+            return (sign * rubliIKopeiki, remains)
         }
 
-        if let numberString = self.firstMatch(for: Patterns.itemNumber),
+        if let numberString = firstMatch(for: Patterns.itemNumber),
            let double = Double(numberString.replacingOccurrences(of: ".", with: "")),
            let remains = self.replaceFirstMatch(for: Patterns.itemNumber, withString: "") {
             return (sign * double, remains)
@@ -47,8 +45,7 @@ public extension String {
             return listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)
         }
 
-        if let rubliIKopeikiString = firstMatch(for: Patterns.rubliKopeiki),
-           let rubliIKopeiki = rubliIKopeikiString.rubliKopeikiToDouble() {
+        if let rubliIKopeiki = rubliKopeikiToDouble() {
             return sign * rubliIKopeiki
         }
 
@@ -64,24 +61,24 @@ public extension String {
 
     func rubliKopeikiToDouble() -> Double? {
         guard let integerString = replaceFirstMatch(for: Patterns.rubliKopeiki, withGroup: "integer"),
-              let integer = Double(integerString.replaceMatches(for: #"\."#, withString: ""))
+              let integer = Double(integerString.replacingOccurrences(of: ".", with: ""))
         else { return nil }
 
         guard let decimalString = replaceFirstMatch(for: Patterns.rubliKopeiki, withGroup: "decimal"),
-              let decimal = Double(decimalString.trimmingCharacters(in: .whitespaces))
+              let decimal = Double(decimalString)
         else { return integer }
 
         return integer + decimal / 100
     }
 
     func percentageStringToDouble() -> Double? {
-        guard self.last == "%",
-              let percentage = Double(self.dropLast()) else { return nil }
+        guard last == "%",
+              let percentage = Double(dropLast()) else { return nil }
         return percentage / 100
     }
 
     func numberWithoutSign() -> Double? {
-        if let numberString = self.firstMatch(for: Patterns.itemNumber),
+        if let numberString = firstMatch(for: Patterns.itemNumber),
            let double = Double(numberString.replacingOccurrences(of: ".", with: "")) {
             return double
         }
