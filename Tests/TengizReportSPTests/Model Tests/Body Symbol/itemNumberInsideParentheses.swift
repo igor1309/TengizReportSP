@@ -15,12 +15,15 @@ extension Patterns {
 
 extension RegexPatternsTests {
     func test_itemNumberInsideParentheses() {
-        // XCTAssertEqual(itemNumberInsideParentheses, "")
+        XCTAssertEqual(Patterns.itemNumberInsideParentheses, #"(?<title>^\d+\..*\(.*\d.*\))\s*(?<value>\d{1,3}(?:\.\d{3})*)$"#)
+
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemNumberInsideParentheses) }.count,
                        1, "Should be exactly 1 match")
 
         XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemNumberInsideParentheses),
                        "27. Сервис Гуру (система аттестации, за 1 год)\t12.655")
+
+        #warning("add negative tests")
     }
 }
 
@@ -31,5 +34,7 @@ extension BodySymbolFuncTests {
 
         XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".bodySymbol(for: Patterns.itemNumberInsideParentheses),
                        .item(title: "27. Сервис Гуру (система аттестации, за 1 год)", value: 12_655, comment: nil))
+
+        #warning("add negative tests")
     }
 }

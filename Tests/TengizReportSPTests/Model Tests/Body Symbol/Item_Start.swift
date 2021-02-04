@@ -14,6 +14,8 @@ extension Patterns {
 
 extension RegexPatternsTests {
     func test_bodyItemStart() {
+        XCTAssertEqual(Patterns.bodyItemStart, #"^\d+\."#)
+
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.bodyItemStart) }.count,
                        33, "Total is 34, 'Correction' item line doesn't start with digits, so should be 33")
     }

@@ -18,7 +18,7 @@ extension RegexPatternsTests {
         #warning("add this kind of testing to 'numberWithSign' func tests")
         XCTAssertEqual("4.500+8.700+15.995".numberWithSign(), 4_500+8_700+15_995)
 
-        // XCTAssertEqual(itemMath, "")
+        XCTAssertEqual(Patterns.itemMath, #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*(?:\+\d{1,3}(?:\.\d{3})*)+)$"#)
 
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemMath) }.count,
                        2, "Should be exactly 2 matches")

@@ -16,7 +16,8 @@ extension Patterns {
 
 extension RegexPatternsTests {
     func test_itemWithComment() {
-        // XCTAssertEqual(Patterns.itemWithComment, "")
+        XCTAssertEqual(Patterns.itemWithComment, #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#)
+        
         XCTAssertNil("1. Приход товара по накладным\t 946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)".firstMatch(for: Patterns.itemWithComment), "This input should be matched by 'itemItogo'")
 
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemWithComment) }.count,

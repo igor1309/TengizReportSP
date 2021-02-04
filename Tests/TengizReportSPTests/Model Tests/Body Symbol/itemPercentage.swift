@@ -15,13 +15,15 @@ extension Patterns {
 
 extension RegexPatternsTests {
     func test_itemPercentage() {
-        // XCTAssertEqual(Patterns.itemPercentage, "")
+        XCTAssertEqual(Patterns.itemPercentage, #"(?<title>^\d+\.\D*\d{1,3}\.\d{1,2}\%\D+)(?<value>\d{1,3}(?:\.\d{3})*)"#)
 
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemPercentage) }.count,
                        1, "Should be exactly 1 match")
 
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage),
                        "4. Банковская комиссия 1.6% за эквайринг\t2.120")
+
+        #warning("add negative tests")
     }
 }
 
@@ -32,5 +34,7 @@ extension BodySymbolFuncTests {
 
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".bodySymbol(for: Patterns.itemPercentage),
                        .item(title: "4. Банковская комиссия 1.6% за эквайринг", value: 2_120, comment: nil))
+
+        #warning("add negative tests")
     }
 }

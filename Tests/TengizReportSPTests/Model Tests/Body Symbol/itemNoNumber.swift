@@ -15,6 +15,8 @@ extension Patterns {
 
 extension RegexPatternsTests {
     func test_itemNoNumber() {
+        XCTAssertEqual(Patterns.itemNoNumber, #"^\d+\.((?!\d).)*$"#)
+
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemNoNumber) }.count,
                        2, "Should be exactly 2 matches")
 

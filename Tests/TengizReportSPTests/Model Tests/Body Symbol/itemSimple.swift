@@ -15,7 +15,8 @@ extension Patterns {
 
 extension RegexPatternsTests {
     func test_itemSimple() {
-        //XCTAssertEqual(itemSimple, "")
+        XCTAssertEqual(Patterns.itemSimple, #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)$"#)
+
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemSimple) }.count,
                        6, "Should be exactly 6 matchs")
 
@@ -33,6 +34,8 @@ extension RegexPatternsTests {
                        "14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000")
 
         XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple), "Number match fail due to number inside parentheses")
+
+        #warning("add more negative tests")
     }
 }
 
@@ -53,5 +56,7 @@ extension BodySymbolFuncTests {
                        .item(title: "23. Аудит кантора (Бухуслуги)", value: 60_000, comment: nil))
         XCTAssertEqual("14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000".bodySymbol(for: Patterns.itemSimple),
                        .item(title: "14. РПК Ника (крепления д/телевизоров и монтаж)", value: 30_000, comment: nil))
+
+        #warning("add negative tests")
     }
 }

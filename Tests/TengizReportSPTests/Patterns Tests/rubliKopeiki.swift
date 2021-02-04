@@ -21,7 +21,7 @@ final class RubliKopeikiTests: XCTestCase {
                 .flatMap { $0.components(separatedBy: "\n") }
                 .filter { nil != $0.firstMatch(for: #"\d{1,3}(\.\d{3})*\s*р"#) }
             }
-        // XCTAssertEqual(sourses, [])
+         XCTAssertNotEqual(sourses, [])
         // XCTAssertNil(sourses?.joined(separator: "\n").listMatches(for: Patterns.rubliKopeiki))
 
         // XCTAssertEqual(bodyItems.count, 340)
@@ -33,18 +33,23 @@ final class RubliKopeikiTests: XCTestCase {
 
 extension RegexPatternsTests {
     func test_rubliKopeiki() {
+        XCTAssertEqual(Patterns.rubliKopeiki, #"(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?)к)?"#)
+
+        XCTAssertNil("".firstMatch(for: Patterns.rubliKopeiki))
+        XCTAssertNil("asfasdf wef hg".firstMatch(for: Patterns.rubliKopeiki))
+
+        XCTAssertEqual("22.22".firstMatch(for: Patterns.rubliKopeiki), "22")
+
+        XCTAssertEqual("2".firstMatch(for: Patterns.rubliKopeiki), "2")
+        XCTAssertEqual("df45".firstMatch(for: Patterns.rubliKopeiki), "45")
+        XCTAssertEqual("9999".firstMatch(for: Patterns.rubliKopeiki), "999")
+
         XCTAssertEqual("1".firstMatch(for: Patterns.rubliKopeiki), "1")
-
         XCTAssertEqual("2.799".firstMatch(for: Patterns.rubliKopeiki), "2.799")
-
         XCTAssertEqual("12.170".firstMatch(for: Patterns.rubliKopeiki), "12.170")
-
         XCTAssertEqual("946.056".firstMatch(for: Patterns.rubliKopeiki), "946.056")
-
         XCTAssertEqual("2.344р 29к".firstMatch(for: Patterns.rubliKopeiki), "2.344р 29к")
-
         XCTAssertEqual("81.225р 35к".firstMatch(for: Patterns.rubliKopeiki), "81.225р 35к")
-
         XCTAssertEqual("244.472р 15к".firstMatch(for: Patterns.rubliKopeiki), "244.472р 15к")
 
         XCTAssertEqual("--. Аудит кантора (Бухуслуги)\t60.000\t\t\n".firstMatch(for:Patterns.rubliKopeiki), "60.000")
@@ -54,18 +59,21 @@ extension RegexPatternsTests {
 
 extension NumberFromStringTests {
     func test_rubliKopeikiToDouble() {
+        XCTAssertNil("".rubliKopeikiToDouble())
+        XCTAssertNil("asfasdf wef hg".rubliKopeikiToDouble())
+
+        XCTAssertEqual("22.22".rubliKopeikiToDouble(), 22)
+
+        XCTAssertEqual("2".rubliKopeikiToDouble(), 2)
+        XCTAssertEqual("df45".rubliKopeikiToDouble(), 45)
+        XCTAssertEqual("9999".rubliKopeikiToDouble(), 999)
+
         XCTAssertEqual("1".rubliKopeikiToDouble(), 1)
-
         XCTAssertEqual("2.799".rubliKopeikiToDouble(), 2_799)
-
         XCTAssertEqual("12.170".rubliKopeikiToDouble(), 12_170)
-
         XCTAssertEqual("946.056".rubliKopeikiToDouble(), 946_056)
-
         XCTAssertEqual("2.344р 29к".rubliKopeikiToDouble(), 2_344.29)
-
         XCTAssertEqual("81.225р 35к".rubliKopeikiToDouble(), 81_225.35)
-
         XCTAssertEqual("244.472р 15к".rubliKopeikiToDouble(), 244_472.15)
 
         XCTAssertEqual("--. Аудит кантора (Бухуслуги)\t60.000\t\t\n".rubliKopeikiToDouble(), 60_000)
