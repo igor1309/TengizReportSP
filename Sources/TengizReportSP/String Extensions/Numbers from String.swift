@@ -15,7 +15,6 @@ public extension String {
         var sign: Double = 1
         if firstMatch(for: Patterns.minus) != nil { sign = -1 }
 
-        #warning("add test to test the math")
         if firstMatch(for: Patterns.math) != nil {
             return listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)
         }

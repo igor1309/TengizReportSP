@@ -27,18 +27,16 @@ extension BodySymbol: ExpressibleByStringLiteral {
     }
 }
 
-#warning("use Patterns properties in definitions")
 extension Patterns {
-
     #warning("how use '\\t' in 'bodyItemStart' ??? ----- how to get '\t' out of title match?")
     static let bodyItemStart = #"(?<title>^\d+\.\D+"#
 
     /// `itogo`
-    static let itemItogo = #"\#(bodyItemStart)\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#
+    static let itemItogo = #"\#(bodyItemStart)\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(Patterns.itemNumber)(?:р \d\d?к)?).*)"#
 
     /// `math` and `itemMath`
     static let math = #"\#(Patterns.itemNumber)(?:\s*\+\s*\#(Patterns.itemNumber))+"#
-    static let itemMath = #"\#(bodyItemStart))(?<comment>(?<value>\#(Patterns.math)))$"#
+    static let itemMath = #"\#(bodyItemStart))(?:\t)(?<comment>(?<value>\#(Patterns.math)))$"#
 
     /// `itemNoNumber`: title without number, should return .empty
     static let itemNoNumber = #"\#(bodyItemStart))((?!\d).)*$"#
@@ -53,7 +51,7 @@ extension Patterns {
     static let itemSimple = #"\#(bodyItemStart))(?<value>\#(Patterns.itemNumber))$"#
 
     /// item with `comment` after number, floating whitespace
-    static let itemWithComment = #"^\#(bodyItemStart))(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#
+    static let itemWithComment = #"^\#(bodyItemStart))(?<value>\#(Patterns.itemNumber))(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#
     // #"^\#(bodyItemStart))(?<value>\#(Patterns.itemNumber))(?<comment>\s*\(.+\))$"#
 }
 

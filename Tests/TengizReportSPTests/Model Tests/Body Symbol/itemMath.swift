@@ -15,7 +15,8 @@ extension RegexPatternsTests {
                        #"\d{1,3}(?:\.\d{3})*(?:\s*\+\s*\d{1,3}(?:\.\d{3})*)+"#)
 
         // MARK: exceptions
-        #warning("write negative tests here")
+        XCTAssertNil("12. Интернет\t7.701".firstMatch(for: Patterns.math))
+        XCTAssertNil("12. Интернет + internet".firstMatch(for: Patterns.math))
 
         // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.math) }.count,
@@ -32,10 +33,12 @@ extension RegexPatternsTests {
     func test_itemMath() {
         // MARK: pattern (regex)
         XCTAssertEqual(Patterns.itemMath,
-                       #"(?<title>^\d+\.\D+)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\s*\+\s*\d{1,3}(?:\.\d{3})*)+))$"#)
+                       #"(?<title>^\d+\.\D+)(?:\t)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\s*\+\s*\d{1,3}(?:\.\d{3})*)+))$"#)
 
         // MARK: exceptions
-        #warning("write negative tests here")
+        XCTAssertNil("12. Интернет\t7.701+".firstMatch(for: Patterns.itemMath))
+        XCTAssertNil("6. Обслуживание кассовой программы Айко\t4.500+ item".firstMatch(for: Patterns.itemMath))
+
 
         // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemMath) }.count,
@@ -48,13 +51,12 @@ extension RegexPatternsTests {
                        "6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995")
 
         // MARK: regex structure
-        #warning("how to get '\t' out of title match?")
         XCTAssertEqual("12. Интернет\t7.701+4.500"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
-                       "12. Интернет\t")
+                       "12. Интернет")
         XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
-                       "6. Обслуживание кассовой программы Айко\t")
+                       "6. Обслуживание кассовой программы Айко")
 
         XCTAssertEqual("12. Интернет\t7.701+4.500"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "value"),
