@@ -23,6 +23,8 @@ public extension String {
                             withString: "Переходит остаток с ноября \t684.753р 85к")
             .replaceMatches(for: "Итого-",
                             withString: "Итого ")
+            .replaceMatches(for: "Студиопак-",
+                            withString: "Студиопак Итого ")
             .replaceMatches(for: #"\s*ВМ ЩК\s*"#,
                             withString: "Название объекта: Вай Мэ! Щелково\n")
             /// remove optionality from rubli-kopeiki making rubliKopeikiPattern and kopeikiPatterm simpler/uniform
