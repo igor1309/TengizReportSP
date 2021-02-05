@@ -11,7 +11,8 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemPercentage() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemPercentage, #"(?<title>^\d+\.\D+\d{1,3}\.\d{1,2}\%\D+)(?<value>\d{1,3}(?:\.\d{3})*)"#)
+        XCTAssertEqual(Patterns.itemPercentage,
+                       #"(?<title>^\d+\.\D+\d{1,3}\.\d{1,2}\%\D+)(?:\t)(?<value>\d{1,3}(?:\.\d{3})*)"#)
 
         // MARK: exceptions
         XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage))
@@ -27,7 +28,7 @@ extension RegexPatternsTests {
         // MARK: regex structure
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120"
                         .replaceFirstMatch(for: Patterns.itemPercentage, withGroup: "title"),
-                       "4. Банковская комиссия 1.6% за эквайринг\t")
+                       "4. Банковская комиссия 1.6% за эквайринг")
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120"
                         .replaceFirstMatch(for: Patterns.itemPercentage, withGroup: "value"),
                        "2.120")

@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemSimple() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemSimple, #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)$"#)
+        XCTAssertEqual(Patterns.itemSimple, #"(?<title>^\d+\.\D+)(?:\t)(?<value>\d{1,3}(?:\.\d{3})*)$"#)
 
         // MARK: exceptions
         XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple), "Match fail due to number inside parentheses")
@@ -39,7 +39,7 @@ extension RegexPatternsTests {
         // MARK: regex structure
         XCTAssertEqual("23. Аудит кантора (Бухуслуги)\t60.000"
                         .replaceFirstMatch(for: Patterns.itemSimple, withGroup: "title"),
-                       "23. Аудит кантора (Бухуслуги)\t")
+                       "23. Аудит кантора (Бухуслуги)")
         XCTAssertEqual("23. Аудит кантора (Бухуслуги)\t60.000"
                         .replaceFirstMatch(for: Patterns.itemSimple, withGroup: "value"),
                        "60.000")

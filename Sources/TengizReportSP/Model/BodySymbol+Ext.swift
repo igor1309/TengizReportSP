@@ -45,10 +45,10 @@ extension Patterns {
     static let itemNumberInsideParentheses = #"\#(bodyItemStart)\(.*\d.*\))\s*(?<value>\#(Patterns.itemNumber))$"#
 
     /// item with digits and `percentage` inside item title
-    static let itemPercentage = #"\#(bodyItemStart)\d{1,3}\.\d{1,2}\%\D+)(?<value>\#(Patterns.itemNumber))"#
+    static let itemPercentage = #"\#(bodyItemStart)\d{1,3}\.\d{1,2}\%\D+)(?:\t)(?<value>\#(Patterns.itemNumber))"#
 
     /// `itemSimple`: item title and number, no itogo, no number inside parantheses, no %, no comment after number
-    static let itemSimple = #"\#(bodyItemStart))(?<value>\#(Patterns.itemNumber))$"#
+    static let itemSimple = #"\#(bodyItemStart))(?:\t)(?<value>\#(Patterns.itemNumber))$"#
 
     /// item with `comment` after number, floating whitespace
     static let itemWithComment = #"^\#(bodyItemStart))(?<value>\#(Patterns.itemNumber))(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#
