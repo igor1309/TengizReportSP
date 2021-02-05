@@ -13,13 +13,10 @@ public extension String {
 
     func numberWithSign() -> Double? {
         var sign: Double = 1
-        if firstMatch(for: Patterns.minus) != nil {
-            sign = -1
-        }
+        if firstMatch(for: Patterns.minus) != nil { sign = -1 }
 
-        #warning("finish with these patterns")
-        let bodyItemStart = #"^\d+\."#
         #warning("add test to test the math")
+        #warning("TWO definitions of'itemMath'")
         let itemMath = #"(\#(Patterns.itemNumber)(?:\+\#(Patterns.itemNumber))+)$"#
         if firstMatch(for: itemMath) != nil {
             return listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)

@@ -36,8 +36,7 @@ extension Patterns {
     static let itemItogo = #"(?<title>^\d+\.\D+\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#
 
     /// `itemMath`
-    #warning("move math part to comment")
-    static let itemMath = #"(?<title>\#(bodyItemStart)\D+)(?<value>\#(Patterns.itemNumber)(?:\+\#(Patterns.itemNumber))+)$"#
+    static let itemMath = #"(?<title>\#(bodyItemStart)\D+)(?<comment>(?<value>\#(Patterns.itemNumber)(?:\+\#(Patterns.itemNumber))+))$"#
 
     /// `itemNoNumber`: title without number, should return .empty
     static let itemNoNumber = #"\#(bodyItemStart)((?!\d).)*$"#
