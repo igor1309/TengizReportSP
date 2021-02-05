@@ -29,29 +29,31 @@ extension BodySymbol: ExpressibleByStringLiteral {
 
 #warning("use Patterns properties in definitions")
 extension Patterns {
+    #warning("should include '(?<title>' in 'bodyItemStart' ???")
+    #warning("should include '\\D+' in 'bodyItemStart' ???")
     static let bodyItemStart = #"^\d+\."#
 
     /// `itogo`
-    //static let itemItogo = #"(?<title>^\d+\.\D+)(?<comment>.*\s*(?<value>(?<=Итого|фактический)\s*\#(Patterns.rubliKopeiki)).*)"#
-    static let itemItogo = #"(?<title>^\d+\.\D+\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#
+    static let itemItogo = #"(?<title>\#(bodyItemStart)\D+\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#
 
-    /// `itemMath`
-    static let itemMath = #"(?<title>\#(bodyItemStart)\D+)(?<comment>(?<value>\#(Patterns.itemNumber)(?:\+\#(Patterns.itemNumber))+))$"#
+    /// `math` and `itemMath`
+    static let math = #"\#(Patterns.itemNumber)(?:\s*\+\s*\#(Patterns.itemNumber))+"#
+    static let itemMath = #"(?<title>\#(bodyItemStart)\D+)(?<comment>(?<value>\#(Patterns.math)))$"#
 
     /// `itemNoNumber`: title without number, should return .empty
     static let itemNoNumber = #"\#(bodyItemStart)((?!\d).)*$"#
 
     /// `itemNumberInsideParentheses`: item with number inside parentheses
-    static let itemNumberInsideParentheses = #"(?<title>\#(bodyItemStart).*\(.*\d.*\))\s*(?<value>\#(Patterns.itemNumber))$"#
+    static let itemNumberInsideParentheses = #"(?<title>\#(bodyItemStart)\D+\(.*\d.*\))\s*(?<value>\#(Patterns.itemNumber))$"#
 
     /// item with digits and `percentage` inside item title
-    static let itemPercentage = #"(?<title>\#(bodyItemStart)\D*\d{1,3}\.\d{1,2}\%\D+)(?<value>\#(Patterns.itemNumber))"#
+    static let itemPercentage = #"(?<title>\#(bodyItemStart)\D+\d{1,3}\.\d{1,2}\%\D+)(?<value>\#(Patterns.itemNumber))"#
 
     /// `itemSimple`: item title and number, no itogo, no number inside parantheses, no %, no comment after number
     static let itemSimple = #"(?<title>\#(bodyItemStart)\D+)(?<value>\#(Patterns.itemNumber))$"#
 
     /// item with `comment` after number, floating whitespace
-    static let itemWithComment = #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#
+    static let itemWithComment = #"^(?<title>\#(bodyItemStart)\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#
     // #"^(?<title>\#(bodyItemStart)\D+)(?<value>\#(Patterns.itemNumber))(?<comment>\s*\(.+\))$"#
 }
 

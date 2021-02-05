@@ -9,12 +9,22 @@ import XCTest
 @testable import TengizReportSP
 
 extension RegexPatternsTests {
+    func test_math() {
+        XCTAssertEqual(Patterns.math,
+                       #"\d{1,3}(?:\.\d{3})*(?:\s*\+\s*\d{1,3}(?:\.\d{3})*)+"#)
+
+        XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.math) }.count,
+                       2, "Should be exactly 2 matches")
+
+        XCTAssertEqual("12. Интернет\t7.701+4.500".firstMatch(for: Patterns.math),
+                       "7.701+4.500")
+        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995".firstMatch(for: Patterns.math),
+                       "4.500+8.700+15.995")
+    }
+
     func test_itemMath() {
         XCTAssertEqual(Patterns.itemMath,
-                       #"?<title>^\d+\.\D+)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\+\d{1,3}(?:\.\d{3})*)+))$"#)
-
-        #warning("add this kind of testing to 'numberWithSign' func tests")
-        XCTAssertEqual("4.500+8.700+15.995".numberWithSign(), 4_500+8_700+15_995)
+                       #"(?<title>^\d+\.\D+)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\s*\+\s*\d{1,3}(?:\.\d{3})*)+))$"#)
 
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemMath) }.count,
                        2, "Should be exactly 2 matches")
@@ -24,9 +34,26 @@ extension RegexPatternsTests {
         XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995".firstMatch(for: Patterns.itemMath),
                        "6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995")
 
-        XCTAssertEqual("12. Интернет\t7.701+4.500".replaceFirstMatch(for: Patterns.itemMath, withGroup: "comment"),
+        #warning("how to get '\t' out of match?")
+        XCTAssertEqual("12. Интернет\t7.701+4.500"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
+                       "12. Интернет\t")
+        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
+                       "6. Обслуживание кассовой программы Айко\t")
+
+        XCTAssertEqual("12. Интернет\t7.701+4.500"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "value"),
                        "7.701+4.500")
-        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995".replaceFirstMatch(for: Patterns.itemMath, withGroup: "comment"),
+        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "value"),
+                       "4.500+8.700+15.995")
+
+        XCTAssertEqual("12. Интернет\t7.701+4.500"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "comment"),
+                       "7.701+4.500")
+        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "comment"),
                        "4.500+8.700+15.995")
     }
 }

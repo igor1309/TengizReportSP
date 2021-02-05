@@ -10,7 +10,7 @@ import XCTest
 
 extension RegexPatternsTests {
     func test_itemNumberInsideParentheses() {
-        XCTAssertEqual(Patterns.itemNumberInsideParentheses, #"(?<title>^\d+\..*\(.*\d.*\))\s*(?<value>\d{1,3}(?:\.\d{3})*)$"#)
+        XCTAssertEqual(Patterns.itemNumberInsideParentheses, #"(?<title>^\d+\.\D+\(.*\d.*\))\s*(?<value>\d{1,3}(?:\.\d{3})*)$"#)
 
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemNumberInsideParentheses) }.count,
                        1, "Should be exactly 1 match")

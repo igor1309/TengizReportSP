@@ -16,9 +16,7 @@ public extension String {
         if firstMatch(for: Patterns.minus) != nil { sign = -1 }
 
         #warning("add test to test the math")
-        #warning("TWO definitions of'itemMath'")
-        let itemMath = #"(\#(Patterns.itemNumber)(?:\+\#(Patterns.itemNumber))+)$"#
-        if firstMatch(for: itemMath) != nil {
+        if firstMatch(for: Patterns.math) != nil {
             return listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)
         }
 

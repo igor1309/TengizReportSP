@@ -10,6 +10,12 @@ import XCTest
 
 final class NumberFromStringTests: XCTestCase {
     func test_numberWithSign() {
+        XCTAssertEqual("7.701+4.500".numberWithSign(), 7_701 + 4_500)
+        XCTAssertEqual("7.701 + 4.500".numberWithSign(), 7_701 + 4_500)
+        XCTAssertEqual("4.500+8.700+15.995".numberWithSign(), 4_500 + 8_700 + 15_995)
+        XCTAssertEqual("4.500  + 8.700 +  15.995".numberWithSign(), 4_500 + 8_700 + 15_995)
+
+
         XCTAssertEqual("Минус 123".numberWithSign(), -123)
         XCTAssertEqual("минус 123".numberWithSign(), -123)
         XCTAssertEqual("-123".numberWithSign(), -123)
