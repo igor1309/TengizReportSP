@@ -33,7 +33,7 @@ final class ReportContentTests: XCTestCase {
 
         try zip(filenames, samples)
             .forEach { filename, sample in
-                let contents = try filename.contentsOfFile()
+                let contents = try filename.contentsOfFile()//.clearReport()
                 let reportContent = ReportContent(stringLiteral: contents)
 
                 XCTAssertNotEqual(reportContent, ReportContent.empty)
@@ -43,7 +43,11 @@ final class ReportContentTests: XCTestCase {
                 XCTAssertFalse(reportContent.footer.isEmpty, "Footer should not be empty")
 
                 XCTAssertEqual(reportContent.header, sample.header, "Header split error")
+
                 XCTAssertEqual(reportContent.body, sample.body, "Body split error")
+                XCTAssertEqual(reportContent.body.count, sample.body.count, "Count should be equal to Samples count")
+                zip(reportContent.body, sample.body).forEach { XCTAssertEqual($0, $1) }
+
                 XCTAssertEqual(reportContent.footer, sample.footer, "Footer split error")
             }
     }
