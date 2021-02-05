@@ -8,11 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    /// `itemNumberInsideParentheses`: item with number inside parentheses
-    static let itemNumberInsideParentheses = #"(?<title>\#(bodyItemStart).*\(.*\d.*\))\s*(?<value>\#(Patterns.itemNumber))$"#
-}
-
 extension RegexPatternsTests {
     func test_itemNumberInsideParentheses() {
         XCTAssertEqual(Patterns.itemNumberInsideParentheses, #"(?<title>^\d+\..*\(.*\d.*\))\s*(?<value>\d{1,3}(?:\.\d{3})*)$"#)

@@ -8,11 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    /// `itemSimple`: item title and number, no itogo, no number inside parantheses, no %, no comment after number
-    static let itemSimple = #"(?<title>\#(bodyItemStart)\D+)(?<value>\#(Patterns.itemNumber))$"#
-}
-
 extension RegexPatternsTests {
     func test_itemSimple() {
         XCTAssertEqual(Patterns.itemSimple, #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)$"#)

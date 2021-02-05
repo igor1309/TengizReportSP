@@ -8,11 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    /// item with digits and `percentage` inside item title
-    static let itemPercentage = #"(?<title>\#(bodyItemStart)\D*\d{1,3}\.\d{1,2}\%\D+)(?<value>\#(Patterns.itemNumber))"#
-}
-
 extension RegexPatternsTests {
     func test_itemPercentage() {
         XCTAssertEqual(Patterns.itemPercentage, #"(?<title>^\d+\.\D*\d{1,3}\.\d{1,2}\%\D+)(?<value>\d{1,3}(?:\.\d{3})*)"#)

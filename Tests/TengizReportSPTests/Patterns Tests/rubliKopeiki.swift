@@ -79,5 +79,30 @@ extension NumberFromStringTests {
         XCTAssertEqual("--. Аудит кантора (Бухуслуги)\t60.000\t\t\n".rubliKopeikiToDouble(), 60_000)
         XCTAssertEqual("\tПереходит минус с сентября 642.997р 43к\t\t\n".rubliKopeikiToDouble(), 642_997.43)
 
+        XCTAssertNotEqual("74к".rubliKopeikiToDouble(), 0.74, "Doesn't work without rubles")
+
+        XCTAssertEqual("3р 74к".rubliKopeikiToDouble(), 3.74)
+        XCTAssertEqual("63р 74к".rubliKopeikiToDouble(), 63.74)
+        XCTAssertEqual("863р 74к".rubliKopeikiToDouble(), 863.74)
+        XCTAssertEqual("5.863р 74к".rubliKopeikiToDouble(), 5863.74)
+
+        XCTAssertEqual("  13.318р 93к  ".rubliKopeikiToDouble(), 13_318.93)
+        XCTAssertEqual("  75.255р  20к  ".rubliKopeikiToDouble(), 75_255.2)
+        XCTAssertEqual("  98.340р24к  ".rubliKopeikiToDouble(), 98_340.24)
+
+        XCTAssertEqual("  145.292р 59к   ".rubliKopeikiToDouble(), 145_292.59)
+        XCTAssertEqual("  739.626р  06к   ".rubliKopeikiToDouble(), 739_626.06)
+        XCTAssertEqual("  922.936р30к   ".rubliKopeikiToDouble(), 922_936.3)
+
+        XCTAssertEqual("  1.065.596р 76к  ".rubliKopeikiToDouble(), 106_5596.76)
+        XCTAssertEqual("  1.677.077р  46к  ".rubliKopeikiToDouble(), 167_7077.46)
+        XCTAssertEqual("  2.030.572р59к  ".rubliKopeikiToDouble(), 203_0572.59)
+
+        XCTAssertEqual("     841р ".rubliKopeikiToDouble(), 841.0)
+        XCTAssertEqual("   7.841р ".rubliKopeikiToDouble(), 7_841.0)
+        XCTAssertEqual("  90.841р ".rubliKopeikiToDouble(), 90_841.0)
+        XCTAssertEqual("907.841р".rubliKopeikiToDouble(), 907_841.0)
+        XCTAssertEqual(" 946.056р ".rubliKopeikiToDouble(), 946_056.0)
+
     }
 }

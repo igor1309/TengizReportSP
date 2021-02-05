@@ -8,11 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    /// `itemNoNumber`: title without number, should return .empty
-    static let itemNoNumber = #"\#(bodyItemStart)((?!\d).)*$"#
-}
-
 extension RegexPatternsTests {
     func test_itemNoNumber() {
         XCTAssertEqual(Patterns.itemNoNumber, #"^\d+\.((?!\d).)*$"#)

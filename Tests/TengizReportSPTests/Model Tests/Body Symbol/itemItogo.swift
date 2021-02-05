@@ -8,13 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    /// `itogo`
-    #warning("use Patterns properties")
-    //static let itemItogo = #"(?<title>^\d+\.\D+)(?<comment>.*\s*(?<value>(?<=Итого|фактический)\s*\#(Patterns.rubliKopeiki)).*)"#
-    static let itemItogo = #"(?<title>^\d+\.\D+\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#
-}
-
 extension RegexPatternsTests {
     func test_itemItogo() {
         XCTAssertEqual(Patterns.itemItogo, #"(?<title>^\d+\.\D+\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#)

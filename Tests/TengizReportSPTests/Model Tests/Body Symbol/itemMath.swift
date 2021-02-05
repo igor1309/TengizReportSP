@@ -8,11 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    /// `itemMath`
-    static let itemMath = #"(?<title>\#(bodyItemStart)\D+)(?<value>\#(Patterns.itemNumber)(?:\+\#(Patterns.itemNumber))+)$"#
-}
-
 extension RegexPatternsTests {
     func test_itemMath() {
         #warning("add this kind of testing to 'numberWithSign' func tests")

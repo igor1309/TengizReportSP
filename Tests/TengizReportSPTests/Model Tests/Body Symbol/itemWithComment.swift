@@ -8,12 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    /// item with `comment` after number, floating whitespace
-    static let itemWithComment = #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#
-    // #"^(?<title>\#(bodyItemStart)\D+)(?<value>\#(Patterns.itemNumber))(?<comment>\s*\(.+\))$"#
-}
-
 extension RegexPatternsTests {
     func test_itemWithComment() {
         XCTAssertEqual(Patterns.itemWithComment, #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#)

@@ -8,10 +8,6 @@
 import XCTest
 @testable import TengizReportSP
 
-extension Patterns {
-    static let bodyItemStart = #"^\d+\."#
-}
-
 extension RegexPatternsTests {
     func test_bodyItemStart() {
         XCTAssertEqual(Patterns.bodyItemStart, #"^\d+\."#)

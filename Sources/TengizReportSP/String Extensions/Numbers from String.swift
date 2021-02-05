@@ -9,27 +9,7 @@ import Foundation
 
 public extension String {
 
-    // MARK: - helpers
-
-    func numberAndRemains() -> (Double?, String) {
-        var sign: Double = 1
-        if firstMatch(for: Patterns.minus) != nil {
-            sign = -1
-        }
-
-        if let rubliIKopeiki = rubliKopeikiToDouble(),
-           let remains = replaceFirstMatch(for: Patterns.rubliKopeiki, withString: "") {
-            return (sign * rubliIKopeiki, remains)
-        }
-
-        if let numberString = firstMatch(for: Patterns.itemNumber),
-           let double = Double(numberString.replacingOccurrences(of: ".", with: "")),
-           let remains = self.replaceFirstMatch(for: Patterns.itemNumber, withString: "") {
-            return (sign * double, remains)
-        }
-
-        return (nil, self)
-    }
+    // MARK: - Conversion
 
     func numberWithSign() -> Double? {
         var sign: Double = 1
@@ -57,8 +37,6 @@ public extension String {
         return nil
     }
 
-    // MARK: - Conversion
-
     func rubliKopeikiToDouble() -> Double? {
         guard let integerString = replaceFirstMatch(for: Patterns.rubliKopeiki, withGroup: "integer"),
               let integer = Double(integerString.replacingOccurrences(of: ".", with: ""))
@@ -82,7 +60,6 @@ public extension String {
            let double = Double(numberString.replacingOccurrences(of: ".", with: "")) {
             return double
         }
-
         return nil
     }
 
