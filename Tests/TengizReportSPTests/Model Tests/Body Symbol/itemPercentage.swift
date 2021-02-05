@@ -23,7 +23,7 @@ extension RegexPatternsTests {
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage),
                        "4. Банковская комиссия 1.6% за эквайринг\t2.120")
 
-        #warning("add negative tests")
+        XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage))
     }
 }
 
@@ -35,6 +35,6 @@ extension BodySymbolFuncTests {
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".bodySymbol(for: Patterns.itemPercentage),
                        .item(title: "4. Банковская комиссия 1.6% за эквайринг", value: 2_120, comment: nil))
 
-        #warning("add negative tests")
+        XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".bodySymbol(for: Patterns.itemPercentage))
     }
 }

@@ -23,7 +23,8 @@ extension RegexPatternsTests {
         XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemNumberInsideParentheses),
                        "27. Сервис Гуру (система аттестации, за 1 год)\t12.655")
 
-        #warning("add negative tests")
+        XCTAssertNil("27. Сервис Гуру (система аттестации, год)\t12.655".firstMatch(for: Patterns.itemNumberInsideParentheses))
+        XCTAssertNil("27. Сервис Гуру \t12.655".firstMatch(for: Patterns.itemNumberInsideParentheses))
     }
 }
 
@@ -35,6 +36,7 @@ extension BodySymbolFuncTests {
         XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".bodySymbol(for: Patterns.itemNumberInsideParentheses),
                        .item(title: "27. Сервис Гуру (система аттестации, за 1 год)", value: 12_655, comment: nil))
 
-        #warning("add negative tests")
+        XCTAssertNil("27. Сервис Гуру (система аттестации, год)\t12.655".bodySymbol(for: Patterns.itemNumberInsideParentheses))
+        XCTAssertNil("27. Сервис Гуру \t12.655".bodySymbol(for: Patterns.itemNumberInsideParentheses))
     }
 }

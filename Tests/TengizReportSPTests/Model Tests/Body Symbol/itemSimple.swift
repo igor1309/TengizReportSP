@@ -33,9 +33,9 @@ extension RegexPatternsTests {
         XCTAssertEqual("14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000".firstMatch(for: Patterns.itemSimple),
                        "14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000")
 
-        XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple), "Number match fail due to number inside parentheses")
-
-        #warning("add more negative tests")
+        XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple), "Match fail due to number inside parentheses")
+        XCTAssertNil("1. ФОТ\t19.721 ( за вторую с 25 по 30 июля)".firstMatch(for: Patterns.itemSimple), "Match fail due to comment after value")
+        XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".firstMatch(for: Patterns.itemSimple))
     }
 }
 
@@ -57,6 +57,8 @@ extension BodySymbolFuncTests {
         XCTAssertEqual("14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000".bodySymbol(for: Patterns.itemSimple),
                        .item(title: "14. РПК Ника (крепления д/телевизоров и монтаж)", value: 30_000, comment: nil))
 
-        #warning("add negative tests")
+        XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".bodySymbol(for: Patterns.itemSimple), "Match fail due to number inside parentheses")
+        XCTAssertNil("1. ФОТ\t19.721 ( за вторую с 25 по 30 июля)".bodySymbol(for: Patterns.itemSimple), "Match fail due to comment after value")
+        XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".bodySymbol(for: Patterns.itemSimple))
     }
 }

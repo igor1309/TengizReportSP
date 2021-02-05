@@ -24,6 +24,7 @@ extension RegexPatternsTests {
                        "1. Аренда торгового помещения\t-----------------------------")
         XCTAssertEqual("2. Предоплаченный товар, но не отраженный в приходе".firstMatch(for: Patterns.itemNoNumber),
                        "2. Предоплаченный товар, но не отраженный в приходе")
+
         XCTAssertNil("5. Аренда головного офиса\t11.500".firstMatch(for: Patterns.itemNoNumber))
         XCTAssertNil("4. Банковская комиссия 1.6% за эквайринг\t2.120".firstMatch(for: Patterns.itemNoNumber))
         XCTAssertNil("-10.000 за перерасход питание персонала в июле".firstMatch(for: Patterns.itemNoNumber))
@@ -34,7 +35,7 @@ extension RegexPatternsTests {
 
 extension BodySymbolFuncTests {
     func test_itemNoNumber() {
-        XCTAssertNil("1. Аренда торгового помещения\t-----------------------------".bodySymbol(for: Patterns.itemNoNumber))
+        XCTAssertNil("1. Аренда торгового помещения\t----------".bodySymbol(for: Patterns.itemNoNumber))
         XCTAssertNil("2. Предоплаченный товар, но не отраженный в приходе".bodySymbol(for: Patterns.itemNoNumber))
         XCTAssertNil("5. Аренда головного офиса\t11.500".bodySymbol(for: Patterns.itemNoNumber))
         XCTAssertNil("4. Банковская комиссия 1.6% за эквайринг\t2.120".bodySymbol(for: Patterns.itemNoNumber))
