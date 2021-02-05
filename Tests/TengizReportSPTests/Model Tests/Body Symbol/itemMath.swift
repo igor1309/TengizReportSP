@@ -10,31 +10,45 @@ import XCTest
 
 extension RegexPatternsTests {
     func test_math() {
+        // MARK: pattern (regex)
         XCTAssertEqual(Patterns.math,
                        #"\d{1,3}(?:\.\d{3})*(?:\s*\+\s*\d{1,3}(?:\.\d{3})*)+"#)
 
+        // MARK: exceptions
+        #warning("write negative tests here")
+
+        // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.math) }.count,
                        2, "Should be exactly 2 matches")
 
+        // MARK: usage
         XCTAssertEqual("12. Интернет\t7.701+4.500".firstMatch(for: Patterns.math),
                        "7.701+4.500")
-        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995".firstMatch(for: Patterns.math),
+        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
+                        .firstMatch(for: Patterns.math),
                        "4.500+8.700+15.995")
     }
 
     func test_itemMath() {
+        // MARK: pattern (regex)
         XCTAssertEqual(Patterns.itemMath,
                        #"(?<title>^\d+\.\D+)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\s*\+\s*\d{1,3}(?:\.\d{3})*)+))$"#)
 
+        // MARK: exceptions
+        #warning("write negative tests here")
+
+        // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemMath) }.count,
                        2, "Should be exactly 2 matches")
-        
+
+        // MARK: usage
         XCTAssertEqual("12. Интернет\t7.701+4.500".firstMatch(for: Patterns.itemMath),
                        "12. Интернет\t7.701+4.500")
         XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995".firstMatch(for: Patterns.itemMath),
                        "6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995")
 
-        #warning("how to get '\t' out of match?")
+        // MARK: regex structure
+        #warning("how to get '\t' out of title match?")
         XCTAssertEqual("12. Интернет\t7.701+4.500"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
                        "12. Интернет\t")

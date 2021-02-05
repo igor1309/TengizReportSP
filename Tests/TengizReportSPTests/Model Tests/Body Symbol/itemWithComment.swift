@@ -10,33 +10,59 @@ import XCTest
 
 extension RegexPatternsTests {
     func test_itemWithComment() {
+        // MARK: pattern (regex)
         XCTAssertEqual(Patterns.itemWithComment, #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#)
-        
-        XCTAssertNil("1. Приход товара по накладным\t 946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)".firstMatch(for: Patterns.itemWithComment), "This input should be matched by 'itemItogo'")
 
+        // MARK: exceptions
+        XCTAssertNil("1. Приход товара по накладным\t 946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)"
+                        .firstMatch(for: Patterns.itemWithComment), "This input should be matched by 'itemItogo'")
+
+        // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemWithComment) }.count,
                        9, "Should be exactly 9 matches")
 
-        XCTAssertEqual("1. Аренда торгового помещения\t46.667 (за июнь)".firstMatch(for: Patterns.itemWithComment),
+        // MARK: usage
+        XCTAssertEqual("1. Аренда торгового помещения\t46.667 (за июнь)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. Аренда торгового помещения\t46.667 (за июнь)")
-        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за июль)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за июль)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. Аренда торгового помещения\t 200.000 (за июль)")
-        XCTAssertEqual("1. ФОТ\t 564.678( за вторую часть октября)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. ФОТ\t 564.678( за вторую часть октября)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. ФОТ\t 564.678( за вторую часть октября)")
-        XCTAssertEqual("1. ФОТ\t595.360 ( за первую часть ноября)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. ФОТ\t595.360 ( за первую часть ноября)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. ФОТ\t595.360 ( за первую часть ноября)")
         /// have `numbers` inside parentheses (inside comment)
-        XCTAssertEqual("1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)")
-        XCTAssertEqual("1. ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)")
-        XCTAssertEqual("1. ФОТ\t 894.510( за вторую часть июля и первая часть августа)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. ФОТ\t 894.510( за вторую часть июля и первая часть августа)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. ФОТ\t 894.510( за вторую часть июля и первая часть августа)")
-        XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)")
         /// item with `math` and `comment` after number
-        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)".firstMatch(for: Patterns.itemWithComment),
+        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
+                        .firstMatch(for: Patterns.itemWithComment),
                        "1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)")
+
+        // MARK: regex structure
+        #warning("how to get rid of whitespace at the end of title using regex?")
+        XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"
+                        .replaceFirstMatch(for: Patterns.itemWithComment, withGroup: "title"),
+                       "1. ФОТ\t ")
+        XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"
+                        .replaceFirstMatch(for: Patterns.itemWithComment, withGroup: "value"),
+                       "1.147.085")
+        XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"
+                        .replaceFirstMatch(for: Patterns.itemWithComment, withGroup: "comment"),
+                       "( за вторую часть сентября и первую  часть октября)")
     }
 }
 

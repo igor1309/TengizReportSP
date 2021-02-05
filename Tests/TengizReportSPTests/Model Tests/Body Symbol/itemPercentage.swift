@@ -10,15 +10,29 @@ import XCTest
 
 extension RegexPatternsTests {
     func test_itemPercentage() {
-        XCTAssertEqual(Patterns.itemPercentage, #"(?<title>^\d+\.\D*\d{1,3}\.\d{1,2}\%\D+)(?<value>\d{1,3}(?:\.\d{3})*)"#)
+        // MARK: pattern (regex)
+        XCTAssertEqual(Patterns.itemPercentage, #"(?<title>^\d+\.\D+\d{1,3}\.\d{1,2}\%\D+)(?<value>\d{1,3}(?:\.\d{3})*)"#)
 
+        // MARK: exceptions
+        XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage))
+
+        // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemPercentage) }.count,
                        1, "Should be exactly 1 match")
 
+        // MARK: usage
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage),
                        "4. Банковская комиссия 1.6% за эквайринг\t2.120")
 
-        XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage))
+        // MARK: regex structure
+        XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120"
+                        .replaceFirstMatch(for: Patterns.itemPercentage, withGroup: "title"),
+                       "4. Банковская комиссия 1.6% за эквайринг\t")
+        XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120"
+                        .replaceFirstMatch(for: Patterns.itemPercentage, withGroup: "value"),
+                       "2.120")
+        XCTAssertNil("4. Банковская комиссия 1.6% за эквайринг\t2.120"
+                        .replaceFirstMatch(for: Patterns.itemPercentage, withGroup: "commnemt"))
     }
 }
 

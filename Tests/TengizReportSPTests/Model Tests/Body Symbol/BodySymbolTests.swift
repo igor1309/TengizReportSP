@@ -17,7 +17,8 @@ extension BodySymbol {
 final class BodySymbolTests: XCTestCase {
     func testBodySymbolExpressibleByStringLiteral() {
         XCTAssertEqual(BodySymbol(""), .empty)
-        XCTAssertEqual(BodySymbol("5. Аренда головного офиса\t11.500\t\t\n"), .item(title: "5. Аренда головного офиса", value: 11500.0, comment: nil))
+        XCTAssertEqual(BodySymbol("5. Аренда головного офиса\t11.500"),
+                       .item(title: "5. Аренда головного офиса", value: 11500.0, comment: nil))
     }
 
     #warning("write new tests for BodySymbol init and use 'selectedBodyItems'")
@@ -55,9 +56,9 @@ final class BodySymbolTests: XCTestCase {
 
         /// `itemMath`
         XCTAssertEqual(BodySymbol("12. Интернет\t7.701+4.500"),
-                       .item(title: "12. Интернет", value: 12_201, comment: nil))
+                       .item(title: "12. Интернет", value: 12_201, comment: "7.701+4.500"))
         XCTAssertEqual(BodySymbol("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"),
-                       .item(title: "6. Обслуживание кассовой программы Айко", value: 4_500 + 8_700 + 15_995, comment: nil))
+                       .item(title: "6. Обслуживание кассовой программы Айко", value: 4_500 + 8_700 + 15_995, comment: "4.500+8.700+15.995"))
 
         /// item with digits and `percentage` inside item title
         XCTAssertEqual(BodySymbol("4. Банковская комиссия 1.6% за эквайринг\t2.120"),
@@ -117,10 +118,4 @@ final class BodySymbolTests: XCTestCase {
                        .item(title: "2. Предоплаченный товар, но не отраженный в приходе", value: 40_400, comment: "Бейсболки персонал-18.000; Подушки в зал-22.400; Итого 40.400"))
     }
 
-}
-
-
-final class BodySymbolPatternsTests: XCTestCase {}
-
-final class BodySymbolTests_Think: XCTestCase {
 }

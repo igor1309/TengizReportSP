@@ -10,11 +10,19 @@ import XCTest
 
 extension RegexPatternsTests {
     func test_itemSimple() {
+        // MARK: pattern (regex)
         XCTAssertEqual(Patterns.itemSimple, #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)$"#)
 
+        // MARK: exceptions
+        XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple), "Match fail due to number inside parentheses")
+        XCTAssertNil("1. ФОТ\t19.721 ( за вторую с 25 по 30 июля)".firstMatch(for: Patterns.itemSimple), "Match fail due to comment after value")
+        XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".firstMatch(for: Patterns.itemSimple))
+
+        // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemSimple) }.count,
                        6, "Should be exactly 6 matchs")
 
+        // MARK: usage
         XCTAssertEqual("5. Аренда головного офиса\t11.500".firstMatch(for: Patterns.itemSimple),
                        "5. Аренда головного офиса\t11.500")
         XCTAssertEqual("16. Текущие мелкие расходы \t1.200".firstMatch(for: Patterns.itemSimple),
@@ -28,9 +36,16 @@ extension RegexPatternsTests {
         XCTAssertEqual("14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000".firstMatch(for: Patterns.itemSimple),
                        "14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000")
 
-        XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple), "Match fail due to number inside parentheses")
-        XCTAssertNil("1. ФОТ\t19.721 ( за вторую с 25 по 30 июля)".firstMatch(for: Patterns.itemSimple), "Match fail due to comment after value")
-        XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".firstMatch(for: Patterns.itemSimple))
+        // MARK: regex structure
+        XCTAssertEqual("23. Аудит кантора (Бухуслуги)\t60.000"
+                        .replaceFirstMatch(for: Patterns.itemSimple, withGroup: "title"),
+                       "23. Аудит кантора (Бухуслуги)\t")
+        XCTAssertEqual("23. Аудит кантора (Бухуслуги)\t60.000"
+                        .replaceFirstMatch(for: Patterns.itemSimple, withGroup: "value"),
+                       "60.000")
+        XCTAssertNil("23. Аудит кантора (Бухуслуги)\t60.000"
+                        .replaceFirstMatch(for: Patterns.itemSimple, withGroup: ""))
+
     }
 }
 
