@@ -11,17 +11,21 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemWithComment() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemWithComment, #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#)
+        XCTAssertEqual(Patterns.itemWithComment, #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))$"#)
 
         // MARK: exceptions
         XCTAssertNil("1. Приход товара по накладным\t 946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)"
                         .firstMatch(for: Patterns.itemWithComment), "This input should be matched by 'itemItogo'")
+        /// item with `math` and `comment` after number
+        XCTAssertNil("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
+                        .firstMatch(for: Patterns.itemWithComment),
+                       "This input should be matched by 'itemMath'")
 
         // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemWithComment) }.count,
-                       9, "Should be exactly 9 matches")
+                       8, "Should be exactly 8 matches")
 
-        // MARK: usage
+        // MARK: match
         XCTAssertEqual("1. Аренда торгового помещения\t46.667 (за июнь)"
                         .firstMatch(for: Patterns.itemWithComment),
                        "1. Аренда торгового помещения\t46.667 (за июнь)")
@@ -47,10 +51,6 @@ extension RegexPatternsTests {
         XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"
                         .firstMatch(for: Patterns.itemWithComment),
                        "1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)")
-        /// item with `math` and `comment` after number
-        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
-                        .firstMatch(for: Patterns.itemWithComment),
-                       "1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)")
 
         // MARK: regex structure
         #warning("how to get rid of whitespace at the end of title using regex?")
@@ -68,9 +68,16 @@ extension RegexPatternsTests {
 
 extension BodySymbolFuncTests {
     func test_itemWithComment() {
-        XCTAssertEqual(selectedBodyItems.compactMap { $0.bodySymbol(for: Patterns.itemWithComment) }.count,
-                       9, "Should be exactly 9 matches")
+        // MARK: exceptions
+        /// item with `math` and `comment` after number
+        XCTAssertNil("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)".bodySymbol(for: Patterns.itemWithComment),
+                       "This input should be matched by 'itemMath'")
 
+        // MARK: count in selectedBodyItems
+        XCTAssertEqual(selectedBodyItems.compactMap { $0.bodySymbol(for: Patterns.itemWithComment) }.count,
+                       8, "Should be exactly 8 matches")
+
+        // MARK: match
         XCTAssertEqual("1. Аренда торгового помещения\t46.667 (за июнь)".bodySymbol(for: Patterns.itemWithComment),
                        .item(title: "1. Аренда торгового помещения", value: 46_667, comment: "(за июнь)"))
         XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за июль)".bodySymbol(for: Patterns.itemWithComment),
@@ -88,10 +95,6 @@ extension BodySymbolFuncTests {
                        .item(title: "1. ФОТ", value: 894_510, comment: "( за вторую часть июля и первая часть августа)"))
         XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)".bodySymbol(for: Patterns.itemWithComment),
                        .item(title: "1. ФОТ", value: 1_147_085, comment: "( за вторую часть сентября и первую  часть октября)"))
-        /// item with `math` and `comment` after number
-        #warning("how to do this math?")
-        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)".bodySymbol(for: Patterns.itemWithComment),
-                       .item(title: "1. Аренда торгового помещения", value: 200_000+400_000, comment: "200.000 (за август) +400.000 (за сентябрь)"))
     }
 }
 

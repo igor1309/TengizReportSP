@@ -21,12 +21,16 @@ final class BodySymbolTests: XCTestCase {
                        .item(title: "5. Аренда головного офиса", value: 11500.0, comment: nil))
     }
 
-    #warning("write new tests for BodySymbol init and use 'selectedBodyItems'")
     func test_BodySymbol_init() {
         XCTAssertEqual(BodySymbol("fhgsfdghb"), .empty)
         XCTAssertEqual(BodySymbol("62384"), .empty)
         XCTAssertEqual(BodySymbol("684"), .empty)
         XCTAssertEqual(BodySymbol("sdf684"), .empty)
+
+        let symbols = selectedBodyItems.map { BodySymbol($0) }
+        XCTAssertEqual(symbols.count, 34)
+        let nonEmptySymbols = symbols.filter { $0 != .empty }
+        XCTAssertEqual(nonEmptySymbols.count, 32, "selectedBodyItems count is 34, just 2 of them are empty")
 
         // selectedBodyItems
         /// `correction`, doesn't start with digits
@@ -57,6 +61,9 @@ final class BodySymbolTests: XCTestCase {
                        .item(title: "12. Интернет", value: 12_201, comment: "7.701+4.500"))
         XCTAssertEqual(BodySymbol("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"),
                        .item(title: "6. Обслуживание кассовой программы Айко", value: 4_500 + 8_700 + 15_995, comment: "4.500+8.700+15.995"))
+        /// item with `math` and `comment` after number
+        XCTAssertEqual(BodySymbol("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"),
+                       .item(title: "1. Аренда торгового помещения", value: 600_000, comment: "200.000 (за август) +400.000 (за сентябрь)"))
 
         /// item with digits and `percentage` inside item title
         XCTAssertEqual(BodySymbol("4. Банковская комиссия 1.6% за эквайринг\t2.120"),
@@ -84,9 +91,6 @@ final class BodySymbolTests: XCTestCase {
                        .item(title: "1. ФОТ", value: 894_510, comment: "( за вторую часть июля и первая часть августа)"))
         XCTAssertEqual(BodySymbol("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"),
                        .item(title: "1. ФОТ", value: 1_147_085, comment: "( за вторую часть сентября и первую  часть октября)"))
-        /// item with `math` and `comment` after number
-        XCTAssertEqual(BodySymbol("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"),
-                       .item(title: "1. Аренда торгового помещения", value: 600_000, comment: "200.000 (за август) +400.000 (за сентябрь)"))
 
         /// `itogo`
         /// due to .replaceMatches(for: "Студиопак-", withString: "Студиопак Итого ") in func clearReport()

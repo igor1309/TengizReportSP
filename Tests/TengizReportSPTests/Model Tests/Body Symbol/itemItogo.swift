@@ -17,7 +17,7 @@ extension RegexPatternsTests {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemItogo) }.count,
                        12, "Should be exactly 12 matches")
 
-        // MARK: usage
+        // MARK: match
         XCTAssertEqual("2. Предоплаченный товар, но не отраженный в приходе\tСтудиопак Итого 12.500 (влажные салфетки);".firstMatch(for: Patterns.itemItogo),
                        "2. Предоплаченный товар, но не отраженный в приходе\tСтудиопак Итого 12.500 (влажные салфетки);")
 

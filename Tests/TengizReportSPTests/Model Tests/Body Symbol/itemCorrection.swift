@@ -24,7 +24,7 @@ extension RegexPatternsTests {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemCorrection) }.count,
                        1, "Should be exactly 1 match")
 
-        // MARK: usage
+        // MARK: match
         XCTAssertEqual("-10.000 за перерасход питание персонала в июле".firstMatch(for: Patterns.itemCorrection),
                        "-10.000 за перерасход питание персонала в июле")
 

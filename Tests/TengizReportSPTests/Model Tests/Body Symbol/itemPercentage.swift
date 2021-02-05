@@ -21,7 +21,7 @@ extension RegexPatternsTests {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemPercentage) }.count,
                        1, "Should be exactly 1 match")
 
-        // MARK: usage
+        // MARK: match
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".firstMatch(for: Patterns.itemPercentage),
                        "4. Банковская комиссия 1.6% за эквайринг\t2.120")
 

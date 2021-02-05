@@ -22,7 +22,7 @@ extension RegexPatternsTests {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemSimple) }.count,
                        6, "Should be exactly 6 matchs")
 
-        // MARK: usage
+        // MARK: match
         XCTAssertEqual("5. Аренда головного офиса\t11.500".firstMatch(for: Patterns.itemSimple),
                        "5. Аренда головного офиса\t11.500")
         XCTAssertEqual("16. Текущие мелкие расходы \t1.200".firstMatch(for: Patterns.itemSimple),

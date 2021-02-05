@@ -22,19 +22,19 @@ extension RegexPatternsTests {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: bodyItemStartToTest) }.count,
                        33, "Total is 34, 'Correction' item line doesn't start with digits, so should be 33")
 
-        // MARK: usage
+        // MARK: match
 
         XCTAssertEqual("1. Аренда торгового помещения\t--------"
                         .firstMatch(for: bodyItemStartToTest),
-                       "1. Аренда торгового помещения")
+                       "1. Аренда торгового помещения\t--------")
         XCTAssertEqual("22. Хэдхантер (подбор пероснала)\t3.240"
                         .firstMatch(for: bodyItemStartToTest),
-                       "22. Хэдхантер (подбор пероснала)")
+                       "22. Хэдхантер (подбор пероснала)\t")
 
         // MARK: regex structure
         XCTAssertEqual("1. Аренда торгового помещения\t--------"
                         .replaceFirstMatch(for: bodyItemStartToTest, withGroup: "title"),
-                       "1. Аренда торгового помещения")
+                       "1. Аренда торгового помещения\t--------")
         XCTAssertNil("1. Аренда торгового помещения\t--------"
                         .replaceFirstMatch(for: bodyItemStartToTest, withGroup: "value"))
     }

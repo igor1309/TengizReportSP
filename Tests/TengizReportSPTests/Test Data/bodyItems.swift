@@ -29,6 +29,8 @@ let selectedBodyItems = [
     /// `itemMath`
     "12. Интернет\t7.701+4.500",
     "6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995",
+    /// item with `math` and `comment` after number
+    "1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)",
 
     /// item with digits and `percentage` inside item title
     "4. Банковская комиссия 1.6% за эквайринг\t2.120",
@@ -36,7 +38,7 @@ let selectedBodyItems = [
     /// `itemNumberInsideParentheses`: item with number inside parentheses
     "27. Сервис Гуру (система аттестации, за 1 год)\t12.655",
 
-    /// `itemWithComment` item with `comment` after number, floating whitespace
+    /// `itemWithComment` 8 item with `comment` after number, floating whitespace
     "1. Аренда торгового помещения\t46.667 (за июнь)",
     "1. Аренда торгового помещения\t 200.000 (за июль)",
     "1. ФОТ\t 564.678( за вторую часть октября)",
@@ -46,8 +48,6 @@ let selectedBodyItems = [
     "1. ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)",
     "1. ФОТ\t 894.510( за вторую часть июля и первая часть августа)",
     "1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)",
-    /// item with `math` and `comment` after number
-    "1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)",
 
     /// `itogo` 12
     /// due to .replaceMatches(for: "Студиопак-", withString: "Студиопак Итого ") in func clearReport()

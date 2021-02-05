@@ -28,6 +28,7 @@ extension BodySymbol: ExpressibleByStringLiteral {
     }
 }
 
+#warning("try to create patterns with idea that TAB separates ttile from the rest of line")
 extension Patterns {
     static let bodyItemStart = #"(?<title>^\d+\.\D+"#
 
@@ -35,8 +36,8 @@ extension Patterns {
     static let itemItogo = #"\#(bodyItemStart)\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(itemNumber)(?:р \d\d?к)?).*)"#
 
     /// `math` and `itemMath`
-    static let math = #"\#(itemNumber)(?:\s*\+\s*\#(itemNumber))+"#
-    static let itemMath = #"\#(bodyItemStart))(?:\t)(?<comment>(?<value>\#(math)))$"#
+    static let math = #"\#(itemNumber)(?:\D*\s*\+\s*\#(itemNumber))+"#
+    static let itemMath = #"\#(bodyItemStart))(?:\t\s*)(?<comment>(?<value>\#(math))\D*)$"#
 
     /// `itemNoNumber`: title without number, should return .empty
     static let itemNoNumber = #"\#(bodyItemStart))((?!\d).)*$"#
@@ -51,7 +52,7 @@ extension Patterns {
     static let itemSimple = #"\#(bodyItemStart))(?:\t)(?<value>\#(itemNumber))$"#
 
     /// item with `comment` after number, floating whitespace
-    static let itemWithComment = #"^\#(bodyItemStart))(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический).)*\))$"#
+    static let itemWithComment = #"^\#(bodyItemStart))(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
     static let itemCorrection = #"^(?<value>-\#(itemNumber))\s*(?<title>.*)$"#
