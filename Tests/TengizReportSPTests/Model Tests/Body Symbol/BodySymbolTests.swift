@@ -23,7 +23,10 @@ final class BodySymbolTests: XCTestCase {
 
     #warning("write new tests for BodySymbol init and use 'selectedBodyItems'")
     func test_BodySymbol_init() {
-        #warning("add negative tests")
+        XCTAssertEqual(BodySymbol("fhgsfdghb"), .empty)
+        XCTAssertEqual(BodySymbol("62384"), .empty)
+        XCTAssertEqual(BodySymbol("684"), .empty)
+        XCTAssertEqual(BodySymbol("sdf684"), .empty)
 
         // selectedBodyItems
         /// `???`
@@ -31,9 +34,8 @@ final class BodySymbolTests: XCTestCase {
                        .item(title: "2. Предоплаченный товар, но не отраженный в приходе", value: 12_500, comment: "Студиопак-12.500 (влажные салфетки);"))
 
         /// `correction`, doesn't start with digits
-        #warning("finish with Correction")
         XCTAssertEqual(BodySymbol("-10.000 за перерасход питание персонала в июле"),
-                       .item(title: "-10.000 за перерасход питание персонала в июле", value: -10_000, comment: ""))
+                       .item(title: "за перерасход питание персонала в июле", value: -10_000, comment: nil))
 
         /// `itemNoNumber`: title without number, should return .empty
         XCTAssertEqual(BodySymbol("1. Аренда торгового помещения\t-----------------------------"), .empty)
