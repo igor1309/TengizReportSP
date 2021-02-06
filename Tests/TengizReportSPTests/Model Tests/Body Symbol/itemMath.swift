@@ -12,7 +12,7 @@ extension RegexPatternsTests {
     func test_itemMath() {
         // MARK: pattern (regex)
         XCTAssertEqual(Patterns.itemMath,
-                       #"(?<title>^\d+\.\D+)(?:\t\s*)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\D*\s*\+\s*\d{1,3}(?:\.\d{3})*)+)\D*)$"#)
+       #"(?<title>^.*?)(?:\t\s*)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\D*\s*\+\s*\d{1,3}(?:\.\d{3})*)+)\D*)$"#)
 
         // MARK: exceptions
         XCTAssertNil("12. Интернет\t7.701+".firstMatch(for: Patterns.itemMath))

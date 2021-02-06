@@ -11,16 +11,15 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemSimple() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemSimple, #"(?<title>^\d+\.\D+)(?:\t)(?<value>\d{1,3}(?:\.\d{3})*)$"#)
+        XCTAssertEqual(Patterns.itemSimple, #"(?<title>^.*?)(?:\t\s*)(?<value>\d{1,3}(?:\.\d{3})*)$"#)
 
         // MARK: exceptions
-        XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple), "Match fail due to number inside parentheses")
         XCTAssertNil("1. ФОТ\t19.721 ( за вторую с 25 по 30 июля)".firstMatch(for: Patterns.itemSimple), "Match fail due to comment after value")
         XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".firstMatch(for: Patterns.itemSimple))
 
         // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemSimple) }.count,
-                       6, "Should be exactly 6 matchs")
+                       8, "Should be exactly 8 matchs")
 
         // MARK: match
         XCTAssertEqual("5. Аренда головного офиса\t11.500".firstMatch(for: Patterns.itemSimple),
@@ -35,6 +34,12 @@ extension RegexPatternsTests {
                        "23. Аудит кантора (Бухуслуги)\t60.000")
         XCTAssertEqual("14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000".firstMatch(for: Patterns.itemSimple),
                        "14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000")
+
+        XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".firstMatch(for: Patterns.itemSimple),
+                       "4. Банковская комиссия 1.6% за эквайринг\t2.120")
+        XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".firstMatch(for: Patterns.itemSimple),
+                       "27. Сервис Гуру (система аттестации, за 1 год)\t12.655")
+
 
         // MARK: regex structure
         XCTAssertEqual("23. Аудит кантора (Бухуслуги)\t60.000"
@@ -52,7 +57,7 @@ extension RegexPatternsTests {
 extension BodySymbolFuncTests {
     func test_itemSimple() {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.bodySymbol(for: Patterns.itemSimple) }.count,
-                       6, "Should be exactly 6 matchs")
+                       8, "Should be exactly 8 matchs")
 
         XCTAssertEqual("5. Аренда головного офиса\t11.500".bodySymbol(for: Patterns.itemSimple),
                        .item(title: "5. Аренда головного офиса", value: 11_500, comment: nil))
@@ -67,7 +72,18 @@ extension BodySymbolFuncTests {
         XCTAssertEqual("14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000".bodySymbol(for: Patterns.itemSimple),
                        .item(title: "14. РПК Ника (крепления д/телевизоров и монтаж)", value: 30_000, comment: nil))
 
-        XCTAssertNil("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".bodySymbol(for: Patterns.itemSimple), "Match fail due to number inside parentheses")
+        XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120".bodySymbol(for: Patterns.itemSimple),
+                       .item(title: "4. Банковская комиссия 1.6% за эквайринг", value: 2_120, comment: nil))
+        XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".bodySymbol(for: Patterns.itemSimple),
+                       .item(title: "27. Сервис Гуру (система аттестации, за 1 год)", value: 12_655, comment: nil))
+
+        // no number
+        XCTAssertNil("1. Аренда торгового помещения\t-----------------------------".bodySymbol(for: Patterns.itemSimple),
+                       "1. Аренда торгового помещения\t-----------------------------")
+        XCTAssertNil("2. Предоплаченный товар, но не отраженный в приходе".bodySymbol(for: Patterns.itemSimple),
+                       "2. Предоплаченный товар, но не отраженный в приходе")
+
+        // other
         XCTAssertNil("1. ФОТ\t19.721 ( за вторую с 25 по 30 июля)".bodySymbol(for: Patterns.itemSimple), "Match fail due to comment after value")
         XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".bodySymbol(for: Patterns.itemSimple))
     }

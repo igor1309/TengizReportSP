@@ -12,9 +12,6 @@ extension BodySymbol: ExpressibleByStringLiteral {
         self = {
             let patterns: [String] = [Patterns.itemItogo,
                                       Patterns.itemMath,
-                                      Patterns.itemNoNumber,
-                                      Patterns.itemNumberInsideParentheses,
-                                      Patterns.itemPercentage,
                                       Patterns.itemSimple,
                                       Patterns.itemWithComment,
                                       Patterns.itemCorrection]
@@ -28,31 +25,24 @@ extension BodySymbol: ExpressibleByStringLiteral {
     }
 }
 
-#warning("try to create patterns with idea that TAB separates ttile from the rest of line")
 extension Patterns {
-    static let bodyItemStart = #"(?<title>^\d+\.\D+"#
-
-    /// `itogo`
-    static let itemItogo = #"\#(bodyItemStart)\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(itemNumber)(?:р \d\d?к)?).*)"#
+    static let title = #"(?<title>^.*?)(?:\t\s*)"#
 
     /// `math` and `itemMath`
     static let math = #"\#(itemNumber)(?:\D*\s*\+\s*\#(itemNumber))+"#
-    static let itemMath = #"\#(bodyItemStart))(?:\t\s*)(?<comment>(?<value>\#(math))\D*)$"#
+    static let itemMath = #"\#(title)(?<comment>(?<value>\#(math))\D*)$"#
 
-    /// `itemNoNumber`: title without number, should return .empty
-    static let itemNoNumber = #"\#(bodyItemStart))((?!\d).)*$"#
-
-    /// `itemNumberInsideParentheses`: item with number inside parentheses
-    static let itemNumberInsideParentheses = #"\#(bodyItemStart)\(.*\d.*\))\s*(?<value>\#(itemNumber))$"#
-
-    /// item with digits and `percentage` inside item title
-    static let itemPercentage = #"\#(bodyItemStart)\d{1,3}\.\d{1,2}\%\D+)(?:\t)(?<value>\#(itemNumber))"#
-
-    /// `itemSimple`: item title and number, no itogo, no number inside parantheses, no %, no comment after number
-    static let itemSimple = #"\#(bodyItemStart))(?:\t)(?<value>\#(itemNumber))$"#
+    /// `itogo`
+    static let itemItogo = #"\#(title)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(itemNumber)(?:р \d\d?к)?).*)"#
 
     /// item with `comment` after number, floating whitespace
-    static let itemWithComment = #"^\#(bodyItemStart))(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))$"#
+    static let itemWithComment = #"^\#(title)(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))$"#
+
+    /// `itemSimple`: item title and number, no itogo
+    /// may have number inside parantheses or %
+    /// no comment after number
+    /// does not match a string without number, so failure could be used to return nil in BodySymbol init
+    static let itemSimple = #"\#(title)(?<value>\#(itemNumber))$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
     static let itemCorrection = #"^(?<value>-\#(itemNumber))\s*(?<title>.*)$"#

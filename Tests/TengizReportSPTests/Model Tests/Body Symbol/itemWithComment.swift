@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemWithComment() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemWithComment, #"^(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))$"#)
+        XCTAssertEqual(Patterns.itemWithComment, #"^(?<title>^.*?)(?:\t\s*)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))$"#)
 
         // MARK: exceptions
         XCTAssertNil("1. Приход товара по накладным\t 946.056 (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)"
@@ -56,7 +56,7 @@ extension RegexPatternsTests {
         #warning("how to get rid of whitespace at the end of title using regex?")
         XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"
                         .replaceFirstMatch(for: Patterns.itemWithComment, withGroup: "title"),
-                       "1. ФОТ\t ")
+                       "1. ФОТ")
         XCTAssertEqual("1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)"
                         .replaceFirstMatch(for: Patterns.itemWithComment, withGroup: "value"),
                        "1.147.085")

@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemItogo() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemItogo, #"(?<title>^\d+\.\D+\t)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#)
+        XCTAssertEqual(Patterns.itemItogo, #"(?<title>^.*?)(?:\t\s*)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р \d\d?к)?).*)"#)
 
         // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemItogo) }.count,
@@ -49,7 +49,7 @@ extension RegexPatternsTests {
         // MARK: regex structure
         XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"
                         .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "title"),
-                       "1. Приход товара по накладным\t")
+                       "1. Приход товара по накладным")
         XCTAssertEqual("1. Приход товара по накладным\t922.936р 37к (оплаты фактические: 313.570р 26к-переводы; 87.091р 20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р 46к)"
                         .replaceFirstMatch(for: Patterns.itemItogo, withGroup: "value"),
                        " 498.373р 46к")
