@@ -12,8 +12,7 @@ extension BodySymbol: ExpressibleByStringLiteral {
         self = {
             let patterns: [String] = [Patterns.itemItogo,
                                       Patterns.itemMath,
-                                      Patterns.itemSimple,
-                                      Patterns.itemWithComment,
+                                      Patterns.itemBasic,
                                       Patterns.itemCorrection]
 
             for pattern in patterns {
@@ -35,14 +34,11 @@ extension Patterns {
     /// `itogo`
     static let itemItogo = #"\#(title)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(itemNumber)(?:р \d\d?к)?).*)"#
 
-    /// item with `comment` after number, floating whitespace
-    static let itemWithComment = #"^\#(title)(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))$"#
-
-    /// `itemSimple`: item title and number, no itogo
-    /// may have number inside parantheses or %
-    /// no comment after number
-    /// does not match a string without number, so failure could be used to return nil in BodySymbol init
-    static let itemSimple = #"\#(title)(?<value>\#(itemNumber))$"#
+    /// `itemBasic`: item with title and number, no itogo.
+    /// Title may have number inside parantheses or %.
+    /// May have comment after number.
+    /// Does not match a string without number, so failure could be used to return `.empty` in BodySymbol init
+    static let itemBasic = #"^\#(title)(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
     static let itemCorrection = #"^(?<value>-\#(itemNumber))\s*(?<title>.*)$"#

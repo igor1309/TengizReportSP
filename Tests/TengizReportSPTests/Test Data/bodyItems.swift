@@ -17,7 +17,7 @@ let selectedBodyItems = [
     "1. Аренда торгового помещения\t-----------------------------",
     "2. Предоплаченный товар, но не отраженный в приходе",
 
-    /// `itemSimple`: no itogo, no number inside parantheses, no %, no comment after number
+    /// `itemBasic`: 8 - no itogo, no number inside parantheses, no %, no comment after number
     "5. Аренда головного офиса\t11.500",
     "16. Текущие мелкие расходы \t1.200",
     /// item with `parentheses` in item title
@@ -25,17 +25,9 @@ let selectedBodyItems = [
     "22. Хэдхантер (подбор пероснала)\t3.240",
     "23. Аудит кантора (Бухуслуги)\t60.000",
     "14. РПК Ника (крепления д/телевизоров и монтаж)\t30.000",
-
-    /// `itemMath`
-    "12. Интернет\t7.701+4.500",
-    "6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995",
-    /// item with `math` and `comment` after number
-    "1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)",
-
-    /// item with digits and `percentage` inside item title
+    /// item with digits and percentage inside item title
     "4. Банковская комиссия 1.6% за эквайринг\t2.120",
-
-    /// `itemNumberInsideParentheses`: item with number inside parentheses
+    /// item with number inside parentheses
     "27. Сервис Гуру (система аттестации, за 1 год)\t12.655",
 
     /// `itemWithComment` 8 item with `comment` after number, floating whitespace
@@ -48,6 +40,12 @@ let selectedBodyItems = [
     "1. ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)",
     "1. ФОТ\t 894.510( за вторую часть июля и первая часть августа)",
     "1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)",
+
+    /// `itemMath` 3
+    "12. Интернет\t7.701+4.500",
+    "6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995",
+    /// item with `math` and `comment` after number
+    "1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)",
 
     /// `itogo` 12
     /// due to .replaceMatches(for: "Студиопак-", withString: "Студиопак Итого ") in func clearReport()

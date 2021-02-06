@@ -15,9 +15,9 @@ final class BodySymbolItemTitleTests: XCTestCase {
 
         // MARK: match
         /// `correction`, doesn't start with digits
-        XCTAssertEqual("-10.000 за перерасход питание персонала в июле"
+        XCTAssertNil("-10.000 за перерасход питание персонала в июле"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
-                       "-10.000 за перерасход питание персонала в июле")
+                       "Spacial case")
 
         /// `itemNoNumber`: title without number, should return .empty
         XCTAssertEqual("1. Аренда торгового помещения\t-----------------------------"
@@ -26,7 +26,7 @@ final class BodySymbolItemTitleTests: XCTestCase {
         XCTAssertNil("2. Предоплаченный товар, но не отраженный в приходе"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"))
 
-        /// `itemSimple`: no itogo, no number inside parantheses, no %, no comment after number
+        /// `itemBasic`: no itogo, no number inside parantheses, no %, no comment after number
         XCTAssertEqual("5. Аренда головного офиса\t11.500"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "5. Аренда головного офиса")
