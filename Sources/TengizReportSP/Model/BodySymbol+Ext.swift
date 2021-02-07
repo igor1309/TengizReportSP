@@ -38,7 +38,7 @@ extension Patterns {
     /// Title may have number inside parantheses or %.
     /// May have comment after number.
     /// Does not match a string without number, so failure could be used to return `.empty` in BodySymbol init
-    static let itemBasic = #"^\#(title)(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#
+    static let itemBasic = #"\#(title)(?<value>\#(itemNumber))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
     static let itemCorrection = #"^(?<value>-\#(itemNumber))\s*(?<title>.*)$"#

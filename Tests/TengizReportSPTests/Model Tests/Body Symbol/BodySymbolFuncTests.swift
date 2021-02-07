@@ -34,6 +34,6 @@ final class BodySymbolFuncTests: XCTestCase {
                        .item(title: "1. Аренда торгового помещения", value: 46_667, comment: nil),
                        "Comment group is nil")
 
-        #warning("need more tests here + failing tests")
+        #warning("need more tests here + negative tests")
     }
 }

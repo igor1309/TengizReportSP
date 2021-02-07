@@ -13,7 +13,7 @@ public enum Patterns {
 
     public static let itemNumber = #"\d{1,3}(?:\.\d{3})*"#
 
-    public static let rubliKopeiki = #"(?<integer>\#(Patterns.itemNumber))(?:\s*р\s*(?<decimal>\d\d?)к)?"#
+    public static let rubliKopeiki = #"(?<integer>\#(Patterns.itemNumber))(?:\s*р\s*(?<decimal>\d\d?) ?к)?"#
 
     public static let minus = #"(?:[М|м]инус\D*)|-(?=\d)"#
 

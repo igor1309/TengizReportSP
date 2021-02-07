@@ -33,7 +33,7 @@ final class RubliKopeikiTests: XCTestCase {
 
 extension RegexPatternsTests {
     func test_rubliKopeiki() {
-        XCTAssertEqual(Patterns.rubliKopeiki, #"(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?)к)?"#)
+        XCTAssertEqual(Patterns.rubliKopeiki, #"(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?) ?к)?"#)
 
         XCTAssertNil("".firstMatch(for: Patterns.rubliKopeiki))
         XCTAssertNil("asfasdf wef hg".firstMatch(for: Patterns.rubliKopeiki))
@@ -81,19 +81,24 @@ extension NumberFromStringTests {
 
         XCTAssertNotEqual("74к".rubliKopeikiToDouble(), 0.74, "Doesn't work without rubles")
 
+        XCTAssertEqual("3р 74 к".rubliKopeikiToDouble(), 3.74)
         XCTAssertEqual("3р 74к".rubliKopeikiToDouble(), 3.74)
+        XCTAssertEqual("63р 74к ".rubliKopeikiToDouble(), 63.74)
         XCTAssertEqual("63р 74к".rubliKopeikiToDouble(), 63.74)
         XCTAssertEqual("863р 74к".rubliKopeikiToDouble(), 863.74)
         XCTAssertEqual("5.863р 74к".rubliKopeikiToDouble(), 5863.74)
 
+        XCTAssertEqual("  13.318р 93 к  ".rubliKopeikiToDouble(), 13_318.93)
         XCTAssertEqual("  13.318р 93к  ".rubliKopeikiToDouble(), 13_318.93)
         XCTAssertEqual("  75.255р  20к  ".rubliKopeikiToDouble(), 75_255.2)
         XCTAssertEqual("  98.340р24к  ".rubliKopeikiToDouble(), 98_340.24)
 
+        XCTAssertEqual("  145.292р 59 к   ".rubliKopeikiToDouble(), 145_292.59)
         XCTAssertEqual("  145.292р 59к   ".rubliKopeikiToDouble(), 145_292.59)
         XCTAssertEqual("  739.626р  06к   ".rubliKopeikiToDouble(), 739_626.06)
         XCTAssertEqual("  922.936р30к   ".rubliKopeikiToDouble(), 922_936.3)
 
+        XCTAssertEqual("  1.065.596р 76 к  ".rubliKopeikiToDouble(), 106_5596.76)
         XCTAssertEqual("  1.065.596р 76к  ".rubliKopeikiToDouble(), 106_5596.76)
         XCTAssertEqual("  1.677.077р  46к  ".rubliKopeikiToDouble(), 167_7077.46)
         XCTAssertEqual("  2.030.572р59к  ".rubliKopeikiToDouble(), 203_0572.59)

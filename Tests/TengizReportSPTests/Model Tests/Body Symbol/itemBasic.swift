@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemBasic() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemBasic, #"^(?<title>^.*?)(?:\t\s*)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#)
+        XCTAssertEqual(Patterns.itemBasic, #"(?<title>^.*?)(?:\t\s*)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#)
 
         // MARK: exceptions
         XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".firstMatch(for: Patterns.itemBasic))

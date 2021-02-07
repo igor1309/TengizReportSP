@@ -17,7 +17,8 @@ final class GetSourcesTests: XCTestCase {
                         .contentsOfFile()
                         .clearReport()
                 )
-                .body
+                //.body
+                .footer
                 .flatMap { $0.components(separatedBy: "\n") }
                 //.filter { nil != $0.firstMatch(for: "Приход") }
             }
@@ -26,6 +27,7 @@ final class GetSourcesTests: XCTestCase {
         XCTAssertEqual(bodyItems.count, 340)
         XCTAssertEqual(selectedBodyItems.count, 34)
 
-        //XCTAssertNil(selectedBodyItems.joined(separator: "\n"))
+        XCTAssertNotNil(selectedBodyItems.joined(separator: "\n"))
+        XCTAssertNotNil(selectedFooterItems.joined(separator: "\n"))
     }
 }
