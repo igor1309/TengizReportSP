@@ -35,6 +35,10 @@ extension RegexPatternsTests {
         XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
                         .firstMatch(for: Patterns.math),
                        "4.500+8.700+15.995")
+
+        XCTAssertEqual("Оборот факт:141.690+1.238.900=1.380.590"
+                        .firstMatch(for: Patterns.math),
+                       "141.690+1.238.900")
     }
 
 }

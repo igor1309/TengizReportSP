@@ -15,8 +15,8 @@ public extension String {
         var sign: Double = 1
         if firstMatch(for: Patterns.minus) != nil { sign = -1 }
 
-        if firstMatch(for: Patterns.math) != nil {
-            return listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)
+        if let math = firstMatch(for: Patterns.math) {
+            return math.listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)
         }
 
         if let rubliIKopeiki = rubliKopeikiToDouble() {

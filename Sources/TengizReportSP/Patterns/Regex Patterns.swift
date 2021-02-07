@@ -17,4 +17,6 @@ public enum Patterns {
 
     public static let minus = #"(?:[М|м]инус\D*)|-(?=\d)"#
 
+    /// `math`
+    static let math = #"\#(itemNumber)(?:\D*\s*\+\s*\#(itemNumber))+"#
 }

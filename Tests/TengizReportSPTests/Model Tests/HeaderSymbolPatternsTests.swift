@@ -69,6 +69,9 @@ final class HeaderSymbolPatternsTests: XCTestCase {
 
     func test_revenue() {
         XCTAssertEqual("Оборот фактический".firstMatch(for: Patterns.revenue), "Оборот")
+        XCTAssertEqual("Оборот факт:141.690+1.238.900=1.380.590".firstMatch(for: Patterns.revenue),
+                       "Оборот")
+
         XCTAssertNil("Выручка".firstMatch(for: Patterns.revenue))
     }
 

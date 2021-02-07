@@ -18,6 +18,7 @@ extension RegexPatternsTests {
         XCTAssertNil("12. Интернет\t7.701+".firstMatch(for: Patterns.itemMath))
         XCTAssertNil("6. Обслуживание кассовой программы Айко\t4.500+ item".firstMatch(for: Patterns.itemMath))
 
+        XCTAssertNil("Оборот факт:141.690+1.238.900=1.380.590".firstMatch(for: Patterns.itemMath))
 
         // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemMath) }.count,

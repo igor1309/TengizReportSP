@@ -33,13 +33,13 @@ public extension String {
 
     func revenue() -> HeaderSymbol? {
         guard firstMatch(for: Patterns.revenue) != nil,
-              let number = numberWithoutSign() else { return nil }
+              let number = numberWithSign() else { return nil }
         return .revenue(number)
     }
 
     func dailyAverage() -> HeaderSymbol? {
         guard firstMatch(for: Patterns.dailyAverage) != nil,
-              let number = numberWithoutSign() else { return nil }
+              let number = numberWithSign() else { return nil }
         return .dailyAverage(number)
     }
 }

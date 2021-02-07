@@ -27,8 +27,7 @@ extension BodySymbol: ExpressibleByStringLiteral {
 extension Patterns {
     static let title = #"(?<title>^.*?)(?:\t\s*)"#
 
-    /// `math` and `itemMath`
-    static let math = #"\#(itemNumber)(?:\D*\s*\+\s*\#(itemNumber))+"#
+    /// `itemMath`
     static let itemMath = #"\#(title)(?<comment>(?<value>\#(math))\D*)$"#
 
     /// `itogo`
