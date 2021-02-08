@@ -31,3 +31,5 @@ public protocol TokenSymbol: Hashable,
                              ExpressibleByStringLiteral where StringLiteralType == String {}
 
 extension HeaderSymbol: TokenSymbol {}
+extension BodySymbol: TokenSymbol {}
+extension FooterSymbol: TokenSymbol {}
