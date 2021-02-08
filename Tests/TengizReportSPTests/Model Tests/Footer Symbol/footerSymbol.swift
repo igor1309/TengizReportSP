@@ -151,31 +151,4 @@ final class GetFooterSourcesTests: XCTestCase {
 
     }
 
-    func test_footerSymbol() {
-        // MARK: - WHAT I WANT (reportContent202007)
-        /*
-         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t1.677.077р 46к"),
-         .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 1_677_077.46))
-         XCTAssertEqual(FooterSymbol("Фактический остаток:\t-609.230р 46к\t20%"),
-         .balance(title: "Фактический остаток", value: -609_230.46, percentage: 0.2))
-         XCTAssertEqual(FooterSymbol("-173.753 остаток с июня"),
-         .openingBalance(title: "-173.753 остаток с июня", value: -173_753))
-         XCTAssertEqual(FooterSymbol("-28.000 субсидия, поступила в июле"),
-         .extraIncomeExpenses(title: "-28.000 субсидия, поступила в июле", value: -28_000))
-         XCTAssertEqual(FooterSymbol("ИТОГ:\t-407.477р 46к"),
-         .runningBalance(title: "ИТОГ", value: -407_477.46))
-         */
-
-        XCTAssertEqual("ИТОГ всех расходов за месяц:\t1.677.077р 46к".footerItem(),
-                       FooterItem(title: "ИТОГ всех расходов за месяц:", value: 1_677_077.46, percentage: nil))
-        XCTAssertEqual("Фактический остаток:\t-609.230р 46к\t20%".footerItem(),
-                       FooterItem(title: "Фактический остаток:", value: -609_230.46, percentage: 0.20))
-        XCTAssertEqual("-173.753 остаток с июня".footerItem(),
-                       FooterItem(title: "-173.753 остаток с июня", value: nil, percentage: nil))
-        XCTAssertEqual("-28.000 субсидия, поступила в июле".footerItem(),
-                       FooterItem(title: "-28.000 субсидия, поступила в июле", value: nil, percentage: nil))
-        XCTAssertEqual("ИТОГ:\t-407.477р 46к".footerItem(),
-                       FooterItem(title: "ИТОГ:", value: -407_477.46, percentage: nil))
-
-    }
 }

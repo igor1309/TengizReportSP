@@ -8,6 +8,7 @@
 import XCTest
 @testable import TengizReportSP
 
+#warning("bad tests: checking for not nil is not enough")
 final class ReportContentTests: XCTestCase {
     func testEmptyReportContent() {
         let reportContent = ReportContent.empty
@@ -50,6 +51,12 @@ final class ReportContentTests: XCTestCase {
 
                 XCTAssertEqual(reportContent.footer, sample.footer, "Footer split error")
             }
+    }
+
+    func test_Saperavi072020() throws {
+        let contents = try filenames[1].contentsOfFile()
+
+        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.reportContent202007)
     }
 }
 

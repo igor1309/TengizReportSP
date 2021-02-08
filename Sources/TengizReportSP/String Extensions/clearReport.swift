@@ -21,7 +21,7 @@ public extension String {
                             withString: "Студиопак Итого ")
             .replaceMatches(for: #"\s*ВМ ЩК\s*"#,
                             withString: "Название объекта: Вай Мэ! Щелково\n")
-            /*
+        /*
             /// remove optionality from rubli-kopeiki making rubliKopeikiPattern and kopeikiPatterm simpler/uniform
             .replaceMatches(for: #"(\d{1,3}(?:\.\d{3})*) *р *(?:(\d\d?) *к\.?)"#,
                             withString: #"$1р $2к"#)

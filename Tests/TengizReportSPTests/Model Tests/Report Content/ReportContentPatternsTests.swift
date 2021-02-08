@@ -8,14 +8,16 @@
 import XCTest
 @testable import TengizReportSP
 
+#warning("'not nil' tests are not good enough")
 final class ReportContentPatternsTests: XCTestCase {
     func testReport_headerPattern() {
-        XCTAssertNotNil("""
+        XCTAssertEqual("""
             Название объекта: Саперави Аминьевка
             Декабрь2020     Оборот:2.318.274    Средний показатель: 74.783
 
             Статья расхода:\t
-            """.firstMatch(for: Patterns.headerPattern))
+            """.firstMatch(for: Patterns.headerPattern),
+                       "Название объекта: Саперави Аминьевка\nДекабрь2020     Оборот:2.318.274    Средний показатель: 74.783\n\n")
 
         XCTAssertNil("""
             Название объекта: Саперави Аминьевка
@@ -31,16 +33,19 @@ final class ReportContentPatternsTests: XCTestCase {
     }
 
     func testReport_footerPattern() {
-        XCTAssertNotNil("""
+        XCTAssertEqual(Patterns.footerPattern, #"(?m)^ИТОГ всех расходов за месяц(?:.|\n)*$"#)
+
+        XCTAssertEqual("""
             ИТОГ всех расходов за месяц:    2.432.175р89к
 
             Фактический остаток:    Минус 113.901р89к    20%
             Переходящий минус 1.065.596р 76к
 
             ИТОГ:    Минус 1.179.498р65к
-            """.firstMatch(for: Patterns.footerPattern))
+            """.firstMatch(for: Patterns.footerPattern),
+                       "ИТОГ всех расходов за месяц:    2.432.175р89к\n\nФактический остаток:    Минус 113.901р89к    20%\nПереходящий минус 1.065.596р 76к\n\nИТОГ:    Минус 1.179.498р65к")
 
-        XCTAssertNotNil("""
+        XCTAssertEqual("""
             ИТОГ:    19.131
             ИТОГ всех расходов за месяц:    2.432.175р89к
 
@@ -48,8 +53,10 @@ final class ReportContentPatternsTests: XCTestCase {
             Переходящий минус 1.065.596р 76к
 
             ИТОГ:    Минус 1.179.498р65к
-            """.firstMatch(for: Patterns.footerPattern))
+            """.firstMatch(for: Patterns.footerPattern),
+                       "ИТОГ всех расходов за месяц:    2.432.175р89к\n\nФактический остаток:    Минус 113.901р89к    20%\nПереходящий минус 1.065.596р 76к\n\nИТОГ:    Минус 1.179.498р65к")
 
+        // no match
         XCTAssertNil("""
 
             Фактический остаток:    Минус 113.901р89к    20%
@@ -57,7 +64,8 @@ final class ReportContentPatternsTests: XCTestCase {
 
             ИТОГ:    Минус 1.179.498р65к
 
-            """.firstMatch(for: Patterns.footerPattern))
+            """.firstMatch(for: Patterns.footerPattern),
+                       "")
     }
 
     func test_columnTitleRowPattern() {

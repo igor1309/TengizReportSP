@@ -10,6 +10,10 @@ import Foundation
 extension BodySymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
         self = {
+            #warning("write tests for this")
+            if let header = string.bodyHeader() { return header }
+            if let footer = string.bodyFooter() { return footer }
+
             let patterns: [String] = [Patterns.itemItogo,
                                       Patterns.itemMath,
                                       Patterns.itemBasic,
@@ -25,13 +29,19 @@ extension BodySymbol: ExpressibleByStringLiteral {
 }
 
 extension Patterns {
+    #warning("write tests for this")
+    static let bodyHeader = #"(?!ИТОГ)(?<title>^\D.*?):.*$"#
+    static let bodyFooter = #"(?=ИТОГ:)\#(title)(?<value>\#(rubKop))$"#
+    #warning("same pattern used in 'itemItogo'")
+    static let rubKop = #"\#(itemNumber)(?:р \d\d? ?к)?"#
+
     static let title = #"(?<title>^.*?)(?:\t\s*)"#
 
     /// `itemMath`
     static let itemMath = #"\#(title)(?<comment>(?<value>\#(math))\D*)$"#
 
     /// `itogo`
-    static let itemItogo = #"\#(title)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(itemNumber)(?:р \d\d?к)?).*)"#
+    static let itemItogo = #"\#(title)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(itemNumber)(?:р ?\d\d?к)?).*)"#
 
     /// `itemBasic`: item with title and number, no itogo.
     /// Title may have number inside parantheses or %.
@@ -45,6 +55,34 @@ extension Patterns {
 }
 
 extension String {
+    #warning("write tests for this")
+    /// Parse body group header row using tabulation (not regex).
+    /// - Returns: BodySymbol.header(title:plan:fact:) or `nil`
+    func bodyHeader() -> BodySymbol? {
+
+        guard firstMatch(for: Patterns.bodyHeader) != nil else { return nil }
+        let elements = components(separatedBy: "\t")
+
+        let count = elements.count
+        guard count == 3 || count == 4 else { return nil }
+
+        let title = String(elements[0].dropLast())
+        let plan = elements[2].percentageStringToDouble()
+        let fact = count == 4 ? elements[3].percentageStringToDouble() : nil
+
+        return .header(title: title, plan: plan, fact: fact)
+    }
+
+    #warning("write tests for this")
+    func bodyFooter() -> BodySymbol? {
+        guard let title = replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "title") else { return nil }
+
+        let value = replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "value")?
+            .numberWithSign()
+
+        return .footer(title: title, value: value)
+    }
+
     func bodySymbol(for pattern: String) -> BodySymbol? {
         guard firstMatch(for: pattern) != nil else { return nil }
 

@@ -55,8 +55,8 @@ extension ReportContent: ExpressibleByStringLiteral {
 }
 
 public extension Patterns {
-    static let headerPattern: String = { #"(?m)(^(.*)\n)+?(?=Статья расхода:)"# }()
-    static let footerPattern: String = { #"(?m)^ИТОГ всех расходов за месяц.*\n(^.*\n)*"# }()
-    static let columnTitleRowPattern: String = { #"(?m)^Статья расхода:\s*Сумма расхода:\s*План %\s*Факт %\s*\n"# }()
-    static let bodyPattern: String = { #"(?m)(?:^[А-Яа-я ]+:.*$)(?:\n.*$)+?\nИТОГ:.*"# }()
+    static let headerPattern = #"(?m)(^(.*)\n)+?(?=Статья расхода:)"#
+    static let footerPattern = #"(?m)^ИТОГ всех расходов за месяц(?:.|\n)*$"#
+    static let columnTitleRowPattern = #"(?m)^Статья расхода:\s*Сумма расхода:\s*План %\s*Факт %\s*\n"#
+    static let bodyPattern = #"(?m)(?:^[А-Яа-я ]+:.*$)(?:\n.*$)+?\nИТОГ:.*"#
 }

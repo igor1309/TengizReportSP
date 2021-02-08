@@ -88,6 +88,8 @@ extension NumberFromStringTests {
         XCTAssertEqual("863р 74к".rubliKopeikiToDouble(), 863.74)
         XCTAssertEqual("5.863р 74к".rubliKopeikiToDouble(), 5863.74)
 
+        XCTAssertEqual(" 13.318р93к".rubliKopeikiToDouble(), 13_318.93)
+        XCTAssertEqual(" 13.318р93 к  ".rubliKopeikiToDouble(), 13_318.93)
         XCTAssertEqual("  13.318р 93 к  ".rubliKopeikiToDouble(), 13_318.93)
         XCTAssertEqual("  13.318р 93к  ".rubliKopeikiToDouble(), 13_318.93)
         XCTAssertEqual("  75.255р  20к  ".rubliKopeikiToDouble(), 75_255.2)

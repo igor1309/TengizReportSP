@@ -15,17 +15,17 @@ struct FooterItem: Equatable {
 
 extension String {
     func footerItem() -> FooterItem? {
-        let components = components(separatedBy: "\t")
-        switch components.count {
-            case 1: return FooterItem(title: components[0],
+        let elements = components(separatedBy: "\t")
+        switch elements.count {
+            case 1: return FooterItem(title: elements[0],
                                       value: nil,
                                       percentage: nil)
-            case 2: return FooterItem(title: components[0],
-                                      value: components[1].numberWithSign(),
+            case 2: return FooterItem(title: elements[0],
+                                      value: elements[1].numberWithSign(),
                                       percentage: nil)
-            case 3...: return FooterItem(title: components[0],
-                                         value: components[1].numberWithSign(),
-                                         percentage: components[2].percentageStringToDouble())
+            case 3...: return FooterItem(title: elements[0],
+                                         value: elements[1].numberWithSign(),
+                                         percentage: elements[2].percentageStringToDouble())
             default: return nil
         }
     }

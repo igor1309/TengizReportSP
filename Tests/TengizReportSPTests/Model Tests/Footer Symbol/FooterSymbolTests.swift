@@ -83,8 +83,11 @@ final class FooterSymbolTests: XCTestCase {
     }
 
     func test_runningBalance() {
+        XCTAssertEqual(FooterSymbol("ИТОГ:\t-407.477р46к"),
+                       .runningBalance(title: "ИТОГ", value: -407_477.46))
         XCTAssertEqual(FooterSymbol("ИТОГ:\t-407.477р 46к"),
                        .runningBalance(title: "ИТОГ", value: -407_477.46))
+
         XCTAssertEqual(FooterSymbol("ИТОГ:\t-739.626р 06к"),
                        .runningBalance(title: "ИТОГ", value: -739_626.06))
         XCTAssertEqual(FooterSymbol("ИТОГ:\tМинус 642.997р 43к"),
