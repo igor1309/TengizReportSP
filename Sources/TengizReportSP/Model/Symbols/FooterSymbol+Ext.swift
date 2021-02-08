@@ -1,5 +1,5 @@
 //
-//  FooterToken+Ext.swift
+//  FooterSymbol+Ext.swift
 //  TengizReportSP
 //
 //  Created by Igor Malyarov on 10.01.2021.

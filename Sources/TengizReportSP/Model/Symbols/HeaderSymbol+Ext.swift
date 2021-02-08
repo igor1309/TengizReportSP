@@ -1,5 +1,5 @@
 //
-//  HeaderToken+Ext.swift
+//  HeaderSymbol+Ext.swift
 //  TengizReportSPM
 //
 //  Created by Igor Malyarov on 10.01.2021.

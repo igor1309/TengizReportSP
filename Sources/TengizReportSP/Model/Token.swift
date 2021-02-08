@@ -25,19 +25,9 @@ extension Token: ExpressibleByStringLiteral {
     }
 }
 
-//public typealias HeaderSymbol = Symbols.HeaderSymbol
-//public typealias BodySymbol = Symbols.BodySymbol
-//public typealias FooterSymbol = Symbols.FooterSymbol
-
 // MARK: TokenSymbol
 
 public protocol TokenSymbol: Hashable,
                              ExpressibleByStringLiteral where StringLiteralType == String {}
 
 extension HeaderSymbol: TokenSymbol {}
-//extension Symbols.BodySymbol: TokenSymbol {}
-//extension Symbols.FooterSymbol: TokenSymbol {}
-
-//extension HeaderSymbol: TokenSymbol {}
-//extension BodySymbol: TokenSymbol {}
-//extension FooterSymbol: TokenSymbol {}
