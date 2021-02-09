@@ -14,7 +14,7 @@ extension RegexPatternsTests {
         XCTAssertEqual(Patterns.itemMath,
        #"(?<title>^.*?)(?:\t\s*)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\D*\s*\+\s*\d{1,3}(?:\.\d{3})*)+)\D*)$"#)
 
-        // MARK: exceptions
+        // MARK: no match
         XCTAssertNil("12. Интернет\t7.701+".firstMatch(for: Patterns.itemMath))
         XCTAssertNil("6. Обслуживание кассовой программы Айко\t4.500+ item".firstMatch(for: Patterns.itemMath))
 

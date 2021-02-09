@@ -62,7 +62,7 @@ final class TokenizedReportTests: XCTestCase {
                  Token<BodySymbol>(source: "2. Предоплаченный товар, но не отраженный в приходе\tБейсболки персонал-18.000; Подушки в зал-22.400; Итого 40.400",
                                    symbol: .item(title: "2. Предоплаченный товар, но не отраженный в приходе", value: 40_400, comment: "Бейсболки персонал-18.000; Подушки в зал-22.400; Итого 40.400")),
                  Token<BodySymbol>(source: "ИТОГ:\t538.773р46к",
-                                   symbol: .empty)],
+                                   symbol: .footer(title: "ИТОГ:", value: 538_773.46))],
                 [Token<BodySymbol>(source: "Прочие расходы:\t\t8%",
                                    symbol: .header(title: "Прочие расходы", plan: 0.08, fact: nil)),
                  Token<BodySymbol>(source: "1.Налоговые платежи \t13.318р93к",
@@ -149,7 +149,10 @@ final class TokenizedReportTests: XCTestCase {
         let report = TokenizedReport(stringLiteral: contents)
         XCTAssertEqual(report, sample)
 
+        // header
         XCTAssertEqual(report.header, sample.header)
+        XCTAssertEqual(report.header.count, sample.header.count)
+        zip(report.header, sample.header).forEach { XCTAssertEqual($0, $1) }
 
         // body
         XCTAssertEqual(report.body, sample.body)
@@ -170,12 +173,10 @@ final class TokenizedReportTests: XCTestCase {
         XCTAssertEqual(report.footer, sample.footer)
         XCTAssertEqual(report.footer.count, sample.footer.count)
         // XCTAssertNil(report.footer)
-        zip(report.footer, sample.footer).forEach { reportFooter, sampleFooter in
-            XCTAssertEqual(reportFooter, sampleFooter)
-        }
+        zip(report.footer, sample.footer).forEach { XCTAssertEqual($0, $1) }
     }
 
-    func test_init_Saperavi_09_2020() throws {
+    func test_init_Saperavi_10_2020() throws {
         let sample = TokenizedReport(
             header: [Token<HeaderSymbol>(source: "Название объекта: Саперави Аминьевка",
                                          symbol: HeaderSymbol.company(name: "Саперави Аминьевка")),
@@ -306,7 +307,10 @@ final class TokenizedReportTests: XCTestCase {
         let report = TokenizedReport(stringLiteral: contents)
         XCTAssertEqual(report, sample)
 
+        // header
         XCTAssertEqual(report.header, sample.header)
+        XCTAssertEqual(report.header.count, sample.header.count)
+        zip(report.header, sample.header).forEach { XCTAssertEqual($0, $1) }
 
         // body
         XCTAssertEqual(report.body, sample.body)
@@ -327,9 +331,7 @@ final class TokenizedReportTests: XCTestCase {
         XCTAssertEqual(report.footer, sample.footer)
         XCTAssertEqual(report.footer.count, sample.footer.count)
         // XCTAssertNil(report.footer)
-        zip(report.footer, sample.footer).forEach { reportFooter, sampleFooter in
-            XCTAssertEqual(reportFooter, sampleFooter)
-        }
+        zip(report.footer, sample.footer).forEach { XCTAssertEqual($0, $1) }
     }
 
     func test_init_VaiMe_12_2020() throws {
@@ -377,7 +379,7 @@ final class TokenizedReportTests: XCTestCase {
                  Token<BodySymbol>(source: "1. Приход товара по накладным\t473.128р43к(оплаты фактические:231.572р46к-переводы;51.104р93к-корпоративная карта;2.799р-наличные из кассы; Итого 285.476р39к)",
                                    symbol: .item(title: "1. Приход товара по накладным", value: 285_476.39, comment: Optional("473.128р43к(оплаты фактические:231.572р46к-переводы;51.104р93к-корпоративная карта;2.799р-наличные из кассы; Итого 285.476р39к)"))),
                  Token<BodySymbol>(source: "ИТОГ:\t285.476р39к",
-                                   symbol: .empty)],
+                                   symbol: .footer(title: "ИТОГ:", value: 285_476.39))],
                 [Token<BodySymbol>(source: "Прочие расходы:\t\t8%",
                                    symbol: .header(title: "Прочие расходы", plan: 0.08, fact: nil)),
                  Token<BodySymbol>(source: "1.Налоговые платежи \t22.282р86к",
@@ -423,7 +425,7 @@ final class TokenizedReportTests: XCTestCase {
                  Token<BodySymbol>(source: "21. -----------------------\t---------------",
                                    symbol: .empty),
                  Token<BodySymbol>(source: "ИТОГ:\t244.472р15к",
-                                   symbol: .empty)],
+                                   symbol: .footer(title: "ИТОГ:", value: 244472.15))],
                 [Token<BodySymbol>(source: "Расходы на доставку:\t-----------------------------",
                                    symbol: .empty),
                  Token<BodySymbol>(source: "1. Курьеры\t-----------------------------",
@@ -453,7 +455,10 @@ final class TokenizedReportTests: XCTestCase {
         let report = TokenizedReport(stringLiteral: contents)
         XCTAssertEqual(report, sample)
 
+        // header
         XCTAssertEqual(report.header, sample.header)
+        XCTAssertEqual(report.header.count, sample.header.count)
+        zip(report.header, sample.header).forEach { XCTAssertEqual($0, $1) }
 
         // body
         XCTAssertEqual(report.body, sample.body)
@@ -474,8 +479,6 @@ final class TokenizedReportTests: XCTestCase {
         XCTAssertEqual(report.footer, sample.footer)
         XCTAssertEqual(report.footer.count, sample.footer.count)
         // XCTAssertNil(report.footer)
-        zip(report.footer, sample.footer).forEach { reportFooter, sampleFooter in
-            XCTAssertEqual(reportFooter, sampleFooter)
-        }
+        zip(report.footer, sample.footer).forEach { XCTAssertEqual($0, $1) }
     }
 }

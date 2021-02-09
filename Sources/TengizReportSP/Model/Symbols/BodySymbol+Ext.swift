@@ -10,7 +10,6 @@ import Foundation
 extension BodySymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
         self = {
-            #warning("write tests for this")
             if let header = string.bodyHeader() { return header }
             if let footer = string.bodyFooter() { return footer }
 
@@ -29,13 +28,7 @@ extension BodySymbol: ExpressibleByStringLiteral {
 }
 
 extension Patterns {
-    #warning("write tests for this")
     static let bodyHeader = #"(?!ИТОГ)(?<title>^\D.*?):.*$"#
-    static let bodyFooter = #"(?=ИТОГ:)\#(title)(?<value>\#(rubKop))$"#
-    #warning("same pattern used in 'itemItogo'")
-    static let rubKop = #"\#(itemNumber)(?:р \d\d? ?к)?"#
-
-    static let title = #"(?<title>^.*?)(?:\t\s*)"#
 
     /// `itemMath`
     static let itemMath = #"\#(title)(?<comment>(?<value>\#(math))\D*)$"#
@@ -55,7 +48,6 @@ extension Patterns {
 }
 
 extension String {
-    #warning("write tests for this")
     /// Parse body group header row using tabulation (not regex).
     /// - Returns: BodySymbol.header(title:plan:fact:) or `nil`
     func bodyHeader() -> BodySymbol? {
@@ -73,7 +65,6 @@ extension String {
         return .header(title: title, plan: plan, fact: fact)
     }
 
-    #warning("write tests for this")
     func bodyFooter() -> BodySymbol? {
         guard let title = replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "title") else { return nil }
 

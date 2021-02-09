@@ -13,7 +13,7 @@ extension RegexPatternsTests {
         // MARK: pattern (regex)
         XCTAssertEqual(Patterns.math, #"\d{1,3}(?:\.\d{3})*(?:\D*\s*\+\s*\d{1,3}(?:\.\d{3})*)+"#)
 
-        // MARK: exceptions
+        // MARK: no match
         XCTAssertNil("12. Интернет\t7.701".firstMatch(for: Patterns.math))
         XCTAssertNil("12. Интернет + internet".firstMatch(for: Patterns.math))
 

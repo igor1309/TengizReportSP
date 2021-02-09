@@ -1,15 +1,42 @@
 //
-//  BodySymbolItemTitleTests.swift
-//  TengizReportSPTests
+//  title.swift
+//  TengizReportSP
 //
-//  Created by Igor Malyarov on 06.02.2021.
+//  Created by Igor Malyarov on 09.02.2021.
 //
 
 import XCTest
 @testable import TengizReportSP
 
-final class BodySymbolItemTitleTests: XCTestCase {
+extension RegexPatternsTests {
     func test_title() {
+        // MARK: pattern (regex)
+        XCTAssertEqual(Patterns.title, #"(?<title>^.*?)(?:\t\s*)"#)
+
+        // MARK: no match
+        XCTAssertNil("12. Интернет 323".firstMatch(for: Patterns.title), "Should have \t")
+        XCTAssertNil("6. Обслуживание кассовой программы Айко 4.500+ item".firstMatch(for: Patterns.title), "Should have \t")
+        XCTAssertNil("Оборот факт:141.690+1.238.900=1.380.590".firstMatch(for: Patterns.title), "Should have \t")
+
+        // MARK: match
+        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
+                        .firstMatch(for: Patterns.title),
+                       "1. Аренда торгового помещения\t ")
+        XCTAssertEqual("12. Интернет\t7.701+4.500".firstMatch(for: Patterns.title),
+                       "12. Интернет\t")
+        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995".firstMatch(for: Patterns.title),
+                       "6. Обслуживание кассовой программы Айко\t")
+
+        // MARK: regex structure
+        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
+                        .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
+                       "1. Аренда торгового помещения")
+        XCTAssertNil("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
+                        .replaceFirstMatch(for: Patterns.title, withGroup: "TITLE"),
+                       "No group 'TITLE'")
+    }
+
+    func test_title_BodySymbolItemTitle() {
         // MARK: pattern (regex)
         XCTAssertEqual(Patterns.title, #"(?<title>^.*?)(?:\t\s*)"#)
 
@@ -17,7 +44,7 @@ final class BodySymbolItemTitleTests: XCTestCase {
         /// `correction`, doesn't start with digits
         XCTAssertNil("-10.000 за перерасход питание персонала в июле"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
-                       "Spacial case")
+                     "Spacial case")
 
         /// `itemNoNumber`: title without number, should return .empty
         XCTAssertEqual("1. Аренда торгового помещения\t-----------------------------"
@@ -137,4 +164,5 @@ final class BodySymbolItemTitleTests: XCTestCase {
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "2. Предоплаченный товар, но не отраженный в приходе")
     }
+
 }

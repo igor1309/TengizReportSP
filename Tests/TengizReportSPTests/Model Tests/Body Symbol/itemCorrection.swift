@@ -17,7 +17,7 @@ extension RegexPatternsTests {
         XCTAssertEqual(Patterns.itemCorrection,
                        #"^(?<value>-\d{1,3}(?:\.\d{3})*)\s*(?<title>.*)$"#)
 
-        // MARK: exceptions
+        // MARK: no match
         XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".firstMatch(for: Patterns.itemCorrection))
 
         // MARK: count in selectedBodyItems

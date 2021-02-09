@@ -9,9 +9,10 @@ import XCTest
 @testable import TengizReportSP
 
 final class BodySymbolFuncTests: XCTestCase {
+    #warning("what is this func for????")
     func test_func_bodySymbol() {
         var input = "1. Аренда торгового помещения\t46.667 (за июнь)"
-        let pattern = #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>.*)$"#
+        let pattern = Patterns.itemBasic//#"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>.*)$"#
 
         XCTAssertEqual(input.replaceFirstMatch(for: pattern, withString: "$1")?
                         .trimmingCharacters(in: .whitespaces),

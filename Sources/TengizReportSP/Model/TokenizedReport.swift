@@ -20,7 +20,7 @@ public struct TokenizedReport: Equatable {
 }
 
 extension TokenizedReport: ExpressibleByStringLiteral {
-    #warning("shoulв use func clearReport()!!! - important replacements")
+    #warning("should use func clearReport()!!! - important replacements there")
     public init(stringLiteral string: String) {
         let reportContent = ReportContent(stringLiteral: string)
         let header = reportContent.header.map { Token<HeaderSymbol>(stringLiteral: $0) }
