@@ -8,7 +8,7 @@
 import Foundation
 
 extension FooterSymbol: ExpressibleByStringLiteral {
-    init(stringLiteral string: String) {
+    public init(stringLiteral string: String) {
         self = {
             if let opening = string.openingBalance() { return opening }
 

@@ -9,9 +9,9 @@ import Foundation
 
 // MARK: Token
 
-struct Token<Symbol: TokenSymbol>: Equatable, Hashable {
-    let source: String
-    let symbol: Symbol
+public struct Token<Symbol: TokenSymbol>: Equatable, Hashable {
+    public let source: String
+    public let symbol: Symbol
     
     init(source: String, symbol: Symbol) {
         self.source = source
@@ -20,14 +20,14 @@ struct Token<Symbol: TokenSymbol>: Equatable, Hashable {
 }
 
 extension Token: ExpressibleByStringLiteral {
-    init(stringLiteral string: String) {
+    public init(stringLiteral string: String) {
         self.init(source: string, symbol: Symbol(stringLiteral: string))
     }
 }
 
 // MARK: TokenSymbol
 
-protocol TokenSymbol: Hashable,
+public protocol TokenSymbol: Hashable,
                              ExpressibleByStringLiteral where StringLiteralType == String {}
 
 extension HeaderSymbol: TokenSymbol {}

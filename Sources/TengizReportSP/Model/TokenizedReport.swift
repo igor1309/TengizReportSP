@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct TokenizedReport: Equatable {
-    var header: [Token<HeaderSymbol>]
-    var body: [[Token<BodySymbol>]]
-    var footer: [Token<FooterSymbol>]
+public struct TokenizedReport: Equatable {
+    public var header: [Token<HeaderSymbol>]
+    public var body: [[Token<BodySymbol>]]
+    public var footer: [Token<FooterSymbol>]
 
     init(header: [Token<HeaderSymbol>], body: [[Token<BodySymbol>]], footer: [Token<FooterSymbol>]) {
         self.header = header
@@ -21,7 +21,7 @@ struct TokenizedReport: Equatable {
 
 extension TokenizedReport: ExpressibleByStringLiteral {
     #warning("should use func clearReport()!!! - important replacements there")
-    init(stringLiteral string: String) {
+    public init(stringLiteral string: String) {
         let reportContent = ReportContent(stringLiteral: string)
         let header = reportContent.header.map { Token<HeaderSymbol>(stringLiteral: $0) }
 

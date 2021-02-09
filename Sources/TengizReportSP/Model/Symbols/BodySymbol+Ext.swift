@@ -8,7 +8,7 @@
 import Foundation
 
 extension BodySymbol: ExpressibleByStringLiteral {
-    init(stringLiteral string: String) {
+    public init(stringLiteral string: String) {
         self = {
             if let header = string.bodyHeader() { return header }
             if let footer = string.bodyFooter() { return footer }

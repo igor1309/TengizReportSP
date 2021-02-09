@@ -8,7 +8,7 @@
 import Foundation
 
 extension HeaderSymbol: ExpressibleByStringLiteral {
-    init(stringLiteral string: String) {
+    public init(stringLiteral string: String) {
         self = {
             if let company      = string.company()      { return company }
             if let month        = string.month()        { return month }
