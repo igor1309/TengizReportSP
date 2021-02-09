@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension String {
+extension String {
 
     /// clean whitespaces and empty lines
     func clearWhitespacesAndNewlines() -> String {

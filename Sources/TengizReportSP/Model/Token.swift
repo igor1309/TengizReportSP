@@ -9,25 +9,25 @@ import Foundation
 
 // MARK: Token
 
-public struct Token<Symbol: TokenSymbol>: Equatable, Hashable {
-    public let source: String
-    public let symbol: Symbol
+struct Token<Symbol: TokenSymbol>: Equatable, Hashable {
+    let source: String
+    let symbol: Symbol
     
-    public init(source: String, symbol: Symbol) {
+    init(source: String, symbol: Symbol) {
         self.source = source
         self.symbol = symbol
     }
 }
 
 extension Token: ExpressibleByStringLiteral {
-    public init(stringLiteral string: String) {
+    init(stringLiteral string: String) {
         self.init(source: string, symbol: Symbol(stringLiteral: string))
     }
 }
 
 // MARK: TokenSymbol
 
-public protocol TokenSymbol: Hashable,
+protocol TokenSymbol: Hashable,
                              ExpressibleByStringLiteral where StringLiteralType == String {}
 
 extension HeaderSymbol: TokenSymbol {}

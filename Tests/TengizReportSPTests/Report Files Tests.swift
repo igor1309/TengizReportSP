@@ -18,7 +18,7 @@ final class FilesTests: XCTestCase {
     }
 }
 
-public extension String {
+extension String {
     func contentsOfFile() throws -> String {
         enum TestErrors: Error {
             case noFile(String)

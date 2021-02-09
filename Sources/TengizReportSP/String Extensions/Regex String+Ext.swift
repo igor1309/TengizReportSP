@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension String {
+extension String {
 
     /// Returns a new string containing matching regular expression replaced with provided string.
     /// - Parameters:

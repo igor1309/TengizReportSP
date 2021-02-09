@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum HeaderSymbol: Hashable, Equatable {
+enum HeaderSymbol: Hashable, Equatable {
     case company(name: String)
     case month(monthStr: String)
     case revenue(Double)
@@ -15,14 +15,14 @@ public enum HeaderSymbol: Hashable, Equatable {
     case error
 }
 
-public enum BodySymbol: Hashable, Equatable {
+enum BodySymbol: Hashable, Equatable {
     case item(title: String, value: Double, comment: String?)
     case header(title: String, plan: Double?, fact: Double?)
     case footer(title: String, value: Double?)
     case empty
 }
 
-public enum FooterSymbol: Hashable, Equatable {
+enum FooterSymbol: Hashable, Equatable {
     case expensesTotal(title: String, value: Double)
     /// сальдо доходов-расходов
     case balance(title: String, value: Double, percentage: Double?)

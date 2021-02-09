@@ -7,23 +7,23 @@
 
 import Foundation
 
-public struct ReportContent: Equatable {
+internal struct ReportContent: Equatable {
 
-    public var header: [String]
-    public var body: [String]
-    public var footer: [String]
+    var header: [String]
+    var body: [String]
+    var footer: [String]
 
-    public init(header: [String], body: [String], footer: [String]) {
+    internal init(header: [String], body: [String], footer: [String]) {
         self.header = header
         self.body = body
         self.footer = footer
     }
 
-    public static let empty = ReportContent(header: [], body: [], footer: [])
+    static let empty = ReportContent(header: [], body: [], footer: [])
 }
 
 extension ReportContent: ExpressibleByStringLiteral {
-    public init(stringLiteral string: String) {
+    init(stringLiteral string: String) {
         let delimiter = "$$$$$"
 
         let headerString = string.firstMatch(for: Patterns.headerPattern) ?? ""
@@ -54,7 +54,7 @@ extension ReportContent: ExpressibleByStringLiteral {
     }
 }
 
-public extension Patterns {
+extension Patterns {
     static let headerPattern = #"(?m)(^(.*)\n)+?(?=Статья расхода:)"#
     static let footerPattern = #"(?m)^ИТОГ всех расходов за месяц(?:.|\n)*$"#
     static let columnTitleRowPattern = #"(?m)^Статья расхода:\s*Сумма расхода:\s*План %\s*Факт %\s*\n"#

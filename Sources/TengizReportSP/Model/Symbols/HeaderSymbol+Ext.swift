@@ -8,7 +8,7 @@
 import Foundation
 
 extension HeaderSymbol: ExpressibleByStringLiteral {
-    public init(stringLiteral string: String) {
+    init(stringLiteral string: String) {
         self = {
             if let company      = string.company()      { return company }
             if let month        = string.month()        { return month }
@@ -20,7 +20,7 @@ extension HeaderSymbol: ExpressibleByStringLiteral {
     }
 }
 
-public extension String {
+extension String {
     func company() -> HeaderSymbol? {
         guard let company = firstMatch(for: Patterns.headerCompany) else { return nil }
         return .company(name: company)
@@ -44,7 +44,7 @@ public extension String {
     }
 }
 
-public extension Patterns {
+extension Patterns {
     static let headerItemTitle = #"[А-Яа-я ]+(?=:)"#
     static let headerItem = headerItemTitle + #":[А-Яа-я ]*\d+(\.\d{3})*"#
     static let headerCompany = #"(?<=Название объекта:\s).*"#

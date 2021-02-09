@@ -8,7 +8,7 @@
 import Foundation
 
 extension FooterSymbol: ExpressibleByStringLiteral {
-    public init(stringLiteral string: String) {
+    init(stringLiteral string: String) {
         self = {
             if let opening = string.openingBalance() { return opening }
 
@@ -26,7 +26,7 @@ extension FooterSymbol: ExpressibleByStringLiteral {
 }
 
 extension Patterns {
-    public static let numberWithSignAtStart = #"^\s*(-|\+)\d{1,3}"#
+    static let numberWithSignAtStart = #"^\s*(-|\+)\d{1,3}"#
     static let bodyFooter = #"(?=ИТОГ:)\#(title)(?<value>\#(rubliKopeiki))$"#
 }
 

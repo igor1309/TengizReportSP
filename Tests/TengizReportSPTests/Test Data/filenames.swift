@@ -1,6 +1,6 @@
 import Foundation
 
-public let filenames = [
+let filenames = [
     "Саперави АМ 2020-06",
     "Саперави АМ 2020-07",
     "Саперави АМ август 2020 ИСПРАВЛЕННЫЙ",

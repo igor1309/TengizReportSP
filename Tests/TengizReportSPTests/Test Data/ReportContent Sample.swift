@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import TengizReportSP
+@testable import TengizReportSP
 
-public extension ReportContent {
+extension ReportContent {
     static var sampleContents: [ReportContent] {
         [ReportContent.reportContent202006,
          ReportContent.reportContent202007,
