@@ -1,6 +1,6 @@
 //
 //  HeaderSymbolTests.swift
-//  TengizReportSPM
+//  TengizReportSPTests
 //
 //  Created by Igor Malyarov on 29.01.2021.
 //

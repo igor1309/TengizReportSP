@@ -1,6 +1,6 @@
 //
 //  footerSymbol.swift
-//  TengizReportSP
+//  TengizReportSPTests
 //
 //  Created by Igor Malyarov on 06.02.2021.
 //

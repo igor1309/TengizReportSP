@@ -1,6 +1,6 @@
 //
 //  BodySymbolTests.swift
-//  TengizReportSPM
+//  TengizReportSPTests
 //
 //  Created by Igor Malyarov on 30.01.2021.
 //
