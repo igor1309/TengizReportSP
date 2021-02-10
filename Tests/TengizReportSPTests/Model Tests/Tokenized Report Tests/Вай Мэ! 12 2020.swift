@@ -13,7 +13,7 @@ extension TokenizedReportTests {
         let sample = TokenizedReport(
             header: [
                 Token<HeaderSymbol>(source: "Название объекта: Вай Мэ! Щелково",
-                                    symbol: HeaderSymbol.company(name: "Вай Мэ! Щелково")),
+                                    symbol: .company(name: "Вай Мэ! Щелково")),
                 Token<HeaderSymbol>(source: "Декабрь2020",
                                     symbol: .month(monthStr: "Декабрь2020")),
                 Token<HeaderSymbol>(source: "Оборот факт:929.625",

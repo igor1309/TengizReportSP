@@ -13,13 +13,13 @@ extension TokenizedReportTests {
         let sample = TokenizedReport(
             header: [
                 Token<HeaderSymbol>(source: "Название объекта: Саперави Аминьевка",
-                                    symbol: HeaderSymbol.company(name: "Саперави Аминьевка")),
+                                    symbol: .company(name: "Саперави Аминьевка")),
                 Token<HeaderSymbol>(source: "Месяц: июль2020",
-                                    symbol: HeaderSymbol.month(monthStr: "июль2020")),
+                                    symbol: .month(monthStr: "июль2020")),
                 Token<HeaderSymbol>(source: "Оборот:1.067.807",
-                                    symbol: HeaderSymbol.revenue(1_067_807)),
+                                    symbol: .revenue(1_067_807)),
                 Token<HeaderSymbol>(source: "Средний показатель: 34.445",
-                                    symbol: HeaderSymbol.dailyAverage(34_445))],
+                                    symbol: .dailyAverage(34_445))],
             body: [
                 [Token<BodySymbol>(source: "Основные расходы:\t\t25%",
                                    symbol: .header(title: "Основные расходы", plan: 0.25, fact: nil)),

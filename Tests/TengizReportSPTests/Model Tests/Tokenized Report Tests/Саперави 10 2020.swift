@@ -12,13 +12,13 @@ extension TokenizedReportTests {
     func test_init_Saperavi_10_2020() throws {
         let sample = TokenizedReport(
             header: [Token<HeaderSymbol>(source: "Название объекта: Саперави Аминьевка",
-                                         symbol: HeaderSymbol.company(name: "Саперави Аминьевка")),
+                                         symbol: .company(name: "Саперави Аминьевка")),
                      Token<HeaderSymbol>(source: "Октябрь2020",
-                                         symbol: HeaderSymbol.month(monthStr: "Октябрь2020")),
+                                         symbol: .month(monthStr: "Октябрь2020")),
                      Token<HeaderSymbol>(source: "Оборот:2.587.735",
-                                         symbol: HeaderSymbol.revenue(2_587_735)),
+                                         symbol: .revenue(2_587_735)),
                      Token<HeaderSymbol>(source: "Средний показатель: 83.475",
-                                         symbol: HeaderSymbol.dailyAverage(83_475))]
+                                         symbol: .dailyAverage(83_475))]
             ,
             body: [
                 [Token<BodySymbol>(source: "Основные расходы:\t\t20%",
@@ -123,13 +123,13 @@ extension TokenizedReportTests {
                                    symbol: .footer(title: "ИТОГ:", value: 21_541))]
             ],
             footer: [Token<FooterSymbol>(source: "ИТОГ всех расходов за месяц:\t2.865.042р 74к",
-                                         symbol: FooterSymbol.expensesTotal(title: "ИТОГ всех расходов за месяц", value: 286_5042.74)),
+                                         symbol: .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 286_5042.74)),
                      Token<FooterSymbol>(source: "Фактический остаток:\tМинус 277.306р 74к\t20%",
-                                         symbol: FooterSymbol.balance(title: "Фактический остаток", value: -277306.74, percentage: 0.2)),
+                                         symbol: .balance(title: "Фактический остаток", value: -277306.74, percentage: 0.2)),
                      Token<FooterSymbol>(source: "Переходит минус с сентября 642.997р 43к",
-                                         symbol: FooterSymbol.openingBalance(title: "Переходит минус с сентября 642.997р 43к", value: -642_997.43)),
+                                         symbol: .openingBalance(title: "Переходит минус с сентября 642.997р 43к", value: -642_997.43)),
                      Token<FooterSymbol>(source: "ИТОГ:\tМинус 920.304р 17к",
-                                         symbol: FooterSymbol.runningBalance(title: "ИТОГ", value: -920_304.17))]
+                                         symbol: .runningBalance(title: "ИТОГ", value: -920_304.17))]
 
         )
 
