@@ -11,7 +11,7 @@ import XCTest
 extension BodySymbolPatternTests {
     func test_bodyFooter() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.bodyFooter, #"(?=ИТОГ:)(?<title>^.*?)(?:\t\s*)(?<value>(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?) ?к)?)$"#)
+        XCTAssertEqual(Patterns.bodyFooter, #"(?=ИТОГ:)(?<title>^[^-].*?)(?:\t\s*)(?<value>(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?) ?к)?)$"#)
 
         // MARK: match
         /*

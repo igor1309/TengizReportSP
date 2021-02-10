@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_title() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.title, #"(?<title>^.*?)(?:\t\s*)"#)
+        XCTAssertEqual(Patterns.title, #"(?<title>^[^-].*?)(?:\t\s*)"#)
 
         // MARK: no match
         XCTAssertNil("12. Интернет 323".firstMatch(for: Patterns.title), "Should have \t")
@@ -38,7 +38,7 @@ extension RegexPatternsTests {
 
     func test_title_BodySymbolItemTitle() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.title, #"(?<title>^.*?)(?:\t\s*)"#)
+        XCTAssertEqual(Patterns.title, #"(?<title>^[^-].*?)(?:\t\s*)"#)
 
         // MARK: match
         /// `correction`, doesn't start with digits

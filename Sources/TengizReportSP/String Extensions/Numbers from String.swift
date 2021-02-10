@@ -16,14 +16,14 @@ extension String {
         if firstMatch(for: Patterns.minus) != nil { sign = -1 }
 
         if let math = firstMatch(for: Patterns.math) {
-            return math.listMatches(for: Patterns.itemNumber).compactMap { $0.numberWithSign() }.reduce(0, +)
+            return math.listMatches(for: Patterns.integer).compactMap { $0.numberWithSign() }.reduce(0, +)
         }
 
         if let rubliIKopeiki = rubliKopeikiToDouble() {
             return sign * rubliIKopeiki
         }
 
-        if let doubleString = firstMatch(for: Patterns.itemNumber),
+        if let doubleString = firstMatch(for: Patterns.integer),
            let double = Double(doubleString.replacingOccurrences(of: ".", with: "")) {
             return sign * double
         }
@@ -50,7 +50,7 @@ extension String {
     }
 
     public func numberWithoutSign() -> Double? {
-        if let numberString = firstMatch(for: Patterns.itemNumber),
+        if let numberString = firstMatch(for: Patterns.integer),
            let double = Double(numberString.replacingOccurrences(of: ".", with: "")) {
             return double
         }

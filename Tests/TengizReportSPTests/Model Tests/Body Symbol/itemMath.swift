@@ -12,7 +12,7 @@ extension RegexPatternsTests {
     func test_itemMath() {
         // MARK: pattern (regex)
         XCTAssertEqual(Patterns.itemMath,
-       #"(?<title>^.*?)(?:\t\s*)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\D*\s*\+\s*\d{1,3}(?:\.\d{3})*)+)\D*)$"#)
+       #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?<comment>(?<value>\d{1,3}(?:\.\d{3})*(?:\D*\s*\+\s*\d{1,3}(?:\.\d{3})*)+)\D*)$"#)
 
         // MARK: no match
         XCTAssertNil("12. Интернет\t7.701+".firstMatch(for: Patterns.itemMath))
@@ -35,8 +35,11 @@ extension RegexPatternsTests {
 
         // MARK: regex structure
         XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "itemNo"),
+                       "1")
+        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
-                       "1. Аренда торгового помещения")
+                       "Аренда торгового помещения")
         XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "value"),
                        "200.000 (за август) +400.000")
@@ -45,11 +48,18 @@ extension RegexPatternsTests {
                        "200.000 (за август) +400.000 (за сентябрь)")
 
         XCTAssertEqual("12. Интернет\t7.701+4.500"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "itemNo"),
+                       "12")
+        XCTAssertEqual("12. Интернет\t7.701+4.500"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
-                       "12. Интернет")
+                       "Интернет")
+
+        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
+                        .replaceFirstMatch(for: Patterns.itemMath, withGroup: "itemNo"),
+                       "6")
         XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "title"),
-                       "6. Обслуживание кассовой программы Айко")
+                       "Обслуживание кассовой программы Айко")
 
         XCTAssertEqual("12. Интернет\t7.701+4.500"
                         .replaceFirstMatch(for: Patterns.itemMath, withGroup: "value"),
@@ -74,12 +84,12 @@ extension BodySymbolFuncTests {
 
         XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
                         .bodySymbol(for: Patterns.itemMath),
-                       .item(title: "1. Аренда торгового помещения", value: 600_000, comment: "200.000 (за август) +400.000 (за сентябрь)"))
+                       .item(itemNumber: 1, title: "Аренда торгового помещения", value: 600_000, comment: "200.000 (за август) +400.000 (за сентябрь)"))
         XCTAssertEqual("12. Интернет\t7.701+4.500"
                         .bodySymbol(for: Patterns.itemMath),
-                       .item(title: "12. Интернет", value: 12_201, comment: "7.701+4.500"))
+                       .item(itemNumber: 12, title: "Интернет", value: 12_201, comment: "7.701+4.500"))
         XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
                         .bodySymbol(for: Patterns.itemMath),
-                       .item(title: "6. Обслуживание кассовой программы Айко", value: 4_500+8_700+15_995, comment: "4.500+8.700+15.995"))
+                       .item(itemNumber: 6, title: "Обслуживание кассовой программы Айко", value: 4_500+8_700+15_995, comment: "4.500+8.700+15.995"))
     }
 }
