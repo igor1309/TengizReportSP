@@ -49,7 +49,7 @@ extension String {
         return percentage / 100
     }
 
-    func numberWithoutSign() -> Double? {
+    public func numberWithoutSign() -> Double? {
         if let numberString = firstMatch(for: Patterns.itemNumber),
            let double = Double(numberString.replacingOccurrences(of: ".", with: "")) {
             return double
