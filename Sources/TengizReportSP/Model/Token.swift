@@ -13,7 +13,7 @@ public struct Token<Symbol: TokenSymbol>: Equatable, Hashable {
     public let source: String
     public let symbol: Symbol
     
-    init(source: String, symbol: Symbol) {
+    public init(source: String, symbol: Symbol) {
         self.source = source
         self.symbol = symbol
     }
