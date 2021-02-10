@@ -17,7 +17,7 @@ public enum HeaderSymbol: Hashable, Equatable {
 
 public enum BodySymbol: Hashable, Equatable {
     case header(title: String, plan: Double?, fact: Double?)
-    case item(itemNumber: Int, title: String, value: Double, comment: String?)
+    case item(itemNumber: Int, title: String, value: Double, note: String?)
     case footer(title: String, value: Double?)
     case empty
 }

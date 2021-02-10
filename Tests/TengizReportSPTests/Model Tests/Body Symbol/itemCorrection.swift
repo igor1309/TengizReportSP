@@ -46,7 +46,7 @@ extension BodySymbolFuncTests {
                        1, "Should be exactly 1 match")
 
         XCTAssertEqual("-10.000 за перерасход питание персонала в июле".bodySymbol(for: Patterns.itemCorrection),
-                       .item(itemNumber: 0, title: "Correction", value: -10_000, comment: "-10.000 за перерасход питание персонала в июле"))
+                       .item(itemNumber: 0, title: "Correction", value: -10_000, note: "-10.000 за перерасход питание персонала в июле"))
 
         XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".bodySymbol(for: Patterns.itemCorrection))
     }

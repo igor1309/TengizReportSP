@@ -53,7 +53,7 @@ extension RegexPatternsTests {
         XCTAssertNil("2. Предоплаченный товар, но не отраженный в приходе"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"))
 
-        /// `itemBasic`: no itogo, no number inside parantheses, no %, no comment after number
+        /// `itemBasic`: no itogo, no number inside parantheses, no %, no note after number
         XCTAssertEqual("5. Аренда головного офиса\t11.500"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "5. Аренда головного офиса")
@@ -81,7 +81,7 @@ extension RegexPatternsTests {
         XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "6. Обслуживание кассовой программы Айко")
-        /// item with `math` and `comment` after number
+        /// item with `math` and `note` after number
         XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "1. Аренда торгового помещения")
@@ -96,7 +96,7 @@ extension RegexPatternsTests {
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "27. Сервис Гуру (система аттестации, за 1 год)")
 
-        /// `itemWithComment` 8 item with `comment` after number, floating whitespace
+        /// `itemWithComment` 8 item with `note` after number, floating whitespace
         XCTAssertEqual("1. Аренда торгового помещения\t46.667 (за июнь)"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "1. Аренда торгового помещения")
@@ -109,7 +109,7 @@ extension RegexPatternsTests {
         XCTAssertEqual("1. ФОТ\t595.360 ( за первую часть ноября)"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "1. ФОТ")
-        /// have `numbers` inside parentheses (inside comment)
+        /// have `numbers` inside parentheses (inside note)
         XCTAssertEqual("1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
                         .replaceFirstMatch(for: Patterns.title, withGroup: "title"),
                        "1. ФОТ")

@@ -17,7 +17,7 @@ let selectedBodyItems = [
     "1. Аренда торгового помещения\t-----------------------------",
     "2. Предоплаченный товар, но не отраженный в приходе",
 
-    /// `itemBasic`: 8 - no itogo, no number inside parantheses, no %, no comment after number
+    /// `itemBasic`: 8 - no itogo, no number inside parantheses, no %, no note after number
     "5. Аренда головного офиса\t11.500",
     "16. Текущие мелкие расходы \t1.200",
     /// item with `parentheses` in item title
@@ -30,12 +30,12 @@ let selectedBodyItems = [
     /// item with number inside parentheses
     "27. Сервис Гуру (система аттестации, за 1 год)\t12.655",
 
-    /// `itemWithComment` 8 item with `comment` after number, floating whitespace
+    /// `itemWithComment` 8 item with `note` after number, floating whitespace
     "1. Аренда торгового помещения\t46.667 (за июнь)",
     "1. Аренда торгового помещения\t 200.000 (за июль)",
     "1. ФОТ\t 564.678( за вторую часть октября)",
     "1. ФОТ\t595.360 ( за первую часть ноября)",
-    /// have `numbers` inside parentheses (inside comment)
+    /// have `numbers` inside parentheses (inside note)
     "1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)",
     "1. ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)",
     "1. ФОТ\t 894.510( за вторую часть июля и первая часть августа)",
@@ -44,7 +44,7 @@ let selectedBodyItems = [
     /// `itemMath` 3
     "12. Интернет\t7.701+4.500",
     "6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995",
-    /// item with `math` and `comment` after number
+    /// item with `math` and `note` after number
     "1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)",
 
     /// `itogo` 12

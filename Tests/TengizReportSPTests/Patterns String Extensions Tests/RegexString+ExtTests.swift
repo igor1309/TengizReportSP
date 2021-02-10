@@ -11,14 +11,14 @@ import XCTest
 final class RegexStringExtTests: XCTestCase {
     func testRegexGroupName() {
         let input = "1. Аренда торгового помещения\t46.667 (за июнь)"
-        let pattern = #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<comment>.*)$"#
+        let pattern = #"(?<title>^\d+\.\D+)(?<value>\d{1,3}(?:\.\d{3})*)(?<note>.*)$"#
 
         XCTAssertEqual(input.replaceFirstMatch(for: pattern, withGroup: "title")?
                         .trimmingCharacters(in: .whitespaces),
                        "1. Аренда торгового помещения")
         XCTAssertEqual(input.replaceFirstMatch(for: pattern, withGroup: "value"),
                        "46.667")
-        XCTAssertEqual(input.replaceFirstMatch(for: pattern, withGroup: "comment")?
+        XCTAssertEqual(input.replaceFirstMatch(for: pattern, withGroup: "note")?
                         .trimmingCharacters(in: .whitespaces),
                        "(за июнь)")
     }

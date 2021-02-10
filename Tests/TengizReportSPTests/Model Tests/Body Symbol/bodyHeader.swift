@@ -141,7 +141,7 @@ extension BodySymbolTests {
 
         input = "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
         XCTAssertEqual(BodySymbol(stringLiteral: input),
-                       .item(itemNumber: 1, title: "ФОТ", value: 704848.0, comment: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"))
+                       .item(itemNumber: 1, title: "ФОТ", value: 704848.0, note: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"))
 
         XCTAssertNotEqual(Token<BodySymbol>(stringLiteral: input),
                           Token<BodySymbol>(source: input, symbol: .empty))

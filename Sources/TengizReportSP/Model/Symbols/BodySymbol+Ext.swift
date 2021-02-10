@@ -33,16 +33,16 @@ extension Patterns {
     static let bodyHeader = #"(?!ИТОГ)(?<title>^\D.*?):.*$"#
 
     /// `itemMath`
-    static let itemMath = #"\#(itemTitle)(?<comment>(?<value>\#(math))\D*)$"#
+    static let itemMath = #"\#(itemTitle)(?<note>(?<value>\#(math))\D*)$"#
 
     /// `itogo`
-    static let itemItogo = #"\#(itemTitle)(?<comment>.*(?<value>(?<=Итого|фактический)\s*\#(integer)(?:р ?\d\d?к)?).*)"#
+    static let itemItogo = #"\#(itemTitle)(?<note>.*(?<value>(?<=Итого|фактический)\s*\#(integer)(?:р ?\d\d?к)?).*)"#
 
     /// `itemBasic`: item with title and number, no itogo.
     /// Title may have number inside parantheses or %.
-    /// May have comment after number.
+    /// May have note after number.
     /// Does not match a string without number, so failure could be used to return `.empty` in BodySymbol init
-    static let itemBasic = #"\#(itemTitle)(?<value>\#(integer))(?<comment>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#
+    static let itemBasic = #"\#(itemTitle)(?<value>\#(integer))(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
     static let itemCorrection = #"^(?<value>-\#(integer))\s*(?<title>.*)$"#
@@ -81,7 +81,7 @@ extension String {
            let valueStr = replaceFirstMatch(for: pattern, withGroup: "value")?
             .trimmingCharacters(in: .whitespaces),
            let value = valueStr.numberWithSign()  {
-            return .item(itemNumber: 0, title: "Correction", value: value, comment: self)
+            return .item(itemNumber: 0, title: "Correction", value: value, note: self)
         }
 
         guard firstMatch(for: pattern) != nil,
@@ -93,10 +93,10 @@ extension String {
                 .trimmingCharacters(in: .whitespaces),
               let value = valueStr.numberWithSign() else { return nil }
 
-        let comment = replaceFirstMatch(for: pattern, withGroup: "comment")?
+        let note = replaceFirstMatch(for: pattern, withGroup: "note")?
             .trimmingCharacters(in: .whitespaces) ?? ""
 
-        return .item(itemNumber: itemNumber, title: title, value: value, comment: comment.isEmpty ? nil : comment)
+        return .item(itemNumber: itemNumber, title: title, value: value, note: note.isEmpty ? nil : note)
     }
 }
 
