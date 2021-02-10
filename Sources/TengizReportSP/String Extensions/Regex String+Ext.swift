@@ -96,7 +96,7 @@ extension String {
         }
     }
 
-    func replaceFirstMatch(for pattern: String, withGroup groupName: String) -> String? {
+    public func replaceFirstMatch(for pattern: String, withGroup groupName: String) -> String? {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return nil }
 
         let range = NSRange(self.startIndex..., in: self)
