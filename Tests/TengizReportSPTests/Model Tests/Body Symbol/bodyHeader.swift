@@ -22,6 +22,7 @@ extension BodySymbolPatternTests {
          "Фактический приход товара и оплата товара:\t\t25%\t"
          "Прочие расходы:\t\t8%\t"
          "Расходы на доставку:\t\t\t"
+         "Расходы на доставку:\t-----------------------------\t\t"
          */
         var input = "Основные расходы:\t\t25%\t"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
@@ -36,6 +37,8 @@ extension BodySymbolPatternTests {
         input = "Прочие расходы:\t\t8%\t"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
         input = "Расходы на доставку:\t\t\t"
+        XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
+        input = "Расходы на доставку:\t-----------------------------\t\t"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
 
 
@@ -72,6 +75,7 @@ extension BodySymbolTests {
          "Фактический приход товара и оплата товара:\t\t25%\t"
          "Прочие расходы:\t\t8%\t"
          "Расходы на доставку:\t\t\t"
+         "Расходы на доставку:\t-----------------------------\t\t"
          */
         XCTAssertEqual("Основные расходы:\t\t25%\t".bodyHeader(),
                        .header(title: "Основные расходы", plan: 0.25, fact: nil))
@@ -87,6 +91,8 @@ extension BodySymbolTests {
         XCTAssertEqual("Прочие расходы:\t\t8%\t".bodyHeader(),
                        .header(title: "Прочие расходы", plan: 0.08, fact: nil))
         XCTAssertEqual("Расходы на доставку:\t\t\t".bodyHeader(),
+                       .header(title: "Расходы на доставку", plan: nil, fact: nil))
+        XCTAssertEqual("Расходы на доставку:\t-----------------------------\t\t".bodyHeader(),
                        .header(title: "Расходы на доставку", plan: nil, fact: nil))
 
         // MARK: no match
@@ -111,6 +117,7 @@ extension BodySymbolTests {
          "Фактический приход товара и оплата товара:\t\t25%\t"
          "Прочие расходы:\t\t8%\t"
          "Расходы на доставку:\t\t\t"
+         "Расходы на доставку:\t-----------------------------\t\t"
          */
         XCTAssertEqual(BodySymbol("Основные расходы:\t\t25%\t"),
                        .header(title: "Основные расходы", plan: 0.25, fact: nil))
@@ -123,6 +130,8 @@ extension BodySymbolTests {
         XCTAssertEqual(BodySymbol("Прочие расходы:\t\t8%\t"),
                        .header(title: "Прочие расходы", plan: 0.08, fact: nil))
         XCTAssertEqual(BodySymbol("Расходы на доставку:\t\t\t"),
+                       .header(title: "Расходы на доставку", plan: nil, fact: nil))
+        XCTAssertEqual(BodySymbol("Расходы на доставку:\t-----------------------------\t\t"),
                        .header(title: "Расходы на доставку", plan: nil, fact: nil))
 
         XCTAssertEqual(BodySymbol("Зарплата:\t\t22%"),
@@ -137,7 +146,7 @@ extension BodySymbolTests {
                        .header(title: "Основные расходы", plan: 0.25, fact: 0.0876))
 
         input = "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t"
-        XCTAssertEqual(BodySymbol(stringLiteral: input), .empty, "Mind the TABs at the end")
+        XCTAssertEqual(BodySymbol(stringLiteral: input), .item(itemNumber: 1, title: "ФОТ", value: 704_848, note: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"), "Mind the TABs at the end")
 
         input = "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
         XCTAssertEqual(BodySymbol(stringLiteral: input),

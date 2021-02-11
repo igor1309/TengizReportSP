@@ -10,7 +10,7 @@ import XCTest
 
 final class GetSourcesTests: XCTestCase {
     func test_GetSources() {
-        let sourses = try? filenames
+        let sourses = try? SampleFiles.filenames
             .flatMap { filename in
                 ReportContent(
                     stringLiteral: try filename
@@ -28,5 +28,20 @@ final class GetSourcesTests: XCTestCase {
 
         XCTAssertNotNil(selectedBodyItems.joined(separator: "\n"))
         XCTAssertNotNil(selectedFooterItems.joined(separator: "\n"))
+    }
+
+    func test_DeliveryHeader() throws {
+        let deliveryHeaders = try SampleFiles.filenames.flatMap { filename -> [String] in
+            let content = try filename.contentsOfFile()
+            return content
+                .components(separatedBy: "\n")
+                .filter { $0.hasPrefix("Расходы на доставку") }
+        }
+        .removingDuplicates()
+
+        let sample = ["Расходы на доставку:\t\t\t",
+                      "Расходы на доставку:\t-----------------------------\t\t"]
+
+        XCTAssertEqual(deliveryHeaders, sample)
     }
 }

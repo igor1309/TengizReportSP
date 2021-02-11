@@ -23,7 +23,7 @@ extension TokenizedReport: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
         /// make some cleaning & fixes
         let cleanContent = string
-            .clearWhitespacesAndNewlines()
+            //.clearWhitespacesAndNewlines()
             // fix special line(s)
             .replaceMatches(for: #"\s*ВМ ЩК\s*"#,
                             withString: "Название объекта: Вай Мэ! Щелково\n")
@@ -53,8 +53,9 @@ extension TokenizedReport: ExpressibleByStringLiteral {
                 .components(separatedBy: "\n")
                 .filter{ !$0.isEmpty }
                 .map {
-                    Token<BodySymbol>(stringLiteral: $0.trimmingCharacters(in: .whitespaces))
+                    Token<BodySymbol>(stringLiteral: $0)//.trimmingCharacters(in: .whitespaces))
                 }
+                .filter { $0.symbol != .empty }
         }
 
         let footer = reportContent.footer.map { Token<FooterSymbol>(stringLiteral: $0) }

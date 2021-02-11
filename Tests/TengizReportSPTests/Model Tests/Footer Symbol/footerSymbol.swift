@@ -10,7 +10,7 @@ import XCTest
 
 final class GetFooterSourcesTests: XCTestCase {
     func testSpecialFuncToGetAllFooters() throws {
-        let footers = try filenames
+        let footers = try SampleFiles.filenames
             .compactMap { filename in
                 ReportContent(
                     stringLiteral: try filename
@@ -28,7 +28,7 @@ final class GetFooterSourcesTests: XCTestCase {
     }
 
     func test_GetSources() {
-        let sourses = try? filenames
+        let sourses = try? SampleFiles.filenames
             .flatMap { filename in
                 ReportContent(
                     stringLiteral: try filename

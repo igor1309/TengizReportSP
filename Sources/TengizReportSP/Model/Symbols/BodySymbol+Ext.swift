@@ -28,7 +28,7 @@ extension BodySymbol: ExpressibleByStringLiteral {
 }
 
 extension Patterns {
-    static let itemTitle = #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)"#
+    static let itemTitle = #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?:\t\t)?"#
 
     static let bodyHeader = #"(?!ИТОГ)(?<title>^\D.*?):.*$"#
 
@@ -42,7 +42,7 @@ extension Patterns {
     /// Title may have number inside parantheses or %.
     /// May have note after number.
     /// Does not match a string without number, so failure could be used to return `.empty` in BodySymbol init
-    static let itemBasic = #"\#(itemTitle)(?<value>\#(integer))(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?$"#
+    static let itemBasic = #"\#(itemTitle)(?<value>\#(integer))(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?:\t\t)?$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
     static let itemCorrection = #"^(?<value>-\#(integer))\s*(?<title>.*)$"#

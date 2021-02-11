@@ -28,10 +28,10 @@ final class ReportContentTests: XCTestCase {
     func testSplitReportContent() throws {
         let samples = ReportContent.sampleContents
 
-        XCTAssertEqual(filenames.count, samples.count,
+        XCTAssertEqual(SampleFiles.filenames.count, samples.count,
                        "File count should be equal to Samples count")
 
-        try zip(filenames, samples)
+        try zip(SampleFiles.filenames, samples)
             .forEach { filename, sample in
                 let contents = try filename.contentsOfFile()//.clearReport()
                 let reportContent = ReportContent(stringLiteral: contents)
@@ -55,9 +55,14 @@ final class ReportContentTests: XCTestCase {
     }
 
     func test_Saperavi072020() throws {
-        let contents = try filenames[1].contentsOfFile()
+        let contents = try SampleFiles.filenames[1].contentsOfFile()
         XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.saperavi202007)
     }
-    
+
+    func test_Saperavi_2020_11() throws {
+        let contents = try SampleFiles.filenames[5].contentsOfFile()
+        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.saperavi202011)
+    }
+
 }
 

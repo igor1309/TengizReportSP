@@ -27,7 +27,7 @@ extension FooterSymbol: ExpressibleByStringLiteral {
 
 extension Patterns {
     static let numberWithSignAtStart = #"^\s*(-|\+)\d{1,3}"#
-    static let bodyFooter = #"(?=ИТОГ:)\#(title)(?<value>\#(rubliKopeiki))$"#
+    static let bodyFooter = #"(?=ИТОГ:)\#(title)(?<value>\#(rubliKopeiki))(?:\t\t)?$"#
 }
 
 extension String {

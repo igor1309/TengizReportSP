@@ -10,7 +10,7 @@ import XCTest
 
 final class RubliKopeikiTests: XCTestCase {
     func test_GetSources() {
-        let sourses = try? filenames
+        let sourses = try? SampleFiles.filenames
             .flatMap { filename in
                 ReportContent(
                     stringLiteral: try filename

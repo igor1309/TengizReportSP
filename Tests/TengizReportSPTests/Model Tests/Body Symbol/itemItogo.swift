@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemItogo() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemItogo, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?<note>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р ?\d\d?к)?).*)"#)
+        XCTAssertEqual(Patterns.itemItogo, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?:\t\t)?(?<note>.*(?<value>(?<=Итого|фактический)\s*\d{1,3}(?:\.\d{3})*(?:р ?\d\d?к)?).*)"#)
 
         // MARK: count in selectedBodyItems
         XCTAssertEqual(selectedBodyItems.compactMap { $0.firstMatch(for: Patterns.itemItogo) }.count,

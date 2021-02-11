@@ -11,13 +11,19 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemTitle() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemTitle, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)"#)
+        XCTAssertEqual(Patterns.itemTitle, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?:\t\t)?"#)
         // MARK: no match
         XCTAssertNil("12. Интернет 323".firstMatch(for: Patterns.itemTitle), "Should have \t")
         XCTAssertNil("6. Обслуживание кассовой программы Айко 4.500+ item".firstMatch(for: Patterns.itemTitle), "Should have \t")
         XCTAssertNil("Оборот факт:141.690+1.238.900=1.380.590".firstMatch(for: Patterns.itemTitle), "Should have \t")
 
         // MARK: match
+        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
+                        .firstMatch(for: Patterns.itemTitle),
+                       "1. Аренда торгового помещения\t ")
+        XCTAssertEqual("5. Аренда головного офиса\t11.500\t\t"
+                        .firstMatch(for: Patterns.itemTitle),
+                       "5. Аренда головного офиса\t")
         XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)"
                         .firstMatch(for: Patterns.itemTitle),
                        "1. Аренда торгового помещения\t ")

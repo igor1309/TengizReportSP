@@ -56,7 +56,7 @@ final class RegexStringExtTests: XCTestCase {
     }
 
     func testListMatchesWithNumbers() {
-        let sources = try? filenames
+        let sources = try? SampleFiles.filenames
             .flatMap { filename -> [String] in
                 let clear = try filename
                     .contentsOfFile()

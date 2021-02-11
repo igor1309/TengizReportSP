@@ -9,9 +9,9 @@ import XCTest
 
 final class FilesTests: XCTestCase {
     func testTextFilesReadable() throws {
-        XCTAssertEqual(filenames.count, 9)
+        XCTAssertEqual(SampleFiles.filenames.count, 9)
 
-        try filenames
+        try SampleFiles.filenames
             .forEach {
                 XCTAssertFalse(try $0.contentsOfFile().isEmpty, "Can't read Report file content")
             }

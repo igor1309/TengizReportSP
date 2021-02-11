@@ -21,23 +21,23 @@ final class TokenTests: XCTestCase {
 
         input = "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t"
         XCTAssertEqual(Token<BodySymbol>(stringLiteral: input),
-                       Token<BodySymbol>(source: input, symbol: .empty))
+                       Token<BodySymbol>(source: "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t", symbol: .item(itemNumber: 1, title: "ФОТ", value: 704848.0, note: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)")))
 
         input = "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"
         XCTAssertEqual(Token<BodySymbol>(stringLiteral: input),
                        Token<BodySymbol>(source: input, symbol: .item(itemNumber: 1, title: "ФОТ", value: 704848.0, note: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)")))
-
         XCTAssertNotEqual(Token<BodySymbol>(stringLiteral: input),
                           Token<BodySymbol>(source: input, symbol: .empty))
 
         input = "ИТОГ:\t65.167"
         XCTAssertEqual(Token<BodySymbol>(stringLiteral: input),
                        Token<BodySymbol>(source: input, symbol: .footer(title: "ИТОГ:", value: 65_167)))
-        // no match
         input = "ИТОГ:\t65.167\t\t"
         XCTAssertEqual(Token<BodySymbol>(stringLiteral: input),
-                       Token<BodySymbol>(source: input, symbol: .empty),
+                       Token<BodySymbol>(source: input, symbol: .footer(title: "ИТОГ:", value: 65_167)),
                        "Mind the TABs at the end")
 
+        // no match
+        #warning("finish with negative cases")
     }
 }

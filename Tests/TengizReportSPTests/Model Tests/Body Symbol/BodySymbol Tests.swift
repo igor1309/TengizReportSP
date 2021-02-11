@@ -39,10 +39,13 @@ final class BodySymbolTests: XCTestCase {
 
         /// `itemNoNumber`: title without number, should return .empty
         XCTAssertEqual(BodySymbol("1. Аренда торгового помещения\t-----------------------------"), .empty)
+        XCTAssertEqual(BodySymbol("2. Эксплуатационные расходы\t-----------------------------\t\t"), .empty)
         XCTAssertEqual(BodySymbol("2. Предоплаченный товар, но не отраженный в приходе"), .empty)
 
         /// `itemBasic`: no itogo, no number inside parantheses, no %, no note after number
         XCTAssertEqual(BodySymbol("5. Аренда головного офиса\t11.500"),
+                       .item(itemNumber: 5, title: "Аренда головного офиса", value: 11_500, note: nil))
+        XCTAssertEqual(BodySymbol("5. Аренда головного офиса\t11.500\t\t"),
                        .item(itemNumber: 5, title: "Аренда головного офиса", value: 11_500, note: nil))
         XCTAssertEqual(BodySymbol("16. Текущие мелкие расходы \t1.200"),
                        .item(itemNumber: 16, title: "Текущие мелкие расходы", value: 1_200, note: nil))
