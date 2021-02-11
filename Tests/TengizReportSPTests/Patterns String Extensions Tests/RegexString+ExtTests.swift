@@ -60,7 +60,6 @@ final class RegexStringExtTests: XCTestCase {
             .flatMap { filename -> [String] in
                 let clear = try filename
                     .contentsOfFile()
-                    .clearReport()
                 let filtered = ReportContent(stringLiteral: clear)
                     .body
                     .flatMap { $0.components(separatedBy: "\n") }

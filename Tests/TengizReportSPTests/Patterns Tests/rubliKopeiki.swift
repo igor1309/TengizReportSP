@@ -15,7 +15,6 @@ final class RubliKopeikiTests: XCTestCase {
                 ReportContent(
                     stringLiteral: try filename
                         .contentsOfFile()
-                        .clearReport()
                 )
                 .body
                 .flatMap { $0.components(separatedBy: "\n") }

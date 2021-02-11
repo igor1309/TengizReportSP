@@ -123,7 +123,7 @@ extension TokenizedReportTests {
 
         )
 
-        let contents = try filenames[8].contentsOfFile().clearReport()
+        let contents = try filenames[8].contentsOfFile()
         let reportContent = ReportContent(stringLiteral: contents)
         XCTAssertNotEqual(reportContent.footer, [])
 

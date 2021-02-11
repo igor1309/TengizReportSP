@@ -15,7 +15,6 @@ final class GetFooterSourcesTests: XCTestCase {
                 ReportContent(
                     stringLiteral: try filename
                         .contentsOfFile()
-                        .clearReport()
                 )
                 .footer
             }
