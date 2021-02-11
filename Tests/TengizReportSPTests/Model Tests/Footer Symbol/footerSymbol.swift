@@ -47,12 +47,12 @@ final class GetFooterSourcesTests: XCTestCase {
 
         _ = [
             // Saperavi 06.2020
-            "ИТОГ всех расходов за месяц:\t92.531р15к",     // expensesTotal
-            "Фактический остаток:\t173.753 \t20%",         // balance = revenue - expensesTotal
+            "ИТОГ всех расходов за месяц:\t92.531р15к",     // totalExpenses
+            "Фактический остаток:\t173.753 \t20%",         // balance = revenue - totalExpenses
 
             // Saperavi 07.2020
-            "ИТОГ всех расходов за месяц:\t1.677.077р46к", // expensesTotal
-            "Фактический остаток:\t-609.230р46к\t20%",     // balance = revenue - expensesTotal
+            "ИТОГ всех расходов за месяц:\t1.677.077р46к", // totalExpenses
+            "Фактический остаток:\t-609.230р46к\t20%",     // balance = revenue - totalExpenses
             "-173.753 остаток с июня",                     // openningBalance // !! написан с минусом, по факту плюс
             "-28.000 субсидия, поступила в июле",          // extra+/- // !! написан с минусом, по факту плюс
             "ИТОГ:\t-407.477р46к",                         // runningBalance

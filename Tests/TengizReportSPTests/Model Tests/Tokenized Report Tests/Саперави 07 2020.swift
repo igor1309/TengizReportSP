@@ -124,7 +124,7 @@ extension TokenizedReportTests {
             ],
             footer: [
                 Token<FooterSymbol>(source: "ИТОГ всех расходов за месяц:\t1.677.077р46к",
-                                    symbol: .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 1_677_077.46)),
+                                    symbol: .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 1_677_077.46)),
                 Token<FooterSymbol>(source: "Фактический остаток:\t-609.230р46к\t20%",
                                     symbol: .balance(title: "Фактический остаток", value: -609_230.46, percentage: 0.2)),
                 Token<FooterSymbol>(source: "-173.753 остаток с июня",

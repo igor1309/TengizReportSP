@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
     func clearReport() -> String {
         // make some cleaning & fixes
         self.clearWhitespacesAndNewlines()

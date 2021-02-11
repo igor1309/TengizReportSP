@@ -23,7 +23,7 @@ public enum BodySymbol: Hashable, Equatable {
 }
 
 public enum FooterSymbol: Hashable, Equatable {
-    case expensesTotal(title: String, value: Double)
+    case totalExpenses(title: String, value: Double)
     /// сальдо доходов-расходов
     case balance(title: String, value: Double, percentage: Double?)
     case openingBalance(title: String, value: Double)

@@ -15,25 +15,25 @@ extension FooterSymbol {
 }
 
 final class FooterSymbolTests: XCTestCase {
-    func test_expensesTotal() {
+    func test_totalExpenses() {
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t92.531р 15к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 92_531.15))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 92_531.15))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t1.677.077р 46к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 1_677_077.46))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 1_677_077.46))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t2.094.271р 36к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_094_271.36))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_094_271.36))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t2.343.392р 37к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_343_392.37))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_343_392.37))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t2.865.042р 74к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_865_042.74))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_865_042.74))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t2.030.572р 59к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_030_572.59))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_030_572.59))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t2.432.175р 89к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_432_175.89))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_432_175.89))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t695.836р 15к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 695_836.15))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 695_836.15))
         XCTAssertEqual(FooterSymbol("ИТОГ всех расходов за месяц:\t920.954р 54к"),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 920_954.54))
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 920_954.54))
     }
 
     func test_balance() {

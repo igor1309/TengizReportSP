@@ -37,7 +37,7 @@ final class FooterSymbolStringExtTests: XCTestCase {
 final class FooterItemTests: XCTestCase {
     func test_balance() throws {
         XCTAssertNil(try XCTUnwrap("ИТОГ всех расходов за месяц:\t920.954р 54к".footerItem())
-                        .balance(), "Process by expensesTotal()'")
+                        .balance(), "Process by totalExpenses()'")
         XCTAssertNil(try XCTUnwrap("ИТОГ:\t-407.477р 46к".footerItem())
                         .balance(), "Process by 'runningBalance()'")
         XCTAssertNil(try XCTUnwrap("-28.000 субсидия, поступила в июле".footerItem())
@@ -74,48 +74,48 @@ final class FooterItemTests: XCTestCase {
                        .balance(title: "Фактический остаток", value: 8_670.46, percentage: nil))
     }
 
-    func test_expensesTotal() throws {
+    func test_totalExpenses() throws {
         XCTAssertNil(try XCTUnwrap("ИТОГ:\t-407.477р 46к".footerItem())
-                        .expensesTotal(), "Process by 'runningBalance()'")
+                        .totalExpenses(), "Process by 'runningBalance()'")
         XCTAssertNil(try XCTUnwrap("Фактический остаток:\t173.753 \t20%".footerItem())
-                        .expensesTotal(), "Process by 'balance()'")
+                        .totalExpenses(), "Process by 'balance()'")
         XCTAssertNil(try XCTUnwrap("-28.000 субсидия, поступила в июле".footerItem())
-                        .expensesTotal(), "Process by 'extraIncomeExpenses()'")
+                        .totalExpenses(), "Process by 'extraIncomeExpenses()'")
         XCTAssertNil(try XCTUnwrap("+23.334р 76к остаток с инвестиций".footerItem())
-                        .expensesTotal(), "Process by 'extraIncomeExpenses()'")
+                        .totalExpenses(), "Process by 'extraIncomeExpenses()'")
 
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t92.531р 15к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 92531.15))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 92531.15))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t1.677.077р 46к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 1677077.46))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 1677077.46))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t2.094.271р 36к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_094_271.36))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_094_271.36))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t2.343.392р 37к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_343_392.37))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_343_392.37))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t2.865.042р 74к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_865_042.74))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_865_042.74))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t2.030.572р 59к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_030_572.59))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_030_572.59))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t2.432.175р 89к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 2_432_175.89))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 2_432_175.89))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t695.836р 15к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 695_836.15))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 695_836.15))
         XCTAssertEqual(try XCTUnwrap("ИТОГ всех расходов за месяц:\t920.954р 54к".footerItem())
-                        .expensesTotal(),
-                       .expensesTotal(title: "ИТОГ всех расходов за месяц", value: 920_954.54))
+                        .totalExpenses(),
+                       .totalExpenses(title: "ИТОГ всех расходов за месяц", value: 920_954.54))
     }
 
     func test_extraIncomeExpenses() throws {
         XCTAssertNil(try XCTUnwrap("ИТОГ всех расходов за месяц:\t920.954р 54к".footerItem())
-                        .extraIncomeExpenses(), "Process by expensesTotal()'")
+                        .extraIncomeExpenses(), "Process by totalExpenses()'")
         XCTAssertNil(try XCTUnwrap("Фактический остаток:\t173.753 \t20%".footerItem())
                         .extraIncomeExpenses(), "Process by 'balance()'")
         XCTAssertNil(try XCTUnwrap("ИТОГ:\t-407.477р 46к".footerItem())
@@ -131,7 +131,7 @@ final class FooterItemTests: XCTestCase {
 
     func test_runningBalance() throws {
         XCTAssertNil(try XCTUnwrap("ИТОГ всех расходов за месяц:\t92.531р 15к".footerItem())
-                        .runningBalance(), "Process by 'expensesTotal()'")
+                        .runningBalance(), "Process by 'totalExpenses()'")
         XCTAssertNil(try XCTUnwrap("Фактический остаток:\t173.753 \t20%".footerItem())
                         .runningBalance(), "Process by 'balance()'")
         XCTAssertNil(try XCTUnwrap("-28.000 субсидия, поступила в июле".footerItem())

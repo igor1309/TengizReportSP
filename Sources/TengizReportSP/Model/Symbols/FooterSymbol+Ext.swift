@@ -15,7 +15,7 @@ extension FooterSymbol: ExpressibleByStringLiteral {
             guard !string.isEmpty,
                   let item = string.footerItem() else { return .error }
 
-            if let expenses = item.expensesTotal()       { return expenses }
+            if let expenses = item.totalExpenses()       { return expenses }
             if let balance  = item.balance()             { return balance }
             if let extra    = item.extraIncomeExpenses() { return extra }
             if let running  = item.runningBalance()      { return running }
@@ -67,7 +67,7 @@ extension FooterItem {
         return .balance(title: "Фактический остаток", value: value ?? 0, percentage: percentage)
     }
 
-    func expensesTotal() -> FooterSymbol? {
+    func totalExpenses() -> FooterSymbol? {
         /*
          ИТОГ всех расходов за месяц:\t92.531р15к
          ИТОГ всех расходов за месяц:\t1.677.077р46к
@@ -75,7 +75,7 @@ extension FooterItem {
          ИТОГ всех расходов за месяц:\t920.954р54к
          */
         guard title.firstMatch(for: "ИТОГ всех расходов за месяц:") != nil else { return nil }
-        return .expensesTotal(title: "ИТОГ всех расходов за месяц", value: value ?? 0)
+        return .totalExpenses(title: "ИТОГ всех расходов за месяц", value: value ?? 0)
     }
 
     func extraIncomeExpenses() -> FooterSymbol? {

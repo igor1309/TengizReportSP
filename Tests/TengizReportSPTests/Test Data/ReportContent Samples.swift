@@ -1,5 +1,5 @@
 //
-//  ReportContent Sample.swift
+//  ReportContent Samples.swift
 //  TextViewAppUnitTests
 //
 //  Created by Igor Malyarov on 06.01.2021.
@@ -10,19 +10,19 @@ import Foundation
 
 extension ReportContent {
     static var sampleContents: [ReportContent] {
-        [ReportContent.reportContent202006,
-         ReportContent.reportContent202007,
-         ReportContent.reportContent202008,
-         ReportContent.reportContent202009,
-         ReportContent.reportContent202010,
-         ReportContent.reportContent202011,
-         ReportContent.reportContent202012,
-         ReportContent.reportContent202013,
-         ReportContent.reportContent202014
+        [ReportContent.saperavi202006,
+         ReportContent.saperavi202007,
+         ReportContent.saperavi202008,
+         ReportContent.saperavi202009,
+         ReportContent.saperavi202010,
+         ReportContent.saperavi202011,
+         ReportContent.saperavi202012,
+         ReportContent.vaiMe202011,
+         ReportContent.vaiMe202012
         ]
     }
 
-    static var reportContent202006: ReportContent {
+    static var saperavi202006: ReportContent {
         ReportContent(
             header: [
                 "Название объекта: Саперави Аминьевка",
@@ -44,7 +44,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202007: ReportContent {
+    static var saperavi202007: ReportContent {
         ReportContent(
             header: [
                 "Название объекта: Саперави Аминьевка",
@@ -63,7 +63,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202008: ReportContent {
+    static var saperavi202008: ReportContent {
         ReportContent(
             header: [
                 "Название объекта: Саперави Аминьевка",
@@ -82,7 +82,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202009: ReportContent {
+    static var saperavi202009: ReportContent {
         ReportContent(
             header: [
                 "Название объекта: Саперави Аминьевка",
@@ -101,7 +101,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202010: ReportContent {
+    static var saperavi202010: ReportContent {
         ReportContent(
             header: [
                 "Название объекта: Саперави Аминьевка",
@@ -125,7 +125,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202011: ReportContent {
+    static var saperavi202011: ReportContent {
         ReportContent(
             header: [
                 "Название объекта: Саперави Аминьевка",
@@ -144,7 +144,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202012: ReportContent {
+    static var saperavi202012: ReportContent {
         ReportContent(
             header: [
                 "Название объекта: Саперави Аминьевка",
@@ -162,7 +162,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202013: ReportContent {
+    static var vaiMe202011: ReportContent {
         ReportContent(
             header: [
                 "ВМ ЩК",
@@ -175,7 +175,7 @@ extension ReportContent {
         )
     }
 
-    static var reportContent202014: ReportContent {
+    static var vaiMe202012: ReportContent {
         ReportContent(
             header: [
                 "ВМ ЩК",

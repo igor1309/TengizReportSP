@@ -56,7 +56,7 @@ final class ReportContentTests: XCTestCase {
 
     func test_Saperavi072020() throws {
         let contents = try filenames[1].contentsOfFile()
-        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.reportContent202007)
+        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.saperavi202007)
     }
     
 }
