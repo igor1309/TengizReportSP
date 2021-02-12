@@ -26,7 +26,7 @@ extension ReportContent: ExpressibleByStringLiteral {
     init(stringLiteral string: String) {
         let delimiter = "$$$$$"
 
-        let headerString = string.firstMatch(for: Patterns.headerPattern) ?? ""
+        let headerString = string.firstMatch(for: Patterns.header) ?? ""
         let header = headerString
             .replaceMatches(for: #"\t"#, withString: delimiter)
             .replaceMatches(for: #"\n"#, withString: delimiter)
@@ -34,7 +34,7 @@ extension ReportContent: ExpressibleByStringLiteral {
             .map { $0.clearWhitespacesAndNewlines() }
             .filter { !$0.isEmpty }
 
-        let footerString = string.firstMatch(for: Patterns.footerPattern) ?? ""
+        let footerString = string.firstMatch(for: Patterns.footer) ?? ""
         let footer = footerString
             .replaceMatches(for: #"\n"#, withString: delimiter)
             .components(separatedBy: delimiter)
@@ -43,20 +43,20 @@ extension ReportContent: ExpressibleByStringLiteral {
 
         let body = string
             // cut header
-            .replaceMatches(for: Patterns.headerPattern, withString: "")
+            .replaceMatches(for: Patterns.header, withString: "")
             // cut footer
-            .replaceMatches(for: Patterns.footerPattern, withString: "")
+            .replaceMatches(for: Patterns.footer, withString: "")
             // delete column title row
-            .replaceMatches(for: Patterns.columnTitleRowPattern, withString: "")
-            .listMatches(for: Patterns.bodyPattern)
+            .replaceMatches(for: Patterns.columnTitleRow, withString: "")
+            .listMatches(for: Patterns.body)
 
         self.init(header: header, body: body, footer: footer)
     }
 }
 
 extension Patterns {
-    static let headerPattern = #"(?m)(^(.*)\n)+?(?=Статья расхода:)"#
-    static let footerPattern = #"(?m)^ИТОГ всех расходов за месяц(?:.|\n)*$"#
-    static let columnTitleRowPattern = #"(?m)^Статья расхода:\s*Сумма расхода:\s*План %\s*Факт %\s*\n"#
-    static let bodyPattern = #"(?m)(?:^[А-Яа-я ]+:.*$)(?:\n.*$)+?\nИТОГ:.*"#
+    static let header = #"(?m)(^(.*)\n)+?(?=Статья расхода:)"#
+    static let footer = #"(?m)^ИТОГ всех расходов за месяц(?:.|\n)*$"#
+    static let columnTitleRow = #"(?m)^Статья расхода:\s*Сумма расхода:\s*План %\s*Факт %\s*\n"#
+    static let body = #"(?m)(?:^[А-Яа-я ]+:.*$)(?:\n.*$)+?\nИТОГ:.*"#
 }
