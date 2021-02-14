@@ -20,6 +20,7 @@ extension TokenizedReport {
                                  symbol: .dailyAverage(34_445))],
 
         body: [
+            // group 1
             [Token<BodySymbol>(source: "Основные расходы:\t\t25%\t",
                                symbol: .header(title: "Основные расходы", plan: 0.25, fact: nil)),
              Token<BodySymbol>(source: "1. Аренда торгового помещения\t46.667 (за июнь)\t\t",
@@ -31,6 +32,7 @@ extension TokenizedReport {
              Token<BodySymbol>(source: "ИТОГ:\t65.167\t\t",
                                symbol: .footer(title: "ИТОГ:", value: 65_167))],
 
+            // group 2
             [Token<BodySymbol>(source: "Зарплата:\t\t22%\t",
                                symbol: .header(title: "Зарплата", plan: 0.22, fact: nil)),
              Token<BodySymbol>(source: "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t",
@@ -40,6 +42,7 @@ extension TokenizedReport {
              Token<BodySymbol>(source: "ИТОГ:\t803.848\t\t",
                                symbol: .footer(title: "ИТОГ:", value: 803_848))],
 
+            // group 3
             [Token<BodySymbol>(source: "Фактический приход товара и оплата товара:\t\t25%\t",
                                symbol: .header(title: "Фактический приход товара и оплата товара", plan: 0.25, fact: nil)),
              Token<BodySymbol>(source: "1. Приход товара по накладным\t922.936р37к (оплаты фактические: 313.570р26к-переводы; 87.091р20к-корпоративная карта; 97.712-наличные из кассы; Итого 498.373р46к)\t\t",
@@ -49,9 +52,10 @@ extension TokenizedReport {
              Token<BodySymbol>(source: "ИТОГ:\t538.773р46к\t\t",
                                symbol: .footer(title: "ИТОГ:", value: 538_773.46))],
 
+            // group 4
             [Token<BodySymbol>(source: "Прочие расходы:\t\t8%\t",
                                symbol: .header(title: "Прочие расходы", plan: 0.08, fact: nil)),
-             Token<BodySymbol>(source: "1.Налоговые платежи\t13.318р93к\t\t",
+             Token<BodySymbol>(source: "1.Налоговые платежи \t13.318р93к\t\t",
                                symbol: .item(itemNumber: 1, title: "Налоговые платежи", value: 13_318.93, note: nil)),
              Token<BodySymbol>(source: "2.Банковское обслуживание\t5.778\t\t",
                                symbol: .item(itemNumber: 2, title: "Банковское обслуживание", value: 5_778, note: nil)),
@@ -82,6 +86,7 @@ extension TokenizedReport {
              Token<BodySymbol>(source: "ИТОГ:\t262.308\t\t",
                                symbol: .footer(title: "ИТОГ:", value: 262_308))],
 
+            // group 5
             [Token<BodySymbol>(source: "Расходы на доставку:\t\t\t",
                                symbol: .header(title: "Расходы на доставку", plan: nil, fact: nil)),
              Token<BodySymbol>(source: "2. Агрегаторы\t6.981\t\t",

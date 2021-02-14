@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemBasic() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemBasic, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?:\t\t)?(?<value>\d{1,3}(?:\.\d{3})*)(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?:\t\t)?$"#)
+        XCTAssertEqual(Patterns.itemBasic, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?:\t\t)?(?<value>(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?) ?к)?)(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?:\t\t)?$"#)
 
         // MARK: no match
         XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".firstMatch(for: Patterns.itemBasic))
@@ -29,10 +29,14 @@ extension RegexPatternsTests {
                        16, "Should be exactly 16 matchs")
 
         // MARK: match
+        XCTAssertEqual("1.Налоговые платежи \t13.318р93к\t\t".firstMatch(for: Patterns.itemBasic),
+                       "1.Налоговые платежи \t13.318р93к\t\t")
         XCTAssertEqual("5. Аренда головного офиса\t11.500".firstMatch(for: Patterns.itemBasic),
                        "5. Аренда головного офиса\t11.500")
         XCTAssertEqual("5. Аренда головного офиса\t11.500\t\t".firstMatch(for: Patterns.itemBasic),
                        "5. Аренда головного офиса\t11.500\t\t")
+        XCTAssertEqual("12.Интернет\t3.500\t\t".firstMatch(for: Patterns.itemBasic),
+                       "12.Интернет\t3.500\t\t")
         XCTAssertEqual("16. Текущие мелкие расходы \t1.200".firstMatch(for: Patterns.itemBasic),
                        "16. Текущие мелкие расходы \t1.200")
         XCTAssertEqual("14. Контур (эл.отчетность)\t3.000".firstMatch(for: Patterns.itemBasic),
@@ -111,6 +115,8 @@ extension BodySymbolFuncTests {
         XCTAssertEqual(selectedBodyItems.compactMap { $0.bodySymbol(for: Patterns.itemBasic) }.count,
                        16, "Should be exactly 16 matchs")
 
+        XCTAssertEqual("1.Налоговые платежи \t13.318р93к\t\t".bodySymbol(for: Patterns.itemBasic),
+                       .item(itemNumber: 1, title: "Налоговые платежи", value: 13_318.93, note: nil))
         XCTAssertEqual("5. Аренда головного офиса\t11.500".bodySymbol(for: Patterns.itemBasic),
                        .item(itemNumber: 5, title: "Аренда головного офиса", value: 11_500, note: nil))
         XCTAssertEqual("5. Аренда головного офиса\t11.500\t\t".bodySymbol(for: Patterns.itemBasic),
@@ -130,6 +136,8 @@ extension BodySymbolFuncTests {
                        .item(itemNumber: 4, title: "Банковская комиссия 1.6% за эквайринг", value: 2_120, note: nil))
         XCTAssertEqual("4. Банковская комиссия 1.6% за эквайринг\t2.120\t\t".bodySymbol(for: Patterns.itemBasic),
                        .item(itemNumber: 4, title: "Банковская комиссия 1.6% за эквайринг", value: 2_120, note: nil))
+        XCTAssertEqual("12.Интернет\t3.500\t\t".bodySymbol(for: Patterns.itemBasic),
+                       .item(itemNumber: 12, title: "Интернет", value: 3_500, note: nil))
         XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655".bodySymbol(for: Patterns.itemBasic),
                        .item(itemNumber: 27, title: "Сервис Гуру (система аттестации, за 1 год)", value: 12_655, note: nil))
         XCTAssertEqual("27. Сервис Гуру (система аттестации, за 1 год)\t12.655\t\t".bodySymbol(for: Patterns.itemBasic),

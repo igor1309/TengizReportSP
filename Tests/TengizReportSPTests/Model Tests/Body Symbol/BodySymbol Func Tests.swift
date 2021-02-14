@@ -22,9 +22,10 @@ final class BodySymbolFuncTests: XCTestCase {
         XCTAssertEqual(input.replaceFirstMatch(for: pattern, withString: "$3")?
                         .trimmingCharacters(in: .whitespaces),
                        "46.667")
-        XCTAssertEqual(input.replaceFirstMatch(for: pattern, withString: "$4")?
+        XCTAssertEqual(input.replaceFirstMatch(for: pattern, withString: "$6")?
                         .trimmingCharacters(in: .whitespaces),
-                       "(за июнь)")
+                       "(за июнь)",
+                       "Multiple groups in pattern, better use group names")
 
         XCTAssertEqual(input.bodySymbol(for: pattern),
                        .item(itemNumber: 1, title: "Аренда торгового помещения", value: 46_667, note: "(за июнь)"))

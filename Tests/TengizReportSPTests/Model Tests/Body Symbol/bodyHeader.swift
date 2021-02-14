@@ -26,8 +26,12 @@ extension BodySymbolPatternTests {
          */
         var input = "Основные расходы:\t\t25%\t"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
+
         input = "Основные расходы:\t\t25%\t8.95%"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
+        input = "Основные расходы:\t\t25%\t8.95%\t"
+        XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
+
         input = "Основные расходы:\t-----------------------------\t25%"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
         input = "Зарплата:\t\t22%\t"
@@ -36,6 +40,7 @@ extension BodySymbolPatternTests {
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
         input = "Прочие расходы:\t\t8%\t"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
+
         input = "Расходы на доставку:\t\t\t"
         XCTAssertEqual(input.firstMatch(for: Patterns.bodyHeader), input)
         input = "Расходы на доставку:\t-----------------------------\t\t"

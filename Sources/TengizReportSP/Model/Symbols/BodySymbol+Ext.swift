@@ -42,7 +42,7 @@ extension Patterns {
     /// Title may have number inside parantheses or %.
     /// May have note after number.
     /// Does not match a string without number, so failure could be used to return `.empty` in BodySymbol init
-    static let itemBasic = #"\#(itemTitle)(?<value>\#(integer))(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?:\t\t)?$"#
+    static let itemBasic = #"\#(itemTitle)(?<value>\#(rubliKopeiki))(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?:\t\t)?$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
     static let itemCorrection = #"^(?<value>-\#(integer))\s*(?<title>.*)$"#

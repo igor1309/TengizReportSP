@@ -13,7 +13,7 @@ extension TokenizedReportTests {
         let filename = SampleFiles.saperavi_2020_07
         let sample = TokenizedReport.saperavi_2020_07
 
-        // MARK: sample check
+        // MARK: checking tokens in sample
         sample.header.forEach { XCTAssertEqual($0.symbol, HeaderSymbol(stringLiteral: $0.source)) }
         sample.body.flatMap { $0 }.forEach { XCTAssertEqual($0.symbol, BodySymbol(stringLiteral: $0.source)) }
         sample.footer.forEach { XCTAssertEqual($0.symbol, FooterSymbol(stringLiteral: $0.source)) }
@@ -33,6 +33,8 @@ extension TokenizedReportTests {
         // body
         XCTAssertEqual(report.body, sample.body)
         XCTAssertEqual(report.body.count, sample.body.count)
+
+        XCTAssertEqual(report.body[3], sample.body[3])
 
         zip(report.body, sample.body).forEach { group, sample in
             XCTAssertEqual(group, sample)
