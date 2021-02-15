@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 final class RegexStringExtTests: XCTestCase {
     func testRegexGroupName() {

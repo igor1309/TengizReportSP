@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 extension HeaderSymbol {
     init(_ string: String) {

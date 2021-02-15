@@ -14,7 +14,7 @@ extension String {
     ///   - pattern: string to create regular expression used for match
     ///   - replacementString: replacement string
     /// - Returns: string with replaced match or original string if no matches for match string were found
-    func replaceMatches(for pattern: String, withString replacementString: String) -> String {
+    public func replaceMatches(for pattern: String, withString replacementString: String) -> String {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
             return self
         }
@@ -31,7 +31,7 @@ extension String {
         return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replacementString)
     }
 
-    func listMatches(for pattern: String) -> [String] {
+    public func listMatches(for pattern: String) -> [String] {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return [] }
         return listMatches(for: regex)
     }
@@ -49,7 +49,7 @@ extension String {
     /// Returns matching string or nil of no match
     /// - Parameter pattern: pattern to create NSRegularExpression
     /// - Returns: nil if no match
-    func firstMatch(for pattern: String) -> String? {
+    public func firstMatch(for pattern: String) -> String? {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return nil }
         return firstMatch(for: regex)
     }
@@ -74,7 +74,7 @@ extension String {
     ///   - pattern: string to create regular expression used for match
     ///   - replacementString: replacement string
     /// - Returns: string with replaced match or nil if no matches for match string were found
-    func replaceFirstMatch(for pattern: String, withString replacementString: String) -> String? {
+    public func replaceFirstMatch(for pattern: String, withString replacementString: String) -> String? {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return nil }
         return replaceFirstMatch(for: regex, withString: replacementString)
     }

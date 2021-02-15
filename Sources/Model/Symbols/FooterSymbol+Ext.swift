@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toolbox
 
 extension FooterSymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {

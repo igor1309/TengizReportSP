@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toolbox
 
 struct FooterItem: Equatable {
     let title: String

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 final class BodySymbolFuncTests: XCTestCase {
     #warning("what is this func for????")

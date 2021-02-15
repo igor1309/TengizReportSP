@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@testable import TengizReportSP
+@testable import Model
 
 extension ReportContent {
     static var sampleContents: [ReportContent] {

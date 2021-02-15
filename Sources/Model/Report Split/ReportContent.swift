@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toolbox
 
 #warning("delete if not used any more")
 internal struct ReportContent: Equatable {

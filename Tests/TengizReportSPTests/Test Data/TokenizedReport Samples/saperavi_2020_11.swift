@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 #warning("write a test for these static vars: body.map(token.source) = Source.body.components(separatedBy: '\n')")
 extension TokenizedReport {

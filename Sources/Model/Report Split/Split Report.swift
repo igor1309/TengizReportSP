@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toolbox
 
 extension String {
     func header() -> String {

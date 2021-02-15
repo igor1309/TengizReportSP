@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 extension TokenizedReportTests {
     func test_init_Saperavi_2020_07() throws {

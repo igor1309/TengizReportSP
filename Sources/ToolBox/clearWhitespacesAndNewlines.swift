@@ -10,7 +10,7 @@ import Foundation
 extension String {
 
     /// clean whitespaces and empty lines
-    func clearWhitespacesAndNewlines() -> String {
+    public func clearWhitespacesAndNewlines() -> String {
         let cleanContent = self
             .components(separatedBy: "\n")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }

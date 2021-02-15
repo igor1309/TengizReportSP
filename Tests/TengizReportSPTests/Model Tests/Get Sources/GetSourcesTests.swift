@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 final class GetSourcesTests: XCTestCase {
     func test_GetSources() {

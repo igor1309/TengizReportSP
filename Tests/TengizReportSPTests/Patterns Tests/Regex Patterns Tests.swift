@@ -6,6 +6,6 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 final class RegexPatternsTests: XCTestCase {}

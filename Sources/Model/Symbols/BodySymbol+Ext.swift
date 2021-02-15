@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toolbox
 
 extension BodySymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
@@ -25,8 +26,6 @@ extension BodySymbol: ExpressibleByStringLiteral {
             return .empty
         }()
     }
-}
-
 }
 
 extension Patterns {
@@ -100,3 +99,5 @@ extension String {
 
         return .item(itemNumber: itemNumber, title: title, value: value, note: note.isEmpty ? nil : note)
     }
+
+}

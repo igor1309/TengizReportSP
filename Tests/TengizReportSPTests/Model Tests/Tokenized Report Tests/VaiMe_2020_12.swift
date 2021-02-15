@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import TengizReportSP
+@testable import Model
 
 extension TokenizedReportTests {
     func test_init_VaiMe_2020_12() throws {
