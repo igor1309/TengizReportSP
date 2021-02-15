@@ -11,7 +11,7 @@ import XCTest
 extension RegexPatternsTests {
     func test_itemBasic() {
         // MARK: pattern (regex)
-        XCTAssertEqual(Patterns.itemBasic, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?:\t\t)?(?<value>(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?) ?к)?)(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?:\t\t)?$"#)
+        XCTAssertEqual(Patterns.itemBasic, #"^(?<itemNo>\d\d?)\.\s*(?<title>.+?)(?:\t\s*)(?:\t\t)?(?<value>(?<integer>\d{1,3}(?:\.\d{3})*)(?:\s*р\s*(?<decimal>\d\d?) ?к)?)(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?: ?\t\t)?$"#)
 
         // MARK: no match
         XCTAssertNil("1. Приход товара по накладным\t 753.950р 74к(оплаты фактические: 444.719р 16к -переводы; 75.255р 20к-корпоративная карта; 1.545-наличные из кассы; Итого 521.519р 36к)".firstMatch(for: Patterns.itemBasic))
@@ -87,6 +87,45 @@ extension RegexPatternsTests {
                         .firstMatch(for: Patterns.itemBasic),
                        "1. ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)")
 
+        /// `ФОТ`
+        XCTAssertEqual("1.ФОТ\t 1.064.769( за вторую  часть ноября и первую часть декабря) \t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t 1.064.769( за вторую  часть ноября и первую часть декабря) \t\t")
+
+        XCTAssertEqual("1.ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)\t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)\t\t")
+
+        XCTAssertEqual("1. ФОТ\t 564.678( за вторую часть октября)"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1. ФОТ\t 564.678( за вторую часть октября)")
+        XCTAssertEqual("1.ФОТ\t 564.678( за вторую часть октября) \t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t 564.678( за вторую часть октября) \t\t")
+
+        XCTAssertEqual("1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t")
+        XCTAssertEqual("1.ФОТ\t 894.510( за вторую часть июля и первая часть августа)\t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t 894.510( за вторую часть июля и первая часть августа)\t\t")
+        XCTAssertEqual("1.ФОТ\t 960.056( за вторую часть августа и первую  часть сентября)\t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t 960.056( за вторую часть августа и первую  часть сентября)\t\t")
+        XCTAssertEqual("1.ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t")
+
+        XCTAssertEqual("1. ФОТ\t595.360 ( за первую часть ноября)"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1. ФОТ\t595.360 ( за первую часть ноября)")
+        XCTAssertEqual("1.ФОТ\t595.360 ( за первую часть ноября) \t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ\t595.360 ( за первую часть ноября) \t\t")
+
+        XCTAssertEqual("1.ФОТ общий\t261.978\t\t"
+                        .firstMatch(for: Patterns.itemBasic),
+                       "1.ФОТ общий\t261.978\t\t")
 
         // MARK: regex structure
         XCTAssertEqual("23. Аудит кантора (Бухуслуги)\t60.000"

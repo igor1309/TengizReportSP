@@ -27,7 +27,7 @@ final class ReportContentTests: XCTestCase {
 
     func testSplitReportContent() throws {
         let samples = ReportContent.sampleContents
-
+        XCTAssertEqual(SampleFiles.filenames.count, 11, "Report sample might have been added.")
         XCTAssertEqual(SampleFiles.filenames.count, samples.count,
                        "File count should be equal to Samples count")
 
@@ -50,18 +50,18 @@ final class ReportContentTests: XCTestCase {
                 zip(reportContent.body, sample.body).forEach { XCTAssertEqual($0, $1) }
 
                 XCTAssertEqual(reportContent.footer, sample.footer, "Footer split error")
-                zip(reportContent.footer, sample.footer).forEach { XCTAssertEqual($0, $1) }
+                zip(reportContent.footer, sample.footer).forEach { XCTAssertEqual([$0], [$1]) }
             }
     }
 
     func test_Saperavi072020() throws {
         let contents = try SampleFiles.filenames[1].contentsOfFile()
-        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.saperavi202007)
+        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.saperavi_2020_07)
     }
 
     func test_Saperavi_2020_11() throws {
         let contents = try SampleFiles.filenames[5].contentsOfFile()
-        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.saperavi202011)
+        XCTAssertEqual(ReportContent(stringLiteral: contents), ReportContent.saperavi_2020_11)
     }
 
 }

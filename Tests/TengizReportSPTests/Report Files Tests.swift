@@ -9,7 +9,7 @@ import XCTest
 
 final class FilesTests: XCTestCase {
     func testTextFilesReadable() throws {
-        XCTAssertEqual(SampleFiles.filenames.count, 9)
+        XCTAssertEqual(SampleFiles.filenames.count, 11, "Report sample might have been added.")
 
         try SampleFiles.filenames
             .forEach {

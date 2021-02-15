@@ -41,6 +41,7 @@ final class BodySymbolTests: XCTestCase {
         XCTAssertEqual(BodySymbol("1. Аренда торгового помещения\t-----------------------------"), .empty)
         XCTAssertEqual(BodySymbol("2. Эксплуатационные расходы\t-----------------------------\t\t"), .empty)
         XCTAssertEqual(BodySymbol("2. Предоплаченный товар, но не отраженный в приходе"), .empty)
+        XCTAssertEqual(BodySymbol("2. Предоплаченный товар, но не отраженный в приходе\t\t\t"), .empty)
 
         /// `itemBasic`: no itogo, no number inside parantheses, no %, no note after number
         XCTAssertEqual(BodySymbol("1.Налоговые платежи \t13.318р93к\t\t"),
@@ -63,6 +64,8 @@ final class BodySymbolTests: XCTestCase {
                        .item(itemNumber: 14, title: "РПК Ника (крепления д/телевизоров и монтаж)", value: 30_000, note: nil))
 
         /// `itemMath`
+        XCTAssertEqual(BodySymbol("12.Интернет\t7.701+4.500\t\t"),
+                       .item(itemNumber: 12, title: "Интернет", value: 12_201, note: "7.701+4.500"))
         XCTAssertEqual(BodySymbol("12. Интернет\t7.701+4.500"),
                        .item(itemNumber: 12, title: "Интернет", value: 12_201, note: "7.701+4.500"))
         XCTAssertEqual(BodySymbol("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995"),
@@ -84,10 +87,38 @@ final class BodySymbolTests: XCTestCase {
                        .item(itemNumber: 1, title: "Аренда торгового помещения", value: 46_667, note: "(за июнь)"))
         XCTAssertEqual(BodySymbol("1. Аренда торгового помещения\t 200.000 (за июль)"),
                        .item(itemNumber: 1, title: "Аренда торгового помещения", value: 200_000, note: "(за июль)"))
+
+        /// `ФОТ`
+        XCTAssertEqual(BodySymbol("1.ФОТ\t 1.064.769( за вторую  часть ноября и первую часть декабря) \t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 1_064_769, note: "( за вторую  часть ноября и первую часть декабря)"))
+
+        XCTAssertEqual(BodySymbol("1.ФОТ\t 1.147.085( за вторую часть сентября и первую  часть октября)\t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 1_147_085, note: "( за вторую часть сентября и первую  часть октября)"))
+
         XCTAssertEqual(BodySymbol("1. ФОТ\t 564.678( за вторую часть октября)"),
                        .item(itemNumber: 1, title: "ФОТ", value: 564_678, note: "( за вторую часть октября)"))
+        XCTAssertEqual(BodySymbol("1.ФОТ\t 564.678( за вторую часть октября) \t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 564_678, note: "( за вторую часть октября)"))
+
+        XCTAssertEqual(BodySymbol("1.ФОТ\t 704.848 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 704_848, note: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"))
+        XCTAssertEqual(BodySymbol("1.ФОТ\t 894.510( за вторую часть июля и первая часть августа)\t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 894_510, note: "( за вторую часть июля и первая часть августа)"))
+        XCTAssertEqual(BodySymbol("1.ФОТ\t 960.056( за вторую часть августа и первую  часть сентября)\t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 960_056, note: "( за вторую часть августа и первую  часть сентября)"))
+        XCTAssertEqual(BodySymbol("1.ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)\t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 19_721, note: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"))
+
         XCTAssertEqual(BodySymbol("1. ФОТ\t595.360 ( за первую часть ноября)"),
                        .item(itemNumber: 1, title: "ФОТ", value: 595_360, note: "( за первую часть ноября)"))
+        XCTAssertEqual(BodySymbol("1.ФОТ\t595.360 ( за первую часть ноября) \t\t"),
+                       .item(itemNumber: 1, title: "ФОТ", value: 595_360, note: "( за первую часть ноября)"))
+
+        XCTAssertEqual(BodySymbol("1.ФОТ общий\t261.978\t\t"),
+                       .item(itemNumber: 1, title: "ФОТ общий", value: 261_978, note: nil))
+
+
+
         /// have `numbers` inside parentheses (inside note)
         XCTAssertEqual(BodySymbol("1. ФОТ\t19.721 ( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"),
                        .item(itemNumber: 1, title: "ФОТ", value: 19_721, note: "( за вторую часть июня мы выдаем с 10 по 15 июля, а первая часть июля с 25 по 30 июля)"))

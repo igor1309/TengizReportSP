@@ -1,27 +1,19 @@
 //
-//  TokenizedReportTests.swift
+//  Saperavi_2020_11.swift
 //  TengizReportSPTests
 //
-//  Created by Igor Malyarov on 08.02.2021.
+//  Created by Igor Malyarov on 15.02.2021.
 //
 
 import XCTest
 @testable import TengizReportSP
 
-final class TokenizedReportTests: XCTestCase {
-    func test_init_dummy() {
-        XCTAssertNotNil(TokenizedReport(header: [], body: [], footer: []))
-        XCTAssertNotNil(TokenizedReport(""))
-        XCTAssertNotNil(TokenizedReport(stringLiteral: ""))
-    }
+extension TokenizedReportTests {
+    func test_init_Saperavi_2020_11() throws {
+        let filename = SampleFiles.saperavi_2020_11
+        let sample = TokenizedReport.saperavi_2020_11
 
-    #warning("finish with this func")
-    func test_init_All() throws {
-        /*
-        let filenames = SampleFiles.filenames
-        let samples = TokenizedReport.all
-
-        // MARK: checking tokens in sample
+        // MARK: sample check
         sample.header.forEach { XCTAssertEqual($0.symbol, HeaderSymbol(stringLiteral: $0.source)) }
         sample.body.flatMap { $0 }.forEach { XCTAssertEqual($0.symbol, BodySymbol(stringLiteral: $0.source)) }
         sample.footer.forEach { XCTAssertEqual($0.symbol, FooterSymbol(stringLiteral: $0.source)) }
@@ -42,8 +34,6 @@ final class TokenizedReportTests: XCTestCase {
         XCTAssertEqual(report.body, sample.body)
         XCTAssertEqual(report.body.count, sample.body.count)
 
-        XCTAssertEqual(report.body[3], sample.body[3])
-
         zip(report.body, sample.body).forEach { group, sample in
             XCTAssertEqual(group, sample)
             XCTAssertEqual(group.count, sample.count)
@@ -60,7 +50,6 @@ final class TokenizedReportTests: XCTestCase {
         XCTAssertEqual(report.footer.count, sample.footer.count)
         // XCTAssertNil(report.footer)
         zip(report.footer, sample.footer).forEach { XCTAssertEqual($0, $1) }
- */
     }
 
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+#warning("delete if not used any more")
 internal struct ReportContent: Equatable {
 
     var header: [String]
@@ -22,6 +23,7 @@ internal struct ReportContent: Equatable {
     static let empty = ReportContent(header: [], body: [], footer: [])
 }
 
+#warning("delete if not used any more")
 extension ReportContent: ExpressibleByStringLiteral {
     init(stringLiteral string: String) {
         let delimiter = "$$$$$"
@@ -54,6 +56,7 @@ extension ReportContent: ExpressibleByStringLiteral {
     }
 }
 
+#warning("move to different file")
 extension Patterns {
     static let header = #"(?m)(^(.*)\n)+?(?=Статья расхода:)"#
     static let footer = #"(?m)^ИТОГ всех расходов за месяц(?:.|\n)*$"#

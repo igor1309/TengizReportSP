@@ -8,8 +8,10 @@ enum SampleFiles {
     static let saperavi_2020_10 = "Саперави октябрь"
     static let saperavi_2020_11 = "Саперави АМ ноябрь 2020 "
     static let saperavi_2020_12 = "Саперави АМ декабрь 2020 "
+    static let saperavi_2021_01 = "Саперави АМ январь 2021 "
     static let vaiMe_2020_11 = "ВМ ЩК ноябрь 2020"
     static let vaiMe_2020_12 = "ВМ ЩК декабрь 2020"
+    static let vaiMe_2021_01 = "ВМ ЩК январь 2021"
 
     static let filenames = [saperavi_2020_06,
                             saperavi_2020_07,
@@ -18,7 +20,9 @@ enum SampleFiles {
                             saperavi_2020_10,
                             saperavi_2020_11,
                             saperavi_2020_12,
+                            saperavi_2021_01,
                             vaiMe_2020_11,
                             vaiMe_2020_12,
+                            vaiMe_2021_01
     ]
 }

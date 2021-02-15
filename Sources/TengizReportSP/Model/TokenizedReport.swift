@@ -24,31 +24,14 @@ extension TokenizedReport: ExpressibleByStringLiteral {
 
         // MARK: Cleaning & fixes
 
-        let cleanContent = string
-            //.clearWhitespacesAndNewlines()
-            /// fix special line(s)
-            .replaceMatches(for: #"\s*ВМ ЩК\s*"#,
-                            withString: "Название объекта: Вай Мэ! Щелково\n")
-            .replaceMatches(for: #"(?m)^ФОТ Бренд, логистика, бухгалтерия"#,
-                            withString: "2. ФОТ Бренд, логистика, бухгалтерия")
-            .replaceMatches(for: "Итого-",
-                            withString: "Итого ")
-            .replaceMatches(for: "Студиопак-",
-                            withString: "Студиопак Итого ")
+        let cleanContent = string.cleanContent()
 
-        let reportContent = ReportContent(stringLiteral: cleanContent)
+        // MARK: - Tokenize
 
-        // MARK: Map Strings to Tokens
+        let header = cleanContent.tokenizedHeader()
+        let body =   cleanContent.tokenizedBody()
+        let footer = cleanContent.tokenizedFooter()
 
-        header = reportContent.header.map(Token<HeaderSymbol>.init)
-
-        body = reportContent.body.map { group in
-            group
-                .components(separatedBy: "\n")
-                .map(Token<BodySymbol>.init)
-                .filter { $0.symbol != .empty }
-        }
-
-        footer = reportContent.footer.map(Token<FooterSymbol>.init)
+        self.init(header: header, body: body, footer: footer)
     }
 }
