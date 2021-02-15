@@ -27,3 +27,10 @@ extension String {
         firstMatch(for: Patterns.footer) ?? ""
     }
 }
+
+extension Patterns {
+    static let header = #"(?m)(^(.*)\n)+?(?=Статья расхода:)"#
+    static let footer = #"(?m)^ИТОГ всех расходов за месяц(?:.|\n)*$"#
+    static let columnTitleRow = #"(?m)^Статья расхода:\s*Сумма расхода:\s*План %\s*Факт %\s*\n"#
+    static let body = #"(?m)(?:^[А-Яа-я ]+:.*$)(?:\n.*$)+?\nИТОГ:.*"#
+}

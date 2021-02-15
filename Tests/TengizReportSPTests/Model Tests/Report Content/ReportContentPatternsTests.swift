@@ -7,7 +7,7 @@
 
 import XCTest
 @testable import Model
-
+#warning("rename - it's split patterns not report content anymmore")
 final class ReportContentPatternsTests: XCTestCase {
     func testReport_header() {
         // MARK: pattern (regex)

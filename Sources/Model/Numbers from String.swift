@@ -23,11 +23,6 @@ extension String {
             return sign * rubliIKopeiki
         }
 
-        if let doubleString = firstMatch(for: Patterns.integer),
-           let double = Double(doubleString.replacingOccurrences(of: ".", with: "")) {
-            return sign * double
-        }
-
         return nil
     }
 
@@ -47,14 +42,6 @@ extension String {
         guard last == "%",
               let percentage = Double(dropLast()) else { return nil }
         return percentage / 100
-    }
-
-    public func numberWithoutSign() -> Double? {
-        if let numberString = firstMatch(for: Patterns.integer),
-           let double = Double(numberString.replacingOccurrences(of: ".", with: "")) {
-            return double
-        }
-        return nil
     }
 
 }
