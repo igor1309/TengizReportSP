@@ -56,18 +56,6 @@ final class RegexStringExtTests: XCTestCase {
     }
 
     func testListMatchesWithNumbers() {
-        let sources = try? SampleFiles.filenames
-            .flatMap { filename -> [String] in
-                let clear = try filename
-                    .contentsOfFile()
-                let filtered = ReportContent(stringLiteral: clear)
-                    .body
-                    .flatMap { $0.components(separatedBy: "\n") }
-                    .filter { $0.contains("+") }
-                return filtered
-            }
-        XCTAssertNotNil(sources)
-
         XCTAssertEqual("7.701+4.500".listMatches(for: Patterns.integer),
                        ["7.701", "4.500"])
 

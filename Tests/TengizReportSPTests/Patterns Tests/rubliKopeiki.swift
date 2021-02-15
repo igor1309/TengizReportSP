@@ -10,18 +10,18 @@ import XCTest
 
 final class RubliKopeikiTests: XCTestCase {
     func test_GetSources() {
-        let sourses = try? SampleFiles.filenames
-            .flatMap { filename in
-                ReportContent(
-                    stringLiteral: try filename
-                        .contentsOfFile()
-                )
-                .body
-                .flatMap { $0.components(separatedBy: "\n") }
-                .filter { nil != $0.firstMatch(for: #"\d{1,3}(\.\d{3})*\s*р"#) }
+        let sources = try? SampleFiles.filenames
+            .flatMap { filename -> [String] in
+                let contents = try filename.contentsOfFile()
+
+                return contents
+                    .components(separatedBy: "\n")
+                    .filter { nil != $0.firstMatch(for: #"\d{1,3}(\.\d{3})*\s*р"#) }
+                    .sorted()
             }
-         XCTAssertNotEqual(sourses, [])
-        // XCTAssertNil(sourses?.joined(separator: "\n").listMatches(for: Patterns.rubliKopeiki))
+        // MARK: - change to XCTAssertEqual to get sources
+         XCTAssertNotEqual(sources, [])
+        // XCTAssertNil(sources?.joined(separator: "\n").listMatches(for: Patterns.rubliKopeiki))
 
         // XCTAssertEqual(bodyItems.count, 340)
         // XCTAssertEqual(selectedBodyItems.count, 34)

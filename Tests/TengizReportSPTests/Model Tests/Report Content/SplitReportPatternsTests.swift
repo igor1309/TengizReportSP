@@ -1,5 +1,5 @@
 //
-//  ReportContentPatternsTests.swift
+//  SplitReportPatternsTests.swift
 //  TengizReportSPTests
 //
 //  Created by Igor Malyarov on 29.01.2021.
@@ -7,8 +7,8 @@
 
 import XCTest
 @testable import Model
-#warning("rename - it's split patterns not report content anymmore")
-final class ReportContentPatternsTests: XCTestCase {
+
+final class SplitReportPatternsTests: XCTestCase {
     func testReport_header() {
         // MARK: pattern (regex)
         XCTAssertEqual(Patterns.header, #"(?m)(^(.*)\n)+?(?=Статья расхода:)"#)
