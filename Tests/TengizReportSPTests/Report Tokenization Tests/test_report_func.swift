@@ -1,6 +1,6 @@
 //
-//  test_report_func.swift
-//  UsingTengizReportSPTests
+//  TokenizedReportReportTests.swift
+//  
 //
 //  Created by Igor Malyarov on 16.02.2021.
 //
@@ -25,7 +25,7 @@ extension TokenizedReport.Report {
     ]
 }
 
-extension TokenizedReportTests {
+extension TokenizedReportReportTests {
     func test_report_func() throws {
         let filenames = SampleFiles.filenames
         let samples = TokenizedReport.Report.allReports
@@ -73,7 +73,7 @@ extension TokenizedReportTests {
 
                 XCTAssertEqual(group.items, sampleGroup.items)
                 XCTAssertEqual(group.items.count, sampleGroup.items.count)
-                
+
                 zip(group.items, sampleGroup.items).forEach {
                     XCTAssertEqual($0, $1)
                     XCTAssertEqual($0.itemNumber, $1.itemNumber)
@@ -85,6 +85,5 @@ extension TokenizedReportTests {
         }
     }
 
+
 }
-
-

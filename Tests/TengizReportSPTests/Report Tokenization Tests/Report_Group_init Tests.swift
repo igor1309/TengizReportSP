@@ -1,5 +1,5 @@
 //
-//  TokenizedReportTests.swift
+//  Report_Group_init Tests.swift
 //  UsingTengizReportSPTests
 //
 //  Created by Igor Malyarov on 10.02.2021.
