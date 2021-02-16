@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import Model
+@testable import Originals
 
 final class SplitReportPatternsTests: XCTestCase {
     func testReport_header() {

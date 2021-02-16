@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import Model
+@testable import Originals
 
 class SourceTests: XCTestCase {
     func contentsOfFile(_ filename: String) throws -> String {
