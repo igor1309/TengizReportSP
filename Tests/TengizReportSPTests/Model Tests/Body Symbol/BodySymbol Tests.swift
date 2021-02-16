@@ -37,6 +37,9 @@ final class BodySymbolTests: XCTestCase {
         XCTAssertEqual(BodySymbol("-10.000 за перерасход питание персонала в июле"),
                        .item(itemNumber: 0, title: "Correction", value: -10_000, note: "-10.000 за перерасход питание персонала в июле"))
 
+        XCTAssertEqual(BodySymbol("\t-10.000 за перерасход питание персонала в июле"),
+                       .item(itemNumber: 0, title: "Correction", value: -10_000, note: "-10.000 за перерасход питание персонала в июле"))
+
         /// `itemNoNumber`: title without number, should return .empty
         XCTAssertEqual(BodySymbol("1. Аренда торгового помещения\t-----------------------------"), .empty)
         XCTAssertEqual(BodySymbol("2. Эксплуатационные расходы\t-----------------------------\t\t"), .empty)

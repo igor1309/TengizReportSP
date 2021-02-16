@@ -19,10 +19,10 @@ extension TokenizedReport {
                     symbol: HeaderSymbol.month(monthStr: "Ноябрь2020")),
                  Token<HeaderSymbol>(
                     source: "Оборот:1.885.280",
-                    symbol: HeaderSymbol.revenue(1885280.0)),
+                    symbol: HeaderSymbol.revenue(1885_280)),
                  Token<HeaderSymbol>(
                     source: "Средний показатель: 62.842",
-                    symbol: HeaderSymbol.dailyAverage(62842.0))],
+                    symbol: HeaderSymbol.dailyAverage(62_842))],
 
         body: [
             [Token<BodySymbol>(
@@ -39,7 +39,7 @@ extension TokenizedReport {
                 symbol: BodySymbol.item(itemNumber: 6, title: "Аренда головного склада", value: 7_000, note: nil)),
              Token<BodySymbol>(
                 source: "ИТОГ:\t518.500\t\t",
-                symbol: BodySymbol.footer(title: "ИТОГ:", value: 518500.0))],
+                symbol: BodySymbol.footer(title: "ИТОГ:", value: 518_500))],
             [Token<BodySymbol>(
                 source: "Зарплата:\t\t20%\t",
                 symbol: BodySymbol.header(title: "Зарплата", plan: 0.2, fact: nil)),
@@ -51,7 +51,7 @@ extension TokenizedReport {
                 symbol: BodySymbol.item(itemNumber: 2, title: "ФОТ Бренд, логистика, бухгалтерия", value: 99_000, note: nil)),
              Token<BodySymbol>(
                 source: "ИТОГ:\t663.678\t\t",
-                symbol: BodySymbol.footer(title: "ИТОГ:", value: 663678.0))],
+                symbol: BodySymbol.footer(title: "ИТОГ:", value: 663_678))],
             [Token<BodySymbol>(
                 source: "Фактический приход товара и оплата товара:\t\t25%\t",
                 symbol: BodySymbol.header(title: "Фактический приход товара и оплата товара", plan: 0.25, fact: nil)),
@@ -123,7 +123,7 @@ extension TokenizedReport {
                 symbol: BodySymbol.item(itemNumber: 2, title: "Агрегаторы", value: 17_839, note: nil)),
              Token<BodySymbol>(
                 source: "ИТОГ:\t17.839\t\t",
-                symbol: BodySymbol.footer(title: "ИТОГ:", value: 17839.0))]
+                symbol: BodySymbol.footer(title: "ИТОГ:", value: 17_839))]
         ],
 
         footer: [Token<FooterSymbol>(

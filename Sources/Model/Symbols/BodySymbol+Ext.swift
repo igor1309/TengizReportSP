@@ -46,7 +46,7 @@ extension Patterns {
     static let itemBasic = #"\#(itemTitle)(?<value>\#(rubliKopeiki))(?<note>\s*\((?:(?!Итого|фактический|\+).)*\))?(?: ?\t\t)?$"#
 
     /// matching lines like `"-10.000 за перерасход питание персонала в июле"`
-    static let itemCorrection = #"^(?<value>-\#(integer))\s*(?<title>.*)$"#
+    static let itemCorrection = #"^\s*(?<value>-\#(integer))\s*(?<title>.*)$"#
 
 }
 
@@ -82,7 +82,8 @@ extension String {
            let valueStr = replaceFirstMatch(for: pattern, withGroup: "value")?
             .trimmingCharacters(in: .whitespaces),
            let value = valueStr.numberWithSign()  {
-            return .item(itemNumber: 0, title: "Correction", value: value, note: self)
+            let note = trimmingCharacters(in: .whitespaces)
+            return .item(itemNumber: 0, title: "Correction", value: value, note: note)
         }
 
         guard firstMatch(for: pattern) != nil,

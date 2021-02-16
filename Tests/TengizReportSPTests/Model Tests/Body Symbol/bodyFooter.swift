@@ -39,7 +39,6 @@ extension BodySymbolPatternTests {
         XCTAssertEqual("ИТОГ:\t65.167".firstMatch(for: Patterns.bodyFooter), "ИТОГ:\t65.167")
         XCTAssertEqual("ИТОГ:\t65.167".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "title"), "ИТОГ:")
         XCTAssertEqual("ИТОГ:\t65.167".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "value"), "65.167")
-        XCTAssertNil("ИТОГ:\t65.167".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "VALUE"), "No such group in pattern")
 
         XCTAssertEqual("ИТОГ:\t37.146р 15к".firstMatch(for: Patterns.bodyFooter), "ИТОГ:\t37.146р 15к")
         XCTAssertEqual("ИТОГ:\t37.146р 15к".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "title"), "ИТОГ:")
@@ -52,8 +51,10 @@ extension BodySymbolPatternTests {
         XCTAssertEqual("ИТОГ:\t 37.146р 15к\t\t".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "value"), "37.146р 15к")
         XCTAssertEqual("ИТОГ:\t 37.146р 15 к\t\t".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "value"), "37.146р 15 к")
 
+        XCTAssertNil("ИТОГ:\t65.167".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "VALUE"), "No such group in pattern")
+
         // MARK: no match
-        #warning("finish this: add more")
+        XCTAssertNil("ИТОГ :\t65.167".firstMatch(for: Patterns.bodyFooter), "Mind the space")
         XCTAssertNil("ИТОГ:\t\t\t".firstMatch(for: Patterns.bodyFooter), "Mind \t\t at the end")
         XCTAssertNil("ИТОГ:\t".firstMatch(for: Patterns.bodyFooter), "No number")
         XCTAssertNil("ИТОГ:\t 37.146р15к \t\t".replaceFirstMatch(for: Patterns.bodyFooter, withGroup: "value"), "37.146р15к")
@@ -106,26 +107,19 @@ extension BodySymbolTests {
          "ИТОГ:\t24.164\t\t",
          "ИТОГ:\t\t\t",
          */
+        XCTAssertEqual(BodySymbol(stringLiteral: "ИТОГ:\t65.167"), .footer(title: "ИТОГ:", value: 65_167))
+        XCTAssertEqual(BodySymbol("ИТОГ:\t65.167"), .footer(title: "ИТОГ:", value: 65_167))
 
-        var input = "ИТОГ:\t65.167"
-        XCTAssertEqual(BodySymbol(stringLiteral: input), .footer(title: "ИТОГ:", value: 65_167))
-        input = "ИТОГ:\t65.167\t\t"
-        XCTAssertEqual(BodySymbol(input), .footer(title: "ИТОГ:", value: 65_167))
-        input = "ИТОГ:\t11.500\t\t"
-        XCTAssertEqual(BodySymbol(input), .footer(title: "ИТОГ:", value: 11_500))
-        input = "ИТОГ:\t19.721\t\t"
-        XCTAssertEqual(BodySymbol(input), .footer(title: "ИТОГ:", value: 19_721))
-        input = "ИТОГ:\t37.146р15к\t\t"
-        XCTAssertEqual(BodySymbol(input), .footer(title: "ИТОГ:", value: 37_146.15))
-        input = "ИТОГ:\t24.164\t\t"
-        XCTAssertEqual(BodySymbol(input), .footer(title: "ИТОГ:", value: 24_164))
+        XCTAssertEqual(BodySymbol("ИТОГ:\t65.167\t\t"), .footer(title: "ИТОГ:", value: 65_167))
+        XCTAssertEqual(BodySymbol("ИТОГ:\t11.500\t\t"), .footer(title: "ИТОГ:", value: 11_500))
+        XCTAssertEqual(BodySymbol("ИТОГ:\t19.721\t\t"), .footer(title: "ИТОГ:", value: 19_721))
+        XCTAssertEqual(BodySymbol("ИТОГ:\t37.146р15к\t\t"), .footer(title: "ИТОГ:", value: 37_146.15))
+        XCTAssertEqual(BodySymbol("ИТОГ:\t24.164\t\t"), .footer(title: "ИТОГ:", value: 24_164))
 
         // MARK: no match
-        #warning("finish this: add more")
-        input = "ИТОГ:"
-        XCTAssertEqual(BodySymbol(input), .empty, "No number")
-        input = "ИТОГ:\t\t\t"
-        XCTAssertEqual(BodySymbol(input), .empty)
+        XCTAssertEqual(BodySymbol("ИТОГ:"), .empty, "No number")
+        XCTAssertEqual(BodySymbol("ИТОГ:\t\t\t"), .empty)
+        XCTAssertEqual(BodySymbol(" ИТОГ:\t\t\t"), .header(title: " ИТОГ", plan: nil, fact: nil))
     }
 
 }

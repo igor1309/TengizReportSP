@@ -15,7 +15,7 @@ extension RegexPatternsTests {
     func test_itemCorrection() {
         // MARK: pattern (regex)
         XCTAssertEqual(Patterns.itemCorrection,
-                       #"^(?<value>-\d{1,3}(?:\.\d{3})*)\s*(?<title>.*)$"#)
+                       #"^\s*(?<value>-\d{1,3}(?:\.\d{3})*)\s*(?<title>.*)$"#)
 
         // MARK: no match
         XCTAssertNil("4. Банковская комиссия 1.6 за эквайринг\t2.120".firstMatch(for: Patterns.itemCorrection))
@@ -25,16 +25,29 @@ extension RegexPatternsTests {
                        1, "Should be exactly 1 match")
 
         // MARK: match
-        XCTAssertEqual("-10.000 за перерасход питание персонала в июле".firstMatch(for: Patterns.itemCorrection),
+        XCTAssertEqual("\t-10.000 за перерасход питание персонала в июле"
+                        .firstMatch(for: Patterns.itemCorrection),
+                       "\t-10.000 за перерасход питание персонала в июле")
+
+        XCTAssertEqual("-10.000 за перерасход питание персонала в июле"
+                        .firstMatch(for: Patterns.itemCorrection),
                        "-10.000 за перерасход питание персонала в июле")
 
         // MARK: regex structure
         XCTAssertEqual("-10.000 за перерасход питание персонала в июле"
                         .replaceFirstMatch(for: Patterns.itemCorrection, withGroup: "title"),
                        "за перерасход питание персонала в июле")
+        XCTAssertEqual("\t-10.000 за перерасход питание персонала в июле"
+                        .replaceFirstMatch(for: Patterns.itemCorrection, withGroup: "title"),
+                       "за перерасход питание персонала в июле")
+
         XCTAssertEqual("-10.000 за перерасход питание персонала в июле"
                         .replaceFirstMatch(for: Patterns.itemCorrection, withGroup: "value"),
                        "-10.000")
+        XCTAssertEqual("\t-10.000 за перерасход питание персонала в июле"
+                        .replaceFirstMatch(for: Patterns.itemCorrection, withGroup: "value"),
+                       "-10.000")
+
         XCTAssertNil("4. Банковская комиссия 1.6% за эквайринг\t2.120"
                         .replaceFirstMatch(for: Patterns.itemCorrection, withGroup: "commnemt"))
     }
