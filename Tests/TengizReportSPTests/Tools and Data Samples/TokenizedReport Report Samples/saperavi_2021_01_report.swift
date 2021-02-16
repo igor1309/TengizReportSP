@@ -5,7 +5,7 @@
 //  Created by Igor Malyarov on 16.02.2021.
 //
 
-import Model
+@testable import Model
 
 extension TokenizedReport.Report {
     #warning("report text with 'Январь2020' but this is Jan 2021!")

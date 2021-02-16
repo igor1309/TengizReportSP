@@ -5,41 +5,40 @@
 //  Created by Igor Malyarov on 10.02.2021.
 //
 
-import Model
-
-#warning("write tests for all small funcs in this file")
+//import Model
+//
 extension TokenizedReport {
-    struct Report: Equatable {
-        let monthStr: String
-        let month: Int
-        let year: Int
-        let company: String
-        let revenue: Double
-        let dailyAverage: Double
-        let openingBalance: Double
-        let balance: Double
-        let runningBalance: Double
-        let totalExpenses: Double
+    public struct Report: Equatable {
+        public let monthStr: String
+        public let month: Int
+        public let year: Int
+        public let company: String
+        public let revenue: Double
+        public let dailyAverage: Double
+        public let openingBalance: Double
+        public let balance: Double
+        public let runningBalance: Double
+        public let totalExpenses: Double
         #warning("finish with note")
-        //                           let note: String
+        //                           public let note: String
 
-        let groups: [Group]
+        public let groups: [Group]
 
-        struct Group: Equatable {
-            let groupNumber: Int
-            let title: String
-            let amount: Double
-            let target: Double?
+        public struct Group: Equatable {
+            public let groupNumber: Int
+            public let title: String
+            public let amount: Double
+            public let target: Double?
             #warning("finish with note")
-            //                    let note: String
+            //                    public let note: String
 
-            let items: [Item]
+            public let items: [Item]
 
-            struct Item: Equatable {
-                let itemNumber: Int
-                let title: String
-                let amount: Double
-                let note: String?
+            public struct Item: Equatable {
+                public let itemNumber: Int
+                public let title: String
+                public let amount: Double
+                public let note: String?
             }
         }
     }
@@ -91,7 +90,7 @@ typealias Group = TokenizedReport.Report.Group
 typealias Item = TokenizedReport.Report.Group.Item
 
 extension TokenizedReport.Report.Group {
-    init?(tokens: [Token<BodySymbol>]) {
+    public init?(tokens: [Token<BodySymbol>]) {
         guard let groupNumber = tokens.groupNumber(),
               let title = tokens.title(),
               let amount = tokens.amount()

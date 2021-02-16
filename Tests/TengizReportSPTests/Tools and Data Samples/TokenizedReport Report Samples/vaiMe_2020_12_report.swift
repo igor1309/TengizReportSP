@@ -5,7 +5,7 @@
 //  Created by Igor Malyarov on 16.02.2021.
 //
 
-import Model
+@testable import Model
 
 extension TokenizedReport.Report {
     static let vaiMe_2020_12: TokenizedReport.Report =
