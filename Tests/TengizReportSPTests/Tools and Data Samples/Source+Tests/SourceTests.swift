@@ -7,9 +7,9 @@
 
 import XCTest
 @testable import Model
-@testable import Originals
 
 class SourceTests: XCTestCase {
+    #warning("check with test coverage if contentsOfFile() is used - which one??")
     func contentsOfFile(_ filename: String) throws -> String {
         enum TestErrors: Error {
             case noFile(String)

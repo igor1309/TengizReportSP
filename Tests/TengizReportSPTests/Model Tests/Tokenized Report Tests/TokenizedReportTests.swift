@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import Model
-@testable import Originals
 
 final class TokenizedReportTests: XCTestCase {
     func test_init_dummy() {

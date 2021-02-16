@@ -30,16 +30,12 @@ let package = Package(
             name: "Toolbox",
             dependencies: []
         ),
-        .target(
-            name: "Originals",
-            dependencies: [],
+        .testTarget(
+            name: "TengizReportSPTests",
+            dependencies: ["Model", "Toolbox"],
             resources: [
                 .process("Reports (txt)")
             ]
-        ),
-        .testTarget(
-            name: "TengizReportSPTests",
-            dependencies: ["Model", "Toolbox", "Originals"]
         ),
     ]
 )

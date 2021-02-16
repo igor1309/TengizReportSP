@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import Model
-@testable import Originals
 
 extension TokenizedReport.Report {
     static let allReports = [

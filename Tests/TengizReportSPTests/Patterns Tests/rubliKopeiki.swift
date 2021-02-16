@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import Model
-@testable import Originals
 
 final class RubliKopeikiTests: XCTestCase {
     func test_GetSources() {

@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import Model
-@testable import Originals
 
 extension TokenizedReportTests {
     func test_init_Saperavi_2020_09() throws {
