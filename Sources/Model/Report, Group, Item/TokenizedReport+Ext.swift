@@ -39,16 +39,45 @@ extension TokenizedReport {
                 public let title: String
                 public let amount: Double
                 public let note: String?
+
+                public init(itemNumber: Int, title: String, amount: Double, note: String?) {
+                    self.itemNumber = itemNumber
+                    self.title = title
+                    self.amount = amount
+                    self.note = note
+                }
             }
+
+            public init(groupNumber: Int, title: String, amount: Double, target: Double?, items: [TokenizedReport.Report.Group.Item]) {
+                self.groupNumber = groupNumber
+                self.title = title
+                self.amount = amount
+                self.target = target
+                self.items = items
+            }
+        }
+
+        public init(monthStr: String, month: Int, year: Int, company: String, revenue: Double, dailyAverage: Double, openingBalance: Double, balance: Double, runningBalance: Double, totalExpenses: Double, groups: [TokenizedReport.Report.Group]) {
+            self.monthStr = monthStr
+            self.month = month
+            self.year = year
+            self.company = company
+            self.revenue = revenue
+            self.dailyAverage = dailyAverage
+            self.openingBalance = openingBalance
+            self.balance = balance
+            self.runningBalance = runningBalance
+            self.totalExpenses = totalExpenses
+            self.groups = groups
         }
     }
 
-    enum TransformationError: Error {
+    public enum TransformationError: Error {
         case noMonth, noCompany, noRevenue, noDailyAverage,
              noOpeningBalance, noBalance, noRunningBalance, noTotalExpenses
     }
 
-    func report() -> Result<Report, TransformationError> {
+    public func report() -> Result<Report, TransformationError> {
         guard let monthStr = header.monthStr() else { return .failure(.noMonth) }
         #warning("dummy mock: fix month")
         let month = 13
