@@ -17,7 +17,7 @@ extension HeaderSymbol {
 final class HeaderSymbolTests: XCTestCase {
     func testHeaderSymbolExpressibleByStringLiteral() {
         XCTAssertEqual(HeaderSymbol("Название объекта: Саперави Аминьевка"), .company(name: "Саперави Аминьевка"))
-        XCTAssertEqual(HeaderSymbol("Месяц: июнь2020 (с 24 по 30 июня)"), .month(monthStr: "июнь2020"))
+        XCTAssertEqual(HeaderSymbol("Месяц: июнь2020 (с 24 по 30 июня)"), .month(monthStr: "июнь2020 (с 24 по 30 июня)"))
         XCTAssertEqual(HeaderSymbol("Месяц: июль2020"), .month(monthStr: "июль2020"))
         XCTAssertEqual(HeaderSymbol("Оборот:266.285\tСредний показатель: 38.040\n\n"), .revenue(266_285))
         XCTAssertEqual(HeaderSymbol("Средний показатель: 38.040\n\n"), .dailyAverage(38_040))
@@ -32,24 +32,24 @@ final class HeaderSymbolTests: XCTestCase {
     }
 
     func testHeaderSymbol_month() {
-        XCTAssertEqual("Месяц: июнь2020 (с 24 по 30 июня)".month(), .month(monthStr: "июнь2020"))
+        XCTAssertEqual("Месяц: июнь2020 (с 24 по 30 июня)".month(), .month(monthStr: "июнь2020 (с 24 по 30 июня)"))
         XCTAssertEqual("Месяц: июль2020".month(), .month(monthStr: "июль2020"))
         XCTAssertEqual("Месяц: август2020".month(), .month(monthStr: "август2020"))
         XCTAssertEqual("Месяц: сентябрь2020".month(), .month(monthStr: "сентябрь2020"))
         XCTAssertEqual("Октябрь2020".month(), .month(monthStr: "Октябрь2020"))
         XCTAssertEqual("Ноябрь2020".month(), .month(monthStr: "Ноябрь2020"))
         XCTAssertEqual("Декабрь2020".month(), .month(monthStr: "Декабрь2020"))
-        XCTAssertEqual("Октябрь+Ноябрь2020".month(), .month(monthStr: "Ноябрь2020"))
+        XCTAssertEqual("Октябрь+Ноябрь2020".month(), .month(monthStr: "Октябрь+Ноябрь2020"))
         XCTAssertEqual("Декабрь2020".month(), .month(monthStr: "Декабрь2020"))
 
-        XCTAssertEqual(HeaderSymbol("Месяц: июнь2020 (с 24 по 30 июня)"), .month(monthStr: "июнь2020"))
+        XCTAssertEqual(HeaderSymbol("Месяц: июнь2020 (с 24 по 30 июня)"), .month(monthStr: "июнь2020 (с 24 по 30 июня)"))
         XCTAssertEqual(HeaderSymbol("Месяц: июль2020"), .month(monthStr: "июль2020"))
         XCTAssertEqual(HeaderSymbol("Месяц: август2020"), .month(monthStr: "август2020"))
         XCTAssertEqual(HeaderSymbol("Месяц: сентябрь2020"), .month(monthStr: "сентябрь2020"))
         XCTAssertEqual(HeaderSymbol("Октябрь2020"), .month(monthStr: "Октябрь2020"))
         XCTAssertEqual(HeaderSymbol("Ноябрь2020"), .month(monthStr: "Ноябрь2020"))
         XCTAssertEqual(HeaderSymbol("Декабрь2020"), .month(monthStr: "Декабрь2020"))
-        XCTAssertEqual(HeaderSymbol("Октябрь+Ноябрь2020"), .month(monthStr: "Ноябрь2020"))
+        XCTAssertEqual(HeaderSymbol("Октябрь+Ноябрь2020"), .month(monthStr: "Октябрь+Ноябрь2020"))
         XCTAssertEqual(HeaderSymbol("Декабрь2020"), .month(monthStr: "Декабрь2020"))
     }
 

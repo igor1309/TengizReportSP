@@ -57,14 +57,17 @@ final class HeaderSymbolPatternsTests: XCTestCase {
     }
 
     func test_headerMonth() {
-        XCTAssertEqual("Название объекта: Саперави Аминьевка\nМесяц: июнь2020 (с 24 по"
-                        .firstMatch(for: Patterns.headerMonth),
-                       "июнь2020")
         XCTAssertEqual("Месяц: июнь2020 (с 24 по"
                         .firstMatch(for: Patterns.headerMonth),
-                       "июнь2020")
+                       "Месяц: июнь2020 (с 24 по")
         XCTAssertEqual("июнь2020".firstMatch(for: Patterns.headerMonth),
                        "июнь2020")
+
+        // fail
+        XCTAssertNotEqual("Название объекта: Саперави Аминьевка\nМесяц: июнь2020 (с 24 по"
+                        .firstMatch(for: Patterns.headerMonth),
+                       "июнь2020 (с 24 по 30 июня)")
+
     }
 
     func test_revenue() {

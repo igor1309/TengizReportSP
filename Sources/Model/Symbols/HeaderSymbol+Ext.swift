@@ -28,7 +28,7 @@ extension String {
     }
 
     func month() -> HeaderSymbol? {
-        guard let month = firstMatch(for: Patterns.headerMonth) else { return nil }
+        guard let month = replaceFirstMatch(for: Patterns.headerMonth, withGroup: "monthStr") else { return nil }
         return .month(monthStr: month)
     }
 
@@ -49,7 +49,7 @@ extension Patterns {
     static let headerItemTitle = #"[А-Яа-я ]+(?=:)"#
     static let headerItem = headerItemTitle + #":[А-Яа-я ]*\d+(\.\d{3})*"#
     static let headerCompany = #"(?<=Название объекта:\s).*"#
-    static let headerMonth = #"[А-Яа-я]+\d{4}"#
+    static let headerMonth = #"^(?!Оборот|Средний)(?:Месяц:)?\s?(?<monthStr>.*)$"#
     static let revenue = "Оборот"
     static let dailyAverage = "Средний показатель"
 }
