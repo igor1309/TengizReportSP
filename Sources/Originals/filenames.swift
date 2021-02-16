@@ -1,7 +1,7 @@
 import Foundation
 
 // using class to find bundle
-public class SampleFiles: AnyClass {
+public class SampleFiles {
     public static let saperavi_2020_06 = "Саперави АМ 2020-06"
     public static let saperavi_2020_07 = "Саперави АМ 2020-07"
     public static let saperavi_2020_08 = "Саперави АМ август 2020 ИСПРАВЛЕННЫЙ"
