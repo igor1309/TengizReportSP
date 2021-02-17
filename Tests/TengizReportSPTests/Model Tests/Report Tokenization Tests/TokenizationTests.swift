@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import TextReports
 @testable import Model
 
 extension TokenizedReport {
@@ -38,9 +39,7 @@ final class TokenizationTests: XCTestCase {
 
     func testTokenizedHeaderSomeSources() {
         let sources = Source.someSources.flatMap {
-            $0.fileContents
-                .cleanContent()
-                .tokenizedHeader()
+            $0.fileContents.tokenizedHeader()
         }
 
         let tokens = TokenizedReport.someReports.flatMap(\.header)
@@ -59,9 +58,7 @@ final class TokenizationTests: XCTestCase {
 
     func testTokenizedBodySomeSources() {
         let sources = Source.someSources.flatMap {
-            $0.fileContents
-                .cleanContent()
-                .tokenizedBody()
+            $0.fileContents.tokenizedBody()
         }
 
         let tokens = TokenizedReport.someReports.flatMap(\.body)
@@ -86,9 +83,7 @@ final class TokenizationTests: XCTestCase {
 
     func testTokenizedFooterSomeSources() {
         let sources = Source.someSources.flatMap {
-            $0.fileContents
-                .cleanContent()
-                .tokenizedFooter()
+            $0.fileContents.tokenizedFooter()
         }
 
         let tokens = TokenizedReport.someReports.flatMap(\.footer)
@@ -106,10 +101,10 @@ final class TokenizationTests: XCTestCase {
     // MARK: - Tokenization via init
 
     func testTokenizationAllTextReports() throws {
-        XCTAssertEqual(SampleFiles.filenames.count, 11, "Might have been added new report(s).")
-        
-        for filename in SampleFiles.filenames {
-            let contents = try filename.contentsOfFile()
+        XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added new report(s).")
+
+        for filename in ContentLoader.allFilenames {
+            let contents = try ContentLoader.contentsOfFile(filename)
             let report = try TokenizedReport(stringLiteral: contents).report().get()
 
             XCTAssertFalse(report.company.isEmpty)

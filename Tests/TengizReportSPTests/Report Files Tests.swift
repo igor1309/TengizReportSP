@@ -6,26 +6,14 @@
 //
 
 import XCTest
+import TextReports
 
 final class FilesTests: XCTestCase {
     func testTextFilesReadable() throws {
-        XCTAssertEqual(SampleFiles.filenames.count, 11, "Report sample might have been added.")
+        XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Report sample might have been added.")
 
-        try SampleFiles.filenames
-            .forEach {
-                XCTAssertFalse(try $0.contentsOfFile().isEmpty, "Can't read Report file content")
-            }
-    }
-}
-
-extension String {
-    func contentsOfFile() throws -> String {
-        enum TestErrors: Error {
-            case noFile(String)
+        for filename in ContentLoader.allFilenames {
+            XCTAssertFalse(try ContentLoader.contentsOfFile(filename).isEmpty, "Can't read Report file content")
         }
-
-        guard let filepath = Bundle.module.path(forResource: self, ofType: "txt") else { throw TestErrors.noFile(self) }
-        return try String(contentsOfFile: filepath)
     }
-
 }

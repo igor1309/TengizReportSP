@@ -16,12 +16,12 @@ extension TokenizedReport.Report {
                                revenue: 1_065_575,
                                dailyAverage: 34_373,
                                openingBalance: 693_424.31,
-                               balance: -337_885.06,
-                               runningBalance: 355_539.25,
-                               totalExpenses: 1_403_460.06,
+                               balance: -337_285.06,
+                               runningBalance: 356_139.25,
+                               totalExpenses: 1_402_860.06,
 
                                groups: [
-                                Group(groupNumber: 0, title: "Основные расходы", amount: 26_600, target: 0.25,
+                                Group(groupNumber: 0, title: "Основные расходы", amount: 26_000, target: 0.25,
                                       items: [Item(itemNumber: 5, title: "Аренда головного офиса", amount: 11_500, note: nil),
                                               Item(itemNumber: 7, title: "Вывоз мусора", amount: 14_500, note: nil)]
                                 ),

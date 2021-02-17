@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import TextReports
 @testable import Model
 
 extension TokenizedReportTests {
     func test_init_Saperavi_2020_11() throws {
-        let filename = SampleFiles.saperavi_2020_11
+        let filename = ContentLoader.saperavi_2020_11
         let sample = TokenizedReport.saperavi_2020_11
 
         // MARK: sample check
@@ -18,7 +19,7 @@ extension TokenizedReportTests {
         sample.body.flatMap { $0 }.forEach { XCTAssertEqual($0.symbol, BodySymbol(stringLiteral: $0.source)) }
         sample.footer.forEach { XCTAssertEqual($0.symbol, FooterSymbol(stringLiteral: $0.source)) }
 
-        let contents = try filename.contentsOfFile()
+        let contents = try ContentLoader.contentsOfFile(filename)
         let report = TokenizedReport(stringLiteral: contents)
         XCTAssertEqual(report, sample)
 

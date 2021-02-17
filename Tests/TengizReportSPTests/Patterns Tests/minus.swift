@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import RegexTools
 @testable import Model
 
 extension RegexPatternsTests {

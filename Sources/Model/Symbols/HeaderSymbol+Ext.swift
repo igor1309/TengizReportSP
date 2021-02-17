@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Toolbox
+import RegexTools
 
 extension HeaderSymbol: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {

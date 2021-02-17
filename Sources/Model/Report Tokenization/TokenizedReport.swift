@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import Toolbox
+import RegexTools
+import StringTools
 
 public struct TokenizedReport: Equatable {
     public var header: [Token<HeaderSymbol>]
@@ -24,14 +25,14 @@ extension TokenizedReport: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
 
         // MARK: Cleaning & fixes
-
-        let cleanContent = string.cleanContent()
+        // moved to TextReports.ContentLoader.contentsOfFile()
+        //let cleanContent = string.clearContent()
 
         // MARK: - Tokenize
 
-        let header = cleanContent.tokenizedHeader()
-        let body =   cleanContent.tokenizedBody()
-        let footer = cleanContent.tokenizedFooter()
+        let header = string.tokenizedHeader()
+        let body =   string.tokenizedBody()
+        let footer = string.tokenizedFooter()
 
         self.init(header: header, body: body, footer: footer)
     }

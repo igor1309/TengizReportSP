@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import TextReports
 @testable import Model
 
 extension TokenizedReportTests {
     func test_init_VaiMe_2020_12() throws {
-        let filename = SampleFiles.vaiMe_2020_12
+        let filename = ContentLoader.vaiMe_2020_12
         let sample = TokenizedReport.vaiMe_2020_12
 
         // MARK: sample check
@@ -18,7 +19,7 @@ extension TokenizedReportTests {
         sample.body.flatMap { $0 }.forEach { XCTAssertEqual($0.symbol, BodySymbol(stringLiteral: $0.source)) }
         sample.footer.forEach { XCTAssertEqual($0.symbol, FooterSymbol(stringLiteral: $0.source)) }
 
-        let contents = try filename.contentsOfFile()
+        let contents = try ContentLoader.contentsOfFile(filename)
         let report = TokenizedReport(stringLiteral: contents)
         XCTAssertEqual(report, sample)
 

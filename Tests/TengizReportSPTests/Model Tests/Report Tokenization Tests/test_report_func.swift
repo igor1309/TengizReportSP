@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import TextReports
 @testable import Model
 
 extension TokenizedReport.Report {
@@ -27,14 +28,14 @@ extension TokenizedReport.Report {
 
 extension TokenizedReportReportTests {
     func test_report_func() throws {
-        let filenames = SampleFiles.filenames
+        let filenames = ContentLoader.allFilenames
         let samples = TokenizedReport.Report.allReports
 
         XCTAssertEqual(filenames.count, samples.count)
 
         try zip(filenames, samples).forEach { filename, sample in
 
-            let contents = try filename.contentsOfFile()
+            let contents = try ContentLoader.contentsOfFile(filename)
             let report = try TokenizedReport(stringLiteral: contents).report().get()
 
             XCTExpectFailure {

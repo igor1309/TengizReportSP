@@ -5,8 +5,6 @@
 //  Created by Igor Malyarov on 10.02.2021.
 //
 
-import Model
-
 public extension Sequence where Element == Token<HeaderSymbol> {
     func monthStr() -> String? {
         compactMap {

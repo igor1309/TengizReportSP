@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import RegexTools
 @testable import Model
 
 final class RegexStringExtTests: XCTestCase {
@@ -55,34 +56,6 @@ final class RegexStringExtTests: XCTestCase {
                        ["23", "5666", "8888"])
     }
 
-    func testListMatchesWithNumbers() {
-        XCTAssertEqual("7.701+4.500".listMatches(for: Patterns.integer),
-                       ["7.701", "4.500"])
-
-        XCTAssertEqual("12. Интернет\t7.701+4.500".listMatches(for: Patterns.integer),
-                       ["12", "7.701", "4.500"])
-
-        XCTAssertEqual("200.000 (за август) +400.000 (за сентябрь)".listMatches(for: Patterns.integer),
-                       ["200.000", "400.000"])
-
-        XCTAssertEqual("1. Аренда торгового помещения\t 200.000 (за август) +400.000 (за сентябрь)".listMatches(for: Patterns.integer),
-                       ["1", "200.000", "400.000"])
-
-        XCTAssertEqual("4.500+8.700+15.995".listMatches(for: Patterns.integer),
-                       ["4.500", "8.700", "15.995"])
-
-        XCTAssertEqual("6. Обслуживание кассовой программы Айко\t4.500+8.700+15.995".listMatches(for: Patterns.integer),
-                       ["6", "4.500", "8.700", "15.995"])
-
-        XCTAssertEqual("Оборот факт:141.690+1.238.900=1.380.590"
-                        .listMatches(for: Patterns.integer),
-                       ["141.690", "1.238.900", "1.380.590"])
-
-
-        XCTAssertEqual("1. Приход товара по накладным\t179.108р 89к+512.293р(оплаты фактические:199.803р 80к-переводы;81.225р 35к-корпоративная карта;34.202р-наличные из кассы; Итого 315.231р 15к)".listMatches(for: Patterns.integer),
-                       ["1", "179.108", "89", "512.293", "199.803", "80", "81.225", "35", "34.202", "315.231", "15"],
-                       "This line with 'Итого' should be tokenized by 'prihodWithItogo()'")
-    }
 
     func testFirstMatch() {
         XCTAssertNil("aaa".firstMatch(for: "AAA"))

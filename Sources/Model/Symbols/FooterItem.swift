@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Toolbox
+import RegexTools
 
 struct FooterItem: Equatable {
     let title: String

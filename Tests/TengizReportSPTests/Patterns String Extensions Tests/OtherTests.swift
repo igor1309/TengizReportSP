@@ -8,6 +8,7 @@
 import XCTest
 @testable import Model
 
+#warning("do I use this???")
 extension String {
     func match(for pattern: String) -> String? {
         self == pattern ? pattern : nil

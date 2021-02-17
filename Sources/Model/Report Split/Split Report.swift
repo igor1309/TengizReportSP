@@ -6,16 +6,20 @@
 //
 
 import Foundation
-import Toolbox
+import RegexTools
 
 extension String {
     func header() -> String {
-        firstMatch(for: Patterns.header) ?? ""
+        self
+            .replaceMatches(for: "\r\n", withString: "\n")
+            .firstMatch(for: Patterns.header) ?? ""
     }
 
     func body() -> [String] {
-        // cut header
-        replaceMatches(for: Patterns.header, withString: "")
+        self
+            .replaceMatches(for: "\r\n", withString: "\n")
+            // cut header
+            .replaceMatches(for: Patterns.header, withString: "")
             // cut footer
             .replaceMatches(for: Patterns.footer, withString: "")
             // delete column title row
@@ -24,7 +28,9 @@ extension String {
     }
 
     func footer() -> String {
-        firstMatch(for: Patterns.footer) ?? ""
+        self
+            .replaceMatches(for: "\r\n", withString: "\n")
+            .firstMatch(for: Patterns.footer) ?? ""
     }
 }
 

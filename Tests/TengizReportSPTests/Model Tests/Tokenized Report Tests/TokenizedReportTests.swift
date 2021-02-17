@@ -18,7 +18,7 @@ final class TokenizedReportTests: XCTestCase {
     #warning("finish with this func")
     func test_init_All() throws {
         /*
-        let filenames = SampleFiles.filenames
+        let filenames = ContentLoader.allFilenames
         let samples = TokenizedReport.all
 
         // MARK: checking tokens in sample
@@ -26,7 +26,7 @@ final class TokenizedReportTests: XCTestCase {
         sample.body.flatMap { $0 }.forEach { XCTAssertEqual($0.symbol, BodySymbol(stringLiteral: $0.source)) }
         sample.footer.forEach { XCTAssertEqual($0.symbol, FooterSymbol(stringLiteral: $0.source)) }
 
-        let contents = try filename.contentsOfFile()
+        let contents = try ContentLoader.contentsOfFile(filename)
         let report = TokenizedReport(stringLiteral: contents)
         XCTAssertEqual(report, sample)
 

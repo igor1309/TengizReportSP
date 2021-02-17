@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import RegexTools
 @testable import Model
 
 final class HeaderSymbolPatternsTests: XCTestCase {
@@ -62,6 +63,9 @@ final class HeaderSymbolPatternsTests: XCTestCase {
                        "Месяц: июнь2020 (с 24 по")
         XCTAssertEqual("июнь2020".firstMatch(for: Patterns.headerMonth),
                        "июнь2020")
+
+        XCTAssertEqual(" Январь2020".firstMatch(for: Patterns.headerMonth),
+                       " Январь2020")
 
         // fail
         XCTAssertNotEqual("Название объекта: Саперави Аминьевка\nМесяц: июнь2020 (с 24 по"
