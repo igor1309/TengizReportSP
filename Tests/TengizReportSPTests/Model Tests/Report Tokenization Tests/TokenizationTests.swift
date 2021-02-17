@@ -103,4 +103,18 @@ final class TokenizationTests: XCTestCase {
         }
     }
 
+    // MARK: - Tokenization via init
+
+    func testTokenizationAllTextReports() throws {
+        XCTAssertEqual(SampleFiles.filenames.count, 11, "Might have been added new report(s).")
+        
+        for filename in SampleFiles.filenames {
+            let contents = try filename.contentsOfFile()
+            let report = try TokenizedReport(stringLiteral: contents).report().get()
+
+            XCTAssertFalse(report.company.isEmpty)
+            XCTAssertFalse(report.balance == 0)
+            XCTAssertFalse(report.groups.isEmpty)
+        }
+    }
 }
