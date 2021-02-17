@@ -6,32 +6,21 @@
 //
 
 import XCTest
+import TextReports
 @testable import Model
 
 class SourceTests: XCTestCase {
-    #warning("check with test coverage if contentsOfFile() is used - which one??")
-    func contentsOfFile(_ filename: String) throws -> String {
-        enum TestErrors: Error {
-            case noFile(String)
-        }
-
-        let bundle = Bundle(for: type(of: self))
-
-        guard let filepath = bundle.path(forResource: filename, ofType: "txt") else { throw TestErrors.noFile(filename) }
-        return try String(contentsOfFile: filepath)
-    }
-
     func test_GET_SOURCE() throws {
-        let contents = try SampleFiles.vaiMe_2021_01.contentsOfFile()
+        let contents = try ContentLoader.contentsOfFile(ContentLoader.vaiMe_2021_01)
         // set 'XCTAssertNil' and filename to get file contents
         XCTAssertNotNil([contents], "Using array to have non-visible symbols")
     }
 
     func testFilesReadable() throws {
-        XCTAssertEqual(SampleFiles.filenames.count, 11, "Might have been added report file(s)")
+        XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added report file(s)")
 
-        for filename in SampleFiles.filenames {
-            let contents = try filename.contentsOfFile()
+        for filename in ContentLoader.allFilenames {
+            let contents = try ContentLoader.contentsOfFile(filename)
             XCTAssertFalse(contents.isEmpty)
         }
     }
@@ -40,7 +29,7 @@ class SourceTests: XCTestCase {
 
     func testAllFileContents() throws {
         let sources = Source.allSources
-        let fileContents = try SampleFiles.filenames.map { try $0.contentsOfFile() }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
@@ -53,7 +42,7 @@ class SourceTests: XCTestCase {
     // MARK: - testing header/body/footer funcs vs samples (Source static properties)
 
     func testAllSourcesHeader() {
-        Source.allSources.forEach { source in
+        for source in Source.allSources {
             XCTAssertEqual([source.fileContents.header()], [source.header], "Using array to have non-visible symbols")
         }
     }
@@ -72,7 +61,7 @@ class SourceTests: XCTestCase {
     }
 
     func testAllSourcesFooter() {
-        Source.allSources.forEach { source in
+        for source in Source.allSources {
             XCTAssertEqual([source.fileContents.footer()], [source.footer], "Using array to have non-visible symbols")
         }
     }
@@ -82,7 +71,7 @@ class SourceTests: XCTestCase {
 
     func testHeaderFunc() throws {
         let sources = Source.allSources
-        let fileContents = try SampleFiles.filenames.map { try $0.contentsOfFile() }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
@@ -94,7 +83,7 @@ class SourceTests: XCTestCase {
 
     func testBodyFunc() throws {
         let sources = Source.allSources
-        let fileContents = try SampleFiles.filenames.map { try $0.contentsOfFile() }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
@@ -112,35 +101,13 @@ class SourceTests: XCTestCase {
 
     func testFooterFunc() throws {
         let sources = Source.allSources
-        let fileContents = try SampleFiles.filenames.map { try $0.contentsOfFile() }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
 
         zip(sources, fileContents).forEach { source, fileContents in
             XCTAssertEqual([source.footer], [fileContents.footer()], "Using array to have non-visible symbols")
-        }
-    }
-
-    // MARK: - Reverse compose file content
-
-    func testReverseComposeSource() throws {
-        let sources = Source.allSources
-
-        for source in sources {
-            let separationLine: String
-            if source.header.contains("Саперави") {
-                separationLine = "Статья расхода:\tСумма расхода:\tПлан % \tФакт %\n"
-            } else {
-                separationLine = "Статья расхода:\tСумма расхода:\tПлан %\tФакт %\n"
-            }
-
-            let contents = [source.header,
-                            separationLine,
-                            source.body.joined(separator: "\n"),
-                            "\n",
-                            source.footer].joined()
-            XCTAssertEqual([contents], [source.fileContents], "Using array to have non-visible symbols")
         }
     }
 
@@ -162,9 +129,9 @@ final class SourceExpressibleByStringLiteralTests: XCTestCase {
         for source in sources {
             let testSource = Source(stringLiteral: source.fileContents)
 
-            XCTAssertEqual(testSource.header, source.header)
+            XCTAssertEqual([testSource.header], [source.header])
             XCTAssertEqual(testSource.body, source.body)
-            XCTAssertEqual(testSource.footer, source.footer)
+            XCTAssertEqual([testSource.footer], [source.footer])
         }
     }
 
