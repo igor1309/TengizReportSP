@@ -6,7 +6,7 @@
 //
 
 //import Model
-//
+
 extension TokenizedReport {
     public struct Report: Equatable {
         public let monthStr: String
