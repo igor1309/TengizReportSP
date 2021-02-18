@@ -24,7 +24,7 @@ extension TokenizedReport {
 
         public let groups: [Group]
 
-        public struct Group: Equatable {
+        public struct Group: Equatable, Hashable {
             public let groupNumber: Int
             public let title: String
             public let amount: Double
@@ -34,7 +34,7 @@ extension TokenizedReport {
 
             public let items: [Item]
 
-            public struct Item: Equatable {
+            public struct Item: Equatable, Hashable {
                 public let itemNumber: Int
                 public let title: String
                 public let amount: Double
