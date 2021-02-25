@@ -25,7 +25,7 @@ extension TokenizedReport: ExpressibleByStringLiteral {
     public init(stringLiteral string: String) {
 
         // MARK: Cleaning & fixes
-        // moved to TextReports.ContentLoader.contentsOfFile()
+        // moved to TextReports.ContentLoader.contents(ofFile)
         //let cleanContent = string.clearContent()
 
         // MARK: - Tokenize

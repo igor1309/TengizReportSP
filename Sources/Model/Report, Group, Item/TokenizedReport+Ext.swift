@@ -72,7 +72,7 @@ extension TokenizedReport {
         }
     }
 
-    public enum TransformationError: Error {
+    public enum TransformationError: String, Error {
         case noMonth, noCompany, noRevenue, noDailyAverage,
              noOpeningBalance, noBalance, noRunningBalance, noTotalExpenses
     }

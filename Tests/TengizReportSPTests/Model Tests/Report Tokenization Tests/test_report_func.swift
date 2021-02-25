@@ -35,7 +35,7 @@ extension TokenizedReportReportTests {
 
         try zip(filenames, samples).forEach { filename, sample in
 
-            let contents = try ContentLoader.contentsOfFile(filename)
+            let contents = try ContentLoader.contentsOfFile(filename).get()
             let report = try TokenizedReport(stringLiteral: contents).report().get()
 
             XCTExpectFailure {

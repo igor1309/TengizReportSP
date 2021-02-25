@@ -11,7 +11,7 @@ import TextReports
 
 class SourceTests: XCTestCase {
     func test_GET_SOURCE() throws {
-        let contents = try ContentLoader.contentsOfFile(ContentLoader.vaiMe_2021_01)
+        let contents = try ContentLoader.contentsOfFile(ContentLoader.vaiMe_2021_01).get()
         // set 'XCTAssertNil' and filename to get file contents
         XCTAssertNotNil([contents], "Using array to have non-visible symbols")
     }
@@ -20,7 +20,7 @@ class SourceTests: XCTestCase {
         XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added report file(s)")
 
         for filename in ContentLoader.allFilenames {
-            let contents = try ContentLoader.contentsOfFile(filename)
+            let contents = try ContentLoader.contentsOfFile(filename).get()
             XCTAssertFalse(contents.isEmpty)
         }
     }
@@ -29,7 +29,7 @@ class SourceTests: XCTestCase {
 
     func testAllFileContents() throws {
         let sources = Source.allSources
-        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0).get() }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
@@ -71,7 +71,7 @@ class SourceTests: XCTestCase {
 
     func testHeaderFunc() throws {
         let sources = Source.allSources
-        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0).get() }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
@@ -83,7 +83,7 @@ class SourceTests: XCTestCase {
 
     func testBodyFunc() throws {
         let sources = Source.allSources
-        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0).get() }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
@@ -101,7 +101,7 @@ class SourceTests: XCTestCase {
 
     func testFooterFunc() throws {
         let sources = Source.allSources
-        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0) }
+        let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfFile($0).get() }
 
         XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")

@@ -104,7 +104,7 @@ final class TokenizationTests: XCTestCase {
         XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added new report(s).")
 
         for filename in ContentLoader.allFilenames {
-            let contents = try ContentLoader.contentsOfFile(filename)
+            let contents = try ContentLoader.contentsOfFile(filename).get()
             let report = try TokenizedReport(stringLiteral: contents).report().get()
 
             XCTAssertFalse(report.company.isEmpty)
