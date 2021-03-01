@@ -6,14 +6,14 @@
 //
 
 import XCTest
-import TextReports
+@testable import TextReports
 
 final class FilesTests: XCTestCase {
     func testTextFilesReadable() throws {
         XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Report sample might have been added.")
 
         for filename in ContentLoader.allFilenames {
-            XCTAssertFalse(try ContentLoader.contentsOfFile(filename).get().isEmpty, "Can't read Report file content")
+            XCTAssertFalse(try ContentLoader.contentsOfSampleFile(filename).get().isEmpty, "Can't read Report file content")
         }
     }
 }

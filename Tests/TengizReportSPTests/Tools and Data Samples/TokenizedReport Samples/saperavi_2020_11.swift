@@ -8,7 +8,6 @@
 import XCTest
 @testable import Model
 
-#warning("write a test for these static vars: body.map(token.source) = Source.body.components(separatedBy: '\n')")
 extension TokenizedReport {
     static let saperavi_2020_11 = TokenizedReport(
         header: [Token<HeaderSymbol>(

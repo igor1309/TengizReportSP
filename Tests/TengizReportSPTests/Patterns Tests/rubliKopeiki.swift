@@ -6,15 +6,15 @@
 //
 
 import XCTest
-import TextReports
 import RegexTools
 @testable import Model
+@testable import TextReports
 
 final class RubliKopeikiTests: XCTestCase {
     func test_GetSources() {
         let sources = try? ContentLoader.allFilenames
             .flatMap { filename -> [String] in
-                let contents = try ContentLoader.contentsOfFile(filename).get()
+                let contents = try ContentLoader.contentsOfSampleFile(filename).get()
 
                 return contents
                     .components(separatedBy: "\n")

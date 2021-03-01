@@ -19,7 +19,7 @@ extension TokenizedReportTests {
         sample.body.flatMap { $0 }.forEach { XCTAssertEqual($0.symbol, BodySymbol(stringLiteral: $0.source)) }
         sample.footer.forEach { XCTAssertEqual($0.symbol, FooterSymbol(stringLiteral: $0.source)) }
 
-        let contents = try ContentLoader.contentsOfFile(filename).get()
+        let contents = try ContentLoader.contentsOfSampleFile(filename).get()
         let report = TokenizedReport(stringLiteral: contents)
         XCTAssertEqual(report, sample)
 

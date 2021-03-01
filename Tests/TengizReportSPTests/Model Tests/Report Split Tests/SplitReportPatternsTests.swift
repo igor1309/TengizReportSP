@@ -6,9 +6,9 @@
 //
 
 import XCTest
-import TextReports
 import RegexTools
 @testable import Model
+@testable import TextReports
 
 final class SplitReportPatternsTests: XCTestCase {
     func testReport_header() {
@@ -160,7 +160,7 @@ final class SplitReportPatternsTests: XCTestCase {
         XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added new report(s).")
 
         let rows = try ContentLoader.allFilenames.flatMap { filename -> [String] in
-            let contents = try ContentLoader.contentsOfFile(filename).get()
+            let contents = try ContentLoader.contentsOfSampleFile(filename).get()
             return contents.components(separatedBy: "\n")
         }
         .filter { !$0.isEmpty}
