@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import TextReports
+@testable import TextReports
 @testable import Model
 
 extension TokenizedReportTests {
