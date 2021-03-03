@@ -14,7 +14,7 @@ final class RubliKopeikiTests: XCTestCase {
     func test_GetSources() {
         let sources = try? ContentLoader.allFilenames
             .flatMap { filename -> [String] in
-                let contents = try ContentLoader.contentsOfSampleFile(filename).get()
+                let contents = try ContentLoader.contentsOfSampleFile(named: filename).get()
 
                 return contents
                     .components(separatedBy: "\n")
