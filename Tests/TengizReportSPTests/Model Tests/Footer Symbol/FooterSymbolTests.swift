@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 extension FooterSymbol {
     init(_ string: String) {

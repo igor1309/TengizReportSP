@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 final class FooterSymbolStringExtTests: XCTestCase {
     func test_openingBalance() {

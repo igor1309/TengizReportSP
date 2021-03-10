@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import Model
+import TengizReportModel
 
 final class BodySymbolSequenceTests: XCTestCase {
     let group = [

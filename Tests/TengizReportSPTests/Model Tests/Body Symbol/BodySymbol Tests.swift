@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 extension BodySymbol {
     init(_ string: String) {

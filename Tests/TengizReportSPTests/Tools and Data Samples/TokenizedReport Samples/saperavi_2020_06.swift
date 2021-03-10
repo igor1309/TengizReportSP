@@ -5,7 +5,7 @@
 //  Created by Igor Malyarov on 14.02.2021.
 //
 
-@testable import Model
+@testable import TengizReportModel
 
 extension TokenizedReport {
     static let saperavi_2020_06 = TokenizedReport(

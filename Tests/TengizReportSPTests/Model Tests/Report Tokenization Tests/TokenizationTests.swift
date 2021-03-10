@@ -7,7 +7,7 @@
 
 import XCTest
 @testable import TextReports
-@testable import Model
+@testable import TengizReportModel
 
 extension TokenizedReport {
     static let someReports = [

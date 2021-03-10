@@ -5,7 +5,7 @@
 //  Created by Igor Malyarov on 10.02.2021.
 //
 
-//import Model
+//import TengizReportModel
 
 extension TokenizedReport {
     public struct Report: Equatable {

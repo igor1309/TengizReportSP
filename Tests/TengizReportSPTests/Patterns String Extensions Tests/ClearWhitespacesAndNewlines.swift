@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 final class ClearWhitespacesAndNewlines: XCTestCase {
     func testClearWhitespacesAndNewlines() {

@@ -7,7 +7,7 @@
 
 import XCTest
 import RegexTools
-@testable import Model
+@testable import TengizReportModel
 
 final class FooterSymbolPatternsTests: XCTestCase {
     func test_numberWithSignAtStart() throws {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@testable import Model
+@testable import TengizReportModel
 
 struct Source {
     let fileContents: String

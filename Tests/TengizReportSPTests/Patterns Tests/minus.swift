@@ -7,7 +7,7 @@
 
 import XCTest
 import RegexTools
-@testable import Model
+@testable import TengizReportModel
 
 extension RegexPatternsTests {
     func test_minus() {

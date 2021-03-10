@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 extension TokenizedReport {
     static let saperavi_2020_10 = TokenizedReport(

@@ -7,7 +7,7 @@
 
 import XCTest
 @testable import TextReports
-@testable import Model
+@testable import TengizReportModel
 
 class SourceTests: XCTestCase {
     func test_GET_SOURCE() throws {

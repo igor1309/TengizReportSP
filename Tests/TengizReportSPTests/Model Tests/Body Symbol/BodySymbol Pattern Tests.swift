@@ -6,6 +6,6 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 final class BodySymbolPatternTests: XCTestCase {}

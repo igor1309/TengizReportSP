@@ -7,7 +7,7 @@
 
 import XCTest
 import RegexTools
-@testable import Model
+@testable import TengizReportModel
 @testable import TextReports
 
 final class SplitReportPatternsTests: XCTestCase {

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 final class TokenizedReportTests: XCTestCase {
     func test_init_dummy() {

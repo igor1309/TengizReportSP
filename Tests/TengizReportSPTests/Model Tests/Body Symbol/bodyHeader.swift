@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import TengizReportModel
 
 extension BodySymbolPatternTests {
     func test_bodyHeader() {
