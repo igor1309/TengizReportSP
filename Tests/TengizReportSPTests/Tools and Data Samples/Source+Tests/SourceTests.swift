@@ -17,7 +17,7 @@ class SourceTests: XCTestCase {
     }
 
     func testFilesReadable() throws {
-        XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added report file(s)")
+        XCTAssertEqual(ContentLoader.allFilenames.count, 12, "Might have been added report file(s)")
 
         for filename in ContentLoader.allFilenames {
             let contents = try ContentLoader.contentsOfSampleFile(named: filename).get()

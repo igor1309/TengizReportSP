@@ -19,8 +19,7 @@ extension TokenizedReport {
         public let balance: Double
         public let runningBalance: Double
         public let totalExpenses: Double
-        #warning("finish with note")
-        //                           public let note: String
+        public var note: String
 
         public let groups: [Group]
 
@@ -29,8 +28,7 @@ extension TokenizedReport {
             public let title: String
             public let amount: Double
             public let target: Double?
-            #warning("finish with note")
-            //                    public let note: String
+            public var note: String
 
             public let items: [Item]
 
@@ -38,9 +36,9 @@ extension TokenizedReport {
                 public let itemNumber: Int
                 public let title: String
                 public let amount: Double
-                public let note: String?
+                public let note: String
 
-                public init(itemNumber: Int, title: String, amount: Double, note: String?) {
+                public init(itemNumber: Int, title: String, amount: Double, note: String = "") {
                     self.itemNumber = itemNumber
                     self.title = title
                     self.amount = amount
@@ -48,16 +46,17 @@ extension TokenizedReport {
                 }
             }
 
-            public init(groupNumber: Int, title: String, amount: Double, target: Double?, items: [TokenizedReport.Report.Group.Item]) {
+            public init(groupNumber: Int, title: String, amount: Double, target: Double?, note: String = "", items: [TokenizedReport.Report.Group.Item]) {
                 self.groupNumber = groupNumber
                 self.title = title
                 self.amount = amount
                 self.target = target
+                self.note = note
                 self.items = items
             }
         }
 
-        public init(monthStr: String, month: Int, year: Int, company: String, revenue: Double, dailyAverage: Double, openingBalance: Double, balance: Double, runningBalance: Double, totalExpenses: Double, groups: [TokenizedReport.Report.Group]) {
+        public init(monthStr: String, month: Int, year: Int, company: String, revenue: Double, dailyAverage: Double, openingBalance: Double, balance: Double, runningBalance: Double, totalExpenses: Double, note: String = "", groups: [TokenizedReport.Report.Group]) {
             self.monthStr = monthStr
             self.month = month
             self.year = year
@@ -68,6 +67,7 @@ extension TokenizedReport {
             self.balance = balance
             self.runningBalance = runningBalance
             self.totalExpenses = totalExpenses
+            self.note = note
             self.groups = groups
         }
     }
@@ -108,7 +108,7 @@ extension TokenizedReport {
                             balance: balance,
                             runningBalance: runningBalance,
                             totalExpenses: totalExpenses,
-                            //                      note: note,
+                            note: "",
                             groups: groups)
 
         return .success(report)
@@ -130,7 +130,7 @@ extension TokenizedReport.Report.Group {
         let items: [Item] = tokens.compactMap {
             switch $0.symbol {
                 case let .item(itemNumber: itemNumber, title: title, value: value, note: note):
-                    return Item(itemNumber: itemNumber, title: title, amount: value, note: note)
+                    return Item(itemNumber: itemNumber, title: title, amount: value, note: note ?? "")
                 default: return nil
             }
         }
@@ -139,6 +139,7 @@ extension TokenizedReport.Report.Group {
         self.title = title
         self.amount = amount
         self.target = target
+        self.note = ""
         self.items = items
     }
 

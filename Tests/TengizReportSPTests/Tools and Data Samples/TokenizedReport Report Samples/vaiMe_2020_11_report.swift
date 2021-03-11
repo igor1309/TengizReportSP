@@ -22,13 +22,13 @@ extension TokenizedReport.Report {
 
                                groups: [
                                 Group(groupNumber: 0, title: "Основные расходы", amount: 27_300, target: nil,
-                                      items: [Item(itemNumber: 5, title: "Аренда головного офиса", amount: 11_500, note: nil),
-                                              Item(itemNumber: 7, title: "Вывоз мусора", amount: 15_800, note: nil)]
+                                      items: [Item(itemNumber: 5, title: "Аренда головного офиса", amount: 11_500),
+                                              Item(itemNumber: 7, title: "Вывоз мусора", amount: 15_800)]
                                 ),
 
                                 Group(groupNumber: 0, title: "Зарплата", amount: 157_894, target: 0.2,
-                                      items: [Item(itemNumber: 1, title: "ФОТ общий", amount: 67_894, note: nil),
-                                              Item(itemNumber: 2, title: "ФОТ Бренд, логистика, бухгалтерия", amount: 90_000, note: nil)]
+                                      items: [Item(itemNumber: 1, title: "ФОТ общий", amount: 67_894),
+                                              Item(itemNumber: 2, title: "ФОТ Бренд, логистика, бухгалтерия", amount: 90_000)]
                                 ),
 
                                 Group(groupNumber: 0, title: "Фактический приход товара и оплата товара", amount: 315231.15, target: 0.3,
@@ -36,19 +36,19 @@ extension TokenizedReport.Report {
                                 ),
 
                                 Group(groupNumber: 0, title: "Прочие расходы", amount: 214_542, target: 0.08,
-                                      items: [Item(itemNumber: 2, title: "Банковское обслуживание", amount: 2_514, note: nil),
-                                              Item(itemNumber: 4, title: "Банковская комиссия 1.6% за эквайринг", amount: 15_963, note: nil),
-                                              Item(itemNumber: 5, title: "Юридическое сопровождение", amount: 40_000, note: nil),
-                                              Item(itemNumber: 6, title: "Обслуживание кассовой программы", amount: 11_500, note: nil),
-                                              Item(itemNumber: 7, title: "Обслуживание хостинга", amount: 2_500, note: nil),
-                                              Item(itemNumber: 8, title: "Аудит Кантора (бухуслуги)", amount: 60_000, note: nil),
-                                              Item(itemNumber: 9, title: "Реклама и IT поддержка", amount: 75_000, note: nil),
-                                              Item(itemNumber: 12, title: "Интернет", amount: 6_065, note: nil),
-                                              Item(itemNumber: 16, title: "Текущие мелкие расходы", amount: 1_000, note: nil)]
+                                      items: [Item(itemNumber: 2, title: "Банковское обслуживание", amount: 2_514),
+                                              Item(itemNumber: 4, title: "Банковская комиссия 1.6% за эквайринг", amount: 15_963),
+                                              Item(itemNumber: 5, title: "Юридическое сопровождение", amount: 40_000),
+                                              Item(itemNumber: 6, title: "Обслуживание кассовой программы", amount: 11_500),
+                                              Item(itemNumber: 7, title: "Обслуживание хостинга", amount: 2_500),
+                                              Item(itemNumber: 8, title: "Аудит Кантора (бухуслуги)", amount: 60_000),
+                                              Item(itemNumber: 9, title: "Реклама и IT поддержка", amount: 75_000),
+                                              Item(itemNumber: 12, title: "Интернет", amount: 6_065),
+                                              Item(itemNumber: 16, title: "Текущие мелкие расходы", amount: 1_000)]
                                 ),
                                 
                                 Group(groupNumber: 0, title: "Расходы на доставку", amount: 8_169, target: nil,
-                                      items: [Item(itemNumber: 2, title: "Агрегаторы", amount: 8_169, note: nil)]
+                                      items: [Item(itemNumber: 2, title: "Агрегаторы", amount: 8_169)]
                                 )
                                ]
         )

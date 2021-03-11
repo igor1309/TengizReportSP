@@ -32,7 +32,7 @@ class TokenizedReportReportTests: XCTestCase {
             groupNumber: 0,
             title: "Фактический приход товара и оплата товара", amount: 645184.37, target: 0.25,
             items: [Item(itemNumber: 0, title: "Correction", amount: -10_000, note: "-10.000 за перерасход питание персонала в июле"),
-                    Item(itemNumber: 1, title: "Приход товара по накладным", amount: 632_684.37, note: Optional("946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)")),
+                    Item(itemNumber: 1, title: "Приход товара по накладным", amount: 632_684.37, note: "946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)"),
                     Item(itemNumber: 2, title: "Предоплаченный товар, но не отраженный в приходе", amount: 12_500, note: "Студиопак Итого 12.500 (влажные салфетки);")]
         )
 
@@ -67,7 +67,7 @@ class TokenizedReportReportTests: XCTestCase {
 
         let sample = TokenizedReport.Report.Group(
             groupNumber: 0,title: "Расходы на доставку", amount: 9_528, target: nil,
-            items: [Item(itemNumber: 2, title: "Агрегаторы", amount: 9_528, note: nil)]
+            items: [Item(itemNumber: 2, title: "Агрегаторы", amount: 9_528)]
         )
 
         XCTAssertEqual(group, sample)

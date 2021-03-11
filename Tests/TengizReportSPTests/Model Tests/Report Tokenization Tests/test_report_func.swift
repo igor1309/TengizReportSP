@@ -31,17 +31,15 @@ extension TokenizedReportReportTests {
         let filenames = ContentLoader.allFilenames
         let samples = TokenizedReport.Report.allReports
 
-        XCTAssertEqual(filenames.count, samples.count)
+        XCTAssertEqual(filenames.count, samples.count, "Might have been added new report(s).")
 
         try zip(filenames, samples).forEach { filename, sample in
 
             let contents = try ContentLoader.contentsOfSampleFile(named: filename).get()
             let report = try TokenizedReport(stringLiteral: contents).report().get()
 
-            XCTExpectFailure {
-                XCTAssertEqual(report.month, sample.month)
-                XCTAssertEqual(report.year, sample.year)
-            }
+            XCTAssertEqual(report.month, sample.month)
+            XCTAssertEqual(report.year, sample.year)
 
             XCTAssertEqual(report.monthStr, sample.monthStr, "\(report.company) (\(report.monthStr)) is not equal to \(sample.company) (\(sample.monthStr))")
 

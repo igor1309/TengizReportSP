@@ -101,7 +101,7 @@ final class TokenizationTests: XCTestCase {
     // MARK: - Tokenization via init
 
     func testTokenizationAllTextReports() throws {
-        XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added new report(s).")
+        XCTAssertEqual(ContentLoader.allFilenames.count, 12, "Might have been added new report(s).")
 
         for filename in ContentLoader.allFilenames {
             let contents = try ContentLoader.contentsOfSampleFile(named: filename).get()
