@@ -96,7 +96,7 @@ extension TokenizedReport {
         let runningBalance = footer.runningBalance() ?? openingBalance + balance
         guard let totalExpenses = footer.totalExpenses() else { return .failure(.noTotalExpenses) }
 
-        let groups: [Report.Group] = body.compactMap { Report.Group(tokens: $0) }
+        let groups: [Report.Group] = body.enumerated().compactMap { Report.Group(groupNumber: $0.0 + 1, tokens: $0.1) }
 
         let report = Report(monthStr: monthStr,
                             month: month,
@@ -119,9 +119,8 @@ typealias Group = TokenizedReport.Report.Group
 typealias Item = TokenizedReport.Report.Group.Item
 
 extension TokenizedReport.Report.Group {
-    public init?(tokens: [Token<BodySymbol>]) {
-        guard let groupNumber = tokens.groupNumber(),
-              let title = tokens.title(),
+    public init?(groupNumber: Int, tokens: [Token<BodySymbol>]) {
+        guard let title = tokens.title(),
               let amount = tokens.amount()
         else { return nil }
 

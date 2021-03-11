@@ -23,22 +23,22 @@ extension TokenizedReport.Report {
             totalExpenses: 2_550_334.18,
 
             groups: [
-                Group(groupNumber: 0, title: "Основные расходы", amount: 168_500, target: 0.2,
+                Group(groupNumber: 1, title: "Основные расходы", amount: 168_500, target: 0.2,
                       items: [Item(itemNumber: 3, title: "Электричество", amount: 150_000),
                               Item(itemNumber: 5, title: "Аренда головного офиса", amount: 11_500),
                               Item(itemNumber: 6, title: "Аренда головного склада", amount: 7_000)]
                 ),
 
-                Group(groupNumber: 0, title: "Зарплата", amount: 1_163_769, target: 0.2,
+                Group(groupNumber: 2, title: "Зарплата", amount: 1_163_769, target: 0.2,
                       items: [Item(itemNumber: 1, title: "ФОТ", amount: 1_064_769, note: "( за вторую  часть ноября и первую часть декабря)"),
                               Item(itemNumber: 2, title: "ФОТ Бренд, логистика, бухгалтерия", amount: 99_000)]
                 ),
 
-                Group(groupNumber: 0, title: "Фактический приход товара и оплата товара", amount: 869029.78, target: 0.25,
+                Group(groupNumber: 3, title: "Фактический приход товара и оплата товара", amount: 869029.78, target: 0.25,
                       items: [Item(itemNumber: 1, title: "Приход товара по накладным", amount: 869_029.78, note: "832.168р88к; (оплаты фактические: 556.331р 58к -переводы; 159.321р20к -корпоративная карта; 153.377р -наличные из кассы; Итого 869.029р 78к)")]
                 ),
 
-                Group(groupNumber: 0, title: "Прочие расходы", amount: 319_456.4, target: 0.15,
+                Group(groupNumber: 4, title: "Прочие расходы", amount: 319_456.4, target: 0.15,
                       items: [Item(itemNumber: 1, title: "Налоговые платежи", amount: 28_480.79),
                               Item(itemNumber: 2, title: "Банковское обслуживание", amount: 6_994.61),
                               Item(itemNumber: 3, title: "Юридическое сопровождение", amount: 40_000),
@@ -54,7 +54,7 @@ extension TokenizedReport.Report {
                               Item(itemNumber: 26, title: "Новогодний декор-демонтаж", amount: 15_900)]
                 ),
 
-                Group(groupNumber: 0, title: "Расходы на доставку", amount: 29_579, target: nil,
+                Group(groupNumber: 5, title: "Расходы на доставку", amount: 29_579, target: nil,
                       items: [Item(itemNumber: 1, title: "Курьеры", amount: 6_400),
                               Item(itemNumber: 2, title: "Агрегаторы", amount: 23_179)]
                 )

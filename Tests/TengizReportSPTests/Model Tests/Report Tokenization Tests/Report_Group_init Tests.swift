@@ -26,10 +26,10 @@ class TokenizedReportReportTests: XCTestCase {
             Token<BodySymbol>(stringLiteral: "ИТОГ:\t645.184р37к"),
         ]
 
-        let group = TokenizedReport.Report.Group(tokens: tokens)
+        let group = TokenizedReport.Report.Group(groupNumber: 5, tokens: tokens)
 
         let sample = TokenizedReport.Report.Group(
-            groupNumber: 0,
+            groupNumber: 5,
             title: "Фактический приход товара и оплата товара", amount: 645184.37, target: 0.25,
             items: [Item(itemNumber: 0, title: "Correction", amount: -10_000, note: "-10.000 за перерасход питание персонала в июле"),
                     Item(itemNumber: 1, title: "Приход товара по накладным", amount: 632_684.37, note: "946.056р (оплаты фактические: 475.228р 52к -переводы; 157.455р 85к-корпоративная карта; 0-наличные из кассы; Итого 632.684р 37к)"),
@@ -63,10 +63,10 @@ class TokenizedReportReportTests: XCTestCase {
         XCTAssertEqual(tokens.amount(), 9_528)
         XCTAssertNil(tokens.target())
 
-        let group = TokenizedReport.Report.Group(tokens: tokens)
+        let group = TokenizedReport.Report.Group(groupNumber: 5, tokens: tokens)
 
         let sample = TokenizedReport.Report.Group(
-            groupNumber: 0,title: "Расходы на доставку", amount: 9_528, target: nil,
+            groupNumber: 5,title: "Расходы на доставку", amount: 9_528, target: nil,
             items: [Item(itemNumber: 2, title: "Агрегаторы", amount: 9_528)]
         )
 
@@ -76,7 +76,9 @@ class TokenizedReportReportTests: XCTestCase {
     func test_TokenizedReport_Report_Group_init_3() throws {
         let sampleTokenizedReport = TokenizedReport.saperavi_2020_07
         let bodyTokens = sampleTokenizedReport.body
-        let groups = bodyTokens.compactMap(try XCTUnwrap(Group.init, "Testing Group 'init?(tokens:)'"))
+        let groups = try bodyTokens.enumerated().compactMap {
+            try XCTUnwrap(Group(groupNumber: $0.0 + 1, tokens: $0.1), "Testing Group 'init?(groupNumber:tokens:)'")
+        }
 
         let reportSample = TokenizedReport.Report.saperavi_2020_07
         let samples = reportSample.groups

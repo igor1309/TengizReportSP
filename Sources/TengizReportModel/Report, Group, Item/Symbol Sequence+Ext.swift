@@ -41,10 +41,6 @@ public extension Sequence where Element == Token<HeaderSymbol> {
 }
 
 public extension Sequence where Element == Token<BodySymbol> {
-    func groupNumber() -> Int? {
-        #warning("finish with groupNumber")
-        return 0
-    }
     func title() -> String? {
         compactMap {
             switch $0.symbol {

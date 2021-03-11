@@ -31,7 +31,7 @@ class SourceTests: XCTestCase {
         let sources = Source.allSources
         let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfSampleFile(named: $0).get() }
 
-        XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
+        XCTAssertEqual(fileContents.count, 12, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
 
         zip(sources, fileContents).forEach { source, fileContents in
@@ -73,7 +73,7 @@ class SourceTests: XCTestCase {
         let sources = Source.allSources
         let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfSampleFile(named: $0).get() }
 
-        XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
+        XCTAssertEqual(fileContents.count, 12, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
 
         zip(sources, fileContents).forEach { source, fileContents in
@@ -85,7 +85,7 @@ class SourceTests: XCTestCase {
         let sources = Source.allSources
         let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfSampleFile(named: $0).get() }
 
-        XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
+        XCTAssertEqual(fileContents.count, 12, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
 
         zip(sources, fileContents).forEach { source, fileContents in
@@ -103,7 +103,7 @@ class SourceTests: XCTestCase {
         let sources = Source.allSources
         let fileContents = try ContentLoader.allFilenames.map { try ContentLoader.contentsOfSampleFile(named: $0).get() }
 
-        XCTAssertEqual(fileContents.count, 11, "Might have been added report file(s)")
+        XCTAssertEqual(fileContents.count, 12, "Might have been added report file(s)")
         XCTAssertEqual(sources.count, fileContents.count, "Might have been added report file(s)")
 
         zip(sources, fileContents).forEach { source, fileContents in

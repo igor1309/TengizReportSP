@@ -19,6 +19,7 @@ extension TokenizedReport.Report {
         saperavi_2020_11,
         saperavi_2020_12,
         saperavi_2021_01,
+        saperavi_2021_02,
 
         vaiMe_2020_11,
         vaiMe_2020_12,
@@ -83,6 +84,5 @@ extension TokenizedReportReportTests {
             }
         }
     }
-
 
 }

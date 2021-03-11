@@ -28,16 +28,6 @@ final class BodySymbolSequenceTests: XCTestCase {
         }
     }
 
-    func test_groupNumber() {
-        // MARK: match
-        XCTExpectFailure {
-            XCTAssertEqual(1, group.groupNumber())
-        }
-
-        // MARK: no match
-        #warning("finish with negative tests AFTER finishing with func groupNumber()")
-    }
-
     func test_title() {
         // MARK: match
         XCTAssertEqual("Фактический приход товара и оплата товара", group.title())
