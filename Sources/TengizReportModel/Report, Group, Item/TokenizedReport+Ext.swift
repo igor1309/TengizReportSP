@@ -72,17 +72,16 @@ extension TokenizedReport {
         }
     }
 
-    public enum TransformationError: String, Error {
-        case noMonth, noCompany, noRevenue, noDailyAverage,
+    public enum TransformationError: Error, Equatable {
+        case noMonth(String?), noCompany, noRevenue, noDailyAverage,
              noOpeningBalance, noBalance, noRunningBalance, noTotalExpenses
     }
 
     public func report() -> Result<Report, TransformationError> {
-        guard let monthStr = header.monthStr() else { return .failure(.noMonth) }
-        #warning("dummy mock: fix month")
-        let month = 13
-        #warning("dummy mock: fix year")
-        let year = 2013
+        guard let monthStr = header.monthStr() else { return .failure(.noMonth(nil)) }
+
+        guard let month = monthStr.monthInt(),
+              let year = monthStr.yearInt() else { return .failure(.noMonth(monthStr)) }
 
         guard let company = header.company() else { return .failure(.noCompany) }
         guard let revenue = header.revenue() else { return .failure(.noRevenue) }

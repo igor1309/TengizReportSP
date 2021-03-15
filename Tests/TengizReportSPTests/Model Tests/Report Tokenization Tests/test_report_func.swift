@@ -39,8 +39,8 @@ extension TokenizedReportReportTests {
             let contents = try ContentLoader.contentsOfSampleFile(named: filename).get()
             let report = try TokenizedReport(stringLiteral: contents).report().get()
 
-            XCTAssertEqual(report.month, sample.month)
-            XCTAssertEqual(report.year, sample.year)
+            XCTAssertEqual(report.month, sample.month, "\(report.company) (\(report.month)) is not equal to \(sample.company) (\(sample.month))")
+            XCTAssertEqual(report.year, sample.year, "\(report.company) (\(report.year)) is not equal to \(sample.company) (\(sample.year))")
 
             XCTAssertEqual(report.monthStr, sample.monthStr, "\(report.company) (\(report.monthStr)) is not equal to \(sample.company) (\(sample.monthStr))")
 

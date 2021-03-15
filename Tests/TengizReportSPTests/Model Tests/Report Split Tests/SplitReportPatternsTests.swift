@@ -157,7 +157,7 @@ final class SplitReportPatternsTests: XCTestCase {
     }
 
     func test_MOVE_IT_TO_GET_SOURCES_AND_RENAME() throws {
-        XCTAssertEqual(ContentLoader.allFilenames.count, 11, "Might have been added new report(s).")
+        XCTAssertEqual(ContentLoader.allFilenames.count, 12, "Might have been added new report(s).")
 
         let rows = try ContentLoader.allFilenames.flatMap { filename -> [String] in
             let contents = try ContentLoader.contentsOfSampleFile(named: filename).get()
@@ -168,7 +168,7 @@ final class SplitReportPatternsTests: XCTestCase {
         .removingDuplicates()
         .sorted()
 
-        XCTAssertEqual(rows.count, 361)
+        XCTAssertEqual(rows.count, 389)
         XCTAssertEqual(rows, FileContent.allRows)
         let firstPart = Array(rows.prefix(200))
         XCTAssertEqual(firstPart, FileContent.firstPart)

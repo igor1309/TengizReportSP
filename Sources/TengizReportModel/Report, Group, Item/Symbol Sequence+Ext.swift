@@ -5,6 +5,38 @@
 //  Created by Igor Malyarov on 10.02.2021.
 //
 
+extension Patterns {
+    static var monthWithoutYear = #"(?:Месяц: )?(?<month>\D+)(?:\d{4}).*\t?"#
+}
+
+extension String {
+    func monthInt() -> Int? {
+        let monthWithoutYearStr = replaceFirstMatch(for: Patterns.monthWithoutYear, withGroup: "month")
+        switch monthWithoutYearStr {
+            case "январь", "Январь": return 1
+            case "февраль", "Февраль": return 2
+            case "март", "Март": return 3
+            case "апрель", "Апрель": return 4
+            case "май", "Май": return 5
+            case "июнь", "Июнь": return 6
+            case "июль", "Июль": return 7
+            case "август", "Август": return 8
+            case "сентябрь", "Сентябрь": return 9
+            case "октябрь", "Октябрь": return 10
+            case "ноябрь", "Ноябрь", "Октябрь+Ноябрь": return 11
+            case "декабрь", "Декабрь": return 12
+            default: return nil
+        }
+    }
+    func yearInt() -> Int? {
+        guard let yearStr = replaceFirstMatch(for: #"\D*(?<year>\d{4})\D*"#, withGroup: "year") else { return nil }
+
+        return Int(yearStr)
+    }
+
+}
+
+#warning("try internal not public extension")
 public extension Sequence where Element == Token<HeaderSymbol> {
     func monthStr() -> String? {
         compactMap {

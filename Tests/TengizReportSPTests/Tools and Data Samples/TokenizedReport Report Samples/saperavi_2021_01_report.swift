@@ -11,7 +11,7 @@ extension TokenizedReport.Report {
     #warning("report text with 'Январь2020' but this is Jan 2021!")
     static let saperavi_2021_01: TokenizedReport.Report =
         TokenizedReport.Report(
-            monthStr: "Январь2020",
+            monthStr: "Январь2021",
             month: 01,
             year: 2021,
             company: "Саперави Аминьевка",
